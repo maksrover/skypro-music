@@ -7,11 +7,11 @@ function AudioPlayer() {
         <div className="bar__player-block">
           <div className="bar__player player">
             <div className="player__controls">
-              {/* <div className="player__btn-prev">
+              <div className="player__btn-prev">
                 <svg className="player__btn-prev-svg" alt="prev">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </svg>
-              </div> */}
+              </div>
               <div className="player__btn-play _btn">
                 <svg className="player__btn-play-svg" alt="play">
                   <use xlinkHref="img/icon/sprite.svg#icon-play" />
