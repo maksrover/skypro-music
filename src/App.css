@@ -42,7 +42,7 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: 'StratosSkyeng', sans-serif;
+  /* font-family: 'StratosSkyeng', sans-serif; */
   color: #ffffff;
 }
 
@@ -61,6 +61,7 @@ body {
   width: 100%;
   min-height: 100%;
   overflow: hidden;
+  /* overflow-y: scroll; */
   background-color: #383838;
 }
 
@@ -350,6 +351,7 @@ body {
   -ms-flex-direction: column;
   flex-direction: column;
   overflow-y: auto;
+  /* overflow-y: scroll; */
   /* scroll-snap-type: y mandatory; */
 }
 
@@ -893,3 +895,43 @@ body {
 .volume__progress-line {
   width: 109px;
 }
+
+
+
+.skeleton {
+  display: block;
+  width: 250px;
+  height: 150px;
+  background-color: #f0f0f0; /* Цвет скелетона */
+  animation: pulse 1s infinite; /* Анимация "пульсации" */
+}
+
+.skeleton-img {
+  width: 100%;
+  height: 100%;
+}
+
+.skeleton2 {
+  background-color: #f0f0f0; /* Цвет фона для скелетона */
+  animation: pulse 1s infinite; /* Анимация для создания эффекта загрузки */
+}
+
+.track__skeleton {
+  width: 185px;
+  height: 20px;
+  background: white;
+  display: flex;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+

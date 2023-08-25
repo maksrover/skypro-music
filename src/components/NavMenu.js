@@ -1,6 +1,6 @@
 import '../App.css'
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react'
+import MenuItem from './MenuBurger'
+import { useState } from 'react'
 
 function NavMenu() {
   const [isMenuVisible, setMenuVisible] = useState(false)
@@ -22,21 +22,9 @@ function NavMenu() {
       </div>
       <div className={`nav__menu menu ${isMenuVisible ? 'visible' : 'hidden'}`}>
         <ul className="menu__list">
-          <li className="menu__item">
-            <a href="#" className="menu__link">
-              Главное
-            </a>
-          </li>
-          <li className="menu__item">
-            <a href="#" className="menu__link">
-              Мой плейлист
-            </a>
-          </li>
-          <li className="menu__item">
-            <a href="../signin.html" className="menu__link">
-              Войти
-            </a>
-          </li>
+          <MenuItem link="#" text="Главное" />
+          <MenuItem link="#" text="Мой плейлист" />
+          <MenuItem link="../signin.html" text="Войти" />
         </ul>
       </div>
     </nav>
