@@ -3,6 +3,7 @@ import AudioPlayer from './components/AudioPlayer'
 import NavMenu from './components/NavMenu'
 import MainBlock from './components/MainBlock'
 import Sidebar from './components/Sidebar'
+// import img 'img/logo.png';
 
 function App() {
   return (
