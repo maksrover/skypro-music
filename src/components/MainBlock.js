@@ -1,17 +1,15 @@
 import '../App.css'
 import Search from './Search'
-import Playlist from './Playlist'
 import ContentPlaylistSkeleton from './ContentPlaylistSceleton'
-import Filter from './Filter'
+import FilterMenu from './FilterMenu'
+import Playlist from './Playlist'
 import { playlist } from './ArrayTrack'
 import { useState, useEffect } from 'react'
-
-// function MainBlock() {
 
 function MainBlock() {
   const [showSkeleton, setShowSkeleton] = useState(true)
   const [tracks, setTracks] = useState([])
-
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSkeleton(false)
@@ -24,11 +22,10 @@ function MainBlock() {
     <div className="main__centerblock centerblock">
       <Search />
       <h2 className="centerblock__h2">Треки</h2>
-      <Filter />
+      <FilterMenu />
       <div className="centerblock__content">
         <div className="content__title playlist-title">
           <div className="playlist-title__col col01">Трек</div>
-
           <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
           <div className="playlist-title__col col03">АЛЬБОМ</div>
           <div className="playlist-title__col col04">
@@ -38,11 +35,7 @@ function MainBlock() {
           </div>
         </div>
         <div className="content__playlist playlist">
-          {showSkeleton ? (
-            <ContentPlaylistSkeleton />
-          ) : (
-            <Playlist tracks={tracks} />
-          )}
+          {showSkeleton ? <ContentPlaylistSkeleton /> : <Playlist tracks={tracks} />}
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-// import './Centerblock.css';
 import PlaylistItem from './playlistItem';
 
 const Playlist = (props) => {
