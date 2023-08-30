@@ -14,7 +14,7 @@
 a,
 a:visited {
   text-decoration: none;
-  font-family: "StratosSkyeng", sans-serif;
+  font-family: 'StratosSkyeng', sans-serif;
   cursor: pointer;
 }
 
@@ -28,10 +28,12 @@ ul li {
 }
 
 @font-face {
-  font-family: "StratosSkyeng";
-  src: local("StratosSkyeng"), local("StratosSkyeng"),
-    url("../public/fonts/StratosSkyeng.woff2") format("woff2"),
-    url("../public/fonts/StratosSkyeng.woff") format("woff");
+  font-family: 'StratosSkyeng';
+  src:
+    local('StratosSkyeng'),
+    local('StratosSkyeng'),
+    url('../public/fonts/StratosSkyeng.woff2') format('woff2'),
+    url('../public/fonts/StratosSkyeng.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
@@ -40,14 +42,26 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: "StratosSkyeng", sans-serif;
+  /* font-family: 'StratosSkyeng', sans-serif; */
   color: #ffffff;
 }
+
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+/* 
+  overflow-y: scroll; */
 
 .wrapper {
   width: 100%;
   min-height: 100%;
   overflow: hidden;
+  /* overflow-y: scroll; */
   background-color: #383838;
 }
 
@@ -147,10 +161,10 @@ body {
   justify-content: space-between;
 }
 
-.nav__menu {
+/* .nav__menu {
   display: block;
   visibility: visible;
-}
+} */
 
 .logo__image {
   width: 113.33px;
@@ -228,6 +242,7 @@ body {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+  /* height: 100vh; */
 }
 
 .search__svg {
@@ -304,6 +319,8 @@ body {
   border: 1px solid #ffffff;
   border-radius: 60px;
   padding: 6px 20px;
+  background-color: #181818;
+  color: white;
 }
 
 .filter__button:not(:last-child) {
@@ -336,6 +353,8 @@ body {
   -ms-flex-direction: column;
   flex-direction: column;
   overflow-y: auto;
+  /* overflow-y: scroll; */
+  /* scroll-snap-type: y mandatory; */
 }
 
 .playlist-title__col {
@@ -376,6 +395,7 @@ body {
   width: 100%;
   display: block;
   margin-bottom: 12px;
+  /* scroll-snap-align: start; */
 }
 
 .playlist__track {
@@ -741,7 +761,7 @@ body {
   display: grid;
   -ms-grid-columns: auto 1fr;
   grid-template-columns: auto 1fr;
-  grid-template-areas: "image author" "image album";
+  grid-template-areas: 'image author' 'image album';
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -877,3 +897,121 @@ body {
 .volume__progress-line {
   width: 109px;
 }
+
+.skeleton {
+  display: block;
+  width: 250px;
+  height: 150px;
+  background-color: #f0f0f0; /* Цвет скелетона */
+  animation: pulse 1s infinite; /* Анимация "пульсации" */
+}
+
+.skeleton-img {
+  width: 100%;
+  height: 100%;
+}
+
+.skeleton2 {
+  background-color: #f0f0f0; /* Цвет фона для скелетона */
+  animation: pulse 1s infinite; /* Анимация для создания эффекта загрузки */
+}
+
+.track__skeleton {
+  width: 185px;
+  height: 20px;
+  background: white;
+  display: flex;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  background-color: #313131;
+  margin-right: 10px;
+  border-radius: 12px;
+  /* overflow-y: scroll; */
+}
+
+.menu__item {
+  position: relative;
+}
+
+.menu__item_button {
+  display: flex;
+  justify-content: center;
+}
+
+.dropdown_el {
+  color: fff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  font-family: StratosSkyeng;
+}
+
+.dropdown .dropdown_item {
+  display: none;
+}
+
+.dropdown.active .dropdown_item {
+  display: block;
+  width: 248px;
+  height: 305px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 24px;
+  padding-top: 34px;
+  /* overflow-y: scroll; */
+}
+
+.dropdown_item1 {
+  overflow-y: scroll;
+  width: 180px;
+  height: 236px;
+  display: flex;
+  gap: 28px;
+  flex-direction: column;
+}
+
+.cont__filt {
+  width: 248px;
+  height: 304px;
+  padding-top: 34px;
+  padding-left: 34px;
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 10px;
+  background-color: #4B4949;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 14px 14px transparent;
+  border: solid 20px transparent;
+  color: #4B4949;
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 14px 14px #ffffff;
+  border: solid 4px;
+  border-radius: 14px;
+}
+
