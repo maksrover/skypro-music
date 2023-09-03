@@ -11,4 +11,8 @@ color: #ffffff;
 font-weight: 400;
 font-size: 16px;
 line-height: 24px;
+&:hover {
+    color: #b672ff;
+    border-color: #b672ff;
+  }
 `

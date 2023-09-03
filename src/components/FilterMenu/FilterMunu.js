@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { playlist } from './ArrayTrack'
+import { playlist } from '../ArrayTrack'
 import * as S from './FilterMunu.style'
 
 function FilterMenu() {
@@ -47,9 +47,7 @@ function FilterMenu() {
           <S.DropdownItem className="dropdown_item">
             <S.DropdownItem1>
               {playlist.map((track) => (
-                <S.DropdownEl key={track.id}>
-                  {track.author}
-                </S.DropdownEl>
+                <S.DropdownEl key={track.id}>{track.author}</S.DropdownEl>
               ))}
             </S.DropdownItem1>
           </S.DropdownItem>
@@ -93,9 +91,7 @@ function FilterMenu() {
           <S.DropdownItem className="dropdown_item">
             <S.DropdownItem1>
               {playlist.map((track) => (
-                <S.DropdownEl key={track.id}>
-                  {track.genre}
-                </S.DropdownEl>
+                <S.DropdownEl key={track.id}>{track.genre}</S.DropdownEl>
               ))}
             </S.DropdownItem1>
           </S.DropdownItem>

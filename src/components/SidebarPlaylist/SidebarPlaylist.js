@@ -16,7 +16,7 @@ function SidebarPlaylist(props) {
 
 // export default SidebarPlaylist
 
-function SidebarPlaylistAll () {
+function SidebarPlaylistAll() {
   return (
     <div>
       <SidebarPlaylist imgSrc="img/playlist01.png" altText="day's playlist" />
@@ -26,4 +26,4 @@ function SidebarPlaylistAll () {
   )
 }
 
-export {SidebarPlaylistAll}
+export { SidebarPlaylistAll }

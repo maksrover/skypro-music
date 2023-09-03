@@ -1,9 +1,9 @@
-import AudioPlayer from './components/AudioPlayer'
-import NavMenu from './components/NavMenu'
-import MainBlock from './components/MainBlock'
-import Sidebar from './components/Sidebar'
-import * as S from './App.styled'
-import GlobalStyle from './GlobalStyles'
+import AudioPlayer from './components/AudioPlayer/AudioPlayer'
+import NavMenu from './components/NavMenu/NavMenu'
+import MainBlock from './components/MainBlock/MainBlock'
+import Sidebar from './components/Sidebar/Sidebar'
+import * as S from './Style/App.styled'
+import GlobalStyle from './Style/GlobalStyles'
 
 function App() {
   return (

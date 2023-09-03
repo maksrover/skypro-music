@@ -1,4 +1,4 @@
-import PlaylistItem from './playlistItem'
+import PlaylistItem from '../PlaylistItem/playlistItem'
 import * as S from './Playlist.styled'
 
 const Playlist = (props) => {

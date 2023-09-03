@@ -1,15 +1,15 @@
-import Search from './Search'
-import ContentPlaylistSkeleton from './ContentPlaylistSceleton'
-import FilterMenu from './FilterMunu'
-import Playlist from './Playlist'
-import { playlist } from './ArrayTrack'
+import Search from '../Search/Search'
+import ContentPlaylistSkeleton from '../ContentPlaylistSceleton'
+import FilterMenu from '../FilterMenu/FilterMunu'
+import Playlist from '../Playlist/Playlist'
+import { playlist } from '../ArrayTrack'
 import * as S from './MainBlock.styled'
 
 import { useState, useEffect } from 'react'
 function MainBlock() {
   const [showSkeleton, setShowSkeleton] = useState(true)
   const [tracks, setTracks] = useState([])
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSkeleton(false)
@@ -35,7 +35,11 @@ function MainBlock() {
           </S.PlaylistTitileCol04>
         </S.ContentTitle>
         <S.ContentPlaylist>
-          {showSkeleton ? <ContentPlaylistSkeleton /> : <Playlist tracks={tracks} />}
+          {showSkeleton ? (
+            <ContentPlaylistSkeleton />
+          ) : (
+            <Playlist tracks={tracks} />
+          )}
         </S.ContentPlaylist>
       </S.CenterblockContent>
     </S.MainCenterblock>

@@ -1,6 +1,6 @@
-import SidebarLogin from './SidebarPersonal'
-import {SidebarPlaylistAll} from './SidebarPlaylist'
-import {SidebarPlaylistSkeletonAll} from './SidebarPlaylistSkeleton'
+import SidebarLogin from '../SidebarPersonal/SidebarPersonal'
+import { SidebarPlaylistAll } from '../SidebarPlaylist/SidebarPlaylist'
+import { SidebarPlaylistSkeletonAll } from '../SidebarPlaylistSkeleton/SidebarPlaylistSkeleton'
 import { useState, useEffect } from 'react'
 import * as S from './Sidebar.styles'
 
@@ -19,7 +19,11 @@ function Sidebar() {
       <SidebarLogin />
       <S.SidebarBlock>
         <S.SidebarList>
-        {showSkeleton ? <SidebarPlaylistSkeletonAll /> : <SidebarPlaylistAll />}
+          {showSkeleton ? (
+            <SidebarPlaylistSkeletonAll />
+          ) : (
+            <SidebarPlaylistAll />
+          )}
         </S.SidebarList>
       </S.SidebarBlock>
     </S.MainSidebar>

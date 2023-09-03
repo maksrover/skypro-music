@@ -61,7 +61,9 @@ export const DropdownEl = styled.li`
   &:hover {
     color: #b672ff;
     border-color: #b672ff;
-  }
+    text-decoration: underline
+    }
+
 `
 
 export const DropdownItem1 = styled.ul`
@@ -71,6 +73,7 @@ export const DropdownItem1 = styled.ul`
   display: flex;
   gap: 28px;
   flex-direction: column;
+  cursor: pointer;
 
   &::-webkit-scrollbar {
     width: 4px;
