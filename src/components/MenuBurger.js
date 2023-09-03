@@ -1,10 +1,12 @@
+import * as S from './MenuBurger.styles'
+
 function MenuItem({ link, text }) {
   return (
-    <li className="menu__item">
-      <a href={link} className="menu__link">
+    <S.MenuItem>
+      <S.MenuLink href={link}>
         {text}
-      </a>
-    </li>
+      </S.MenuLink>
+    </S.MenuItem>
   )
 }
 

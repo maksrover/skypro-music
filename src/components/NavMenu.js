@@ -1,6 +1,7 @@
-import '../App.css'
 import MenuItem from './MenuBurger'
 import { useState } from 'react'
+import * as S from './NavMenu.styles'
+
 
 function NavMenu() {
   const [isMenuVisible, setMenuVisible] = useState(false)
@@ -11,23 +12,23 @@ function NavMenu() {
   }
 
   return (
-    <nav className="main__nav nav">
-      <div className="nav__logo logo">
-        <img className="logo__image" src="img/logo.png" alt="logo" />
-      </div>
-      <div className="nav__burger burger" onClick={toggleMenu}>
-        <span className="burger__line" />
-        <span className="burger__line" />
-        <span className="burger__line" />
-      </div>
-      <div className={`nav__menu menu ${isMenuVisible ? 'visible' : 'hidden'}`}>
-        <ul className="menu__list">
+    <S.MainNav>
+      <S.NavLogo>
+        <S.LogoImage src="img/logo.png" alt="logo" />
+      </S.NavLogo>
+      <S.NavBurger onClick={toggleMenu}>
+        <S.BurgerLine />
+        <S.BurgerLine />
+        <S.BurgerLine />
+      </S.NavBurger>
+      <S.NavMenu className={`${isMenuVisible ? 'visible' : 'hidden'}`}>
+        <S.MenuList>
           <MenuItem link="#" text="Главное" />
           <MenuItem link="#" text="Мой плейлист" />
           <MenuItem link="../signin.html" text="Войти" />
-        </ul>
-      </div>
-    </nav>
+        </S.MenuList>
+      </S.NavMenu>
+    </S.MainNav>
   )
 }
 

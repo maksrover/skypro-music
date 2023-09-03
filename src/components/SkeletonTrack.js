@@ -1,32 +1,34 @@
-function SkeletonTrack () {
-    return (
-      <div className="playlist__item">
-        <div className="playlist__track track">
-          <div className="track__title">
-            <div className="track__title-image skeleton2"></div>
-            <div className="track__title-text">
-              <a className="track__skeleton skeleton" href="http://">
-                <span className="skeleton-text"></span>
-              </a>
-            </div>
-          </div>
-          <div className="track__author">
-            <a className="track__skeleton skeleton" href="http://">
-              <span className="skeleton-text"></span>
-            </a>
-          </div>
-          <div className="track__album">
-            <a className="track__skeleton skeleton" href="http://">
-              <span className="skeleton-text"></span>
-            </a>
-          </div>
-          <div className="track__time">
-            <span className="skeleton2"></span>
-            <span className="skeleton-text">00:00</span>
-          </div>
-        </div>
-      </div>
-    )
-  }
-  
-  export default SkeletonTrack
+import * as S from './SkeletonTrack.styled'
+
+function SkeletonTrack() {
+  return (
+    <S.PlaylistItem>
+      <S.PlaylistTrack>
+        <S.TrackTitle>
+          <S.TrackTitleImageSceleton></S.TrackTitleImageSceleton>
+          <S.TrackTitleText>
+            <S.TrackSkeleton href="http://">
+              <S.TrackSkeletonText></S.TrackSkeletonText>
+            </S.TrackSkeleton>
+          </S.TrackTitleText>
+        </S.TrackTitle>
+        <S.TrackAutor>
+          <S.TrackSkeleton href="http://">
+            <S.TrackSkeletonText></S.TrackSkeletonText>
+          </S.TrackSkeleton>
+        </S.TrackAutor>
+        <S.TrackAlbum>
+          <S.TrackSkeleton href="http://">
+            <S.TrackSkeletonText></S.TrackSkeletonText>
+          </S.TrackSkeleton>
+        </S.TrackAlbum>
+        <S.TrackTime>
+          <S.Skeleton2></S.Skeleton2>
+          <S.SkeletonText>00:00</S.SkeletonText>
+        </S.TrackTime>
+      </S.PlaylistTrack>
+    </S.PlaylistItem>
+  )
+}
+
+export default SkeletonTrack

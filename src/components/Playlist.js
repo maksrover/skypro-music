@@ -1,13 +1,14 @@
-import PlaylistItem from './playlistItem';
+import PlaylistItem from './playlistItem'
+import * as S from './Playlist.styled'
 
 const Playlist = (props) => {
   return (
-    <div className="content__playlist playlist">
-        {props.tracks.map(track=>{
-            return <PlaylistItem key={track.id} track={track} />
-        })}
-</div>
-  );
+    <S.ContentPlaylist>
+      {props.tracks.map((track) => {
+        return <PlaylistItem key={track.id} track={track} />
+      })}
+    </S.ContentPlaylist>
+  )
 }
 
-export default Playlist;
+export default Playlist

@@ -1,16 +1,16 @@
-import '../App.css'
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
+import * as S from './SidebarPlaylist.styled'
 
 function SidebarPlaylist(props) {
   const { imgSrc, altText } = props
 
   return (
-    <div className="sidebar__item">
-      <a className="sidebar__link" href="#">
-        <img className="sidebar__img" src={imgSrc} alt={altText} />
-      </a>
-    </div>
+    <S.SidebarItem>
+      <S.SidebarLink href="#">
+        <S.SidebarImg src={imgSrc} alt={altText} />
+      </S.SidebarLink>
+    </S.SidebarItem>
   )
 }
 

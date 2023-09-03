@@ -1,14 +1,14 @@
-import '../App.css'
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
+import * as S from './SidebarPlaylistSkeleton.style'
 
 function SidebarPlaylistSkeleton() {
   return (
-    <div className="sidebar__item">
-      <div className="sidebar__link skeleton">
-        <div className="sidebar__img skeleton-img"></div>
-      </div>
-    </div>
+    <S.SidebarItem>
+      <S.SidebarLink>
+        <S.SidebarImg></S.SidebarImg>
+      </S.SidebarLink>
+    </S.SidebarItem>
   )
 }
 
@@ -25,3 +25,13 @@ function SidebarPlaylistSkeletonAll() {
 }
 
 export {SidebarPlaylistSkeletonAll}
+
+/**
+ * Удалить?         <SidebarImg></SidebarImg>
+ * и слити для него
+ * const SidebarImg = styled.div`
+width: 100%;
+height: auto;
+}
+`
+ */

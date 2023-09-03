@@ -1,8 +1,8 @@
-import '../App.css'
 import SidebarLogin from './SidebarPersonal'
 import {SidebarPlaylistAll} from './SidebarPlaylist'
 import {SidebarPlaylistSkeletonAll} from './SidebarPlaylistSkeleton'
 import { useState, useEffect } from 'react'
+import * as S from './Sidebar.styles'
 
 function Sidebar() {
   const [showSkeleton, setShowSkeleton] = useState(true)
@@ -15,16 +15,14 @@ function Sidebar() {
     return () => clearTimeout(timer)
   }, [])
   return (
-    <div className="main__sidebar sidebar">
+    <S.MainSidebar>
       <SidebarLogin />
-      <div className="sidebar__block">
-        <div className="sidebar__list">
+      <S.SidebarBlock>
+        <S.SidebarList>
         {showSkeleton ? <SidebarPlaylistSkeletonAll /> : <SidebarPlaylistAll />}
-          {/* <SidebarPlaylistAll/>
-          <SidebarPlaylistSkeletonAll/> */}
-        </div>
-      </div>
-    </div>
+        </S.SidebarList>
+      </S.SidebarBlock>
+    </S.MainSidebar>
   )
 }
 
