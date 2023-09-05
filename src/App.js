@@ -1,27 +1,28 @@
-import './App.css'
-import AudioPlayer from './components/AudioPlayer'
-import NavMenu from './components/NavMenu'
-import MainBlock from './components/MainBlock'
-import Sidebar from './components/Sidebar'
-// import img 'img/logo.png';
+import AudioPlayer from './components/AudioPlayer/AudioPlayer'
+import NavMenu from './components/NavMenu/NavMenu'
+import MainBlock from './components/MainBlock/MainBlock'
+import Sidebar from './components/Sidebar/Sidebar'
+import * as S from './Style/App.styled'
+import GlobalStyle from './Style/GlobalStyles'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="wrapper">
-          <div className="container">
-            <main className="main">
+    <S.App>
+      <GlobalStyle />
+      <S.AppHeader>
+        <S.Wrapper>
+          <S.Container>
+            <S.Main>
               <NavMenu />
               <MainBlock />
-              <Sidebar/>
-            </main>
+              <Sidebar />
+            </S.Main>
             <AudioPlayer />
-            <footer className="footer" />
-          </div>
-        </div>
-      </header>
-    </div>
+            <S.Footer />
+          </S.Container>
+        </S.Wrapper>
+      </S.AppHeader>
+    </S.App>
   )
 }
 

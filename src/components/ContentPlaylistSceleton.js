@@ -1,8 +1,9 @@
-import SkeletonTrack from './SkeletonTrack'
+import SkeletonTrack from './SkeletonTrack/SkeletonTrack'
+import * as S from './Playlist/Playlist.styled'
 
 function ContentPlaylistSkeleton () {
     return (
-        <div className="content__playlist playlist">
+        <S.ContentPlaylist>
           <SkeletonTrack />
           <SkeletonTrack />
           <SkeletonTrack />
@@ -20,14 +21,7 @@ function ContentPlaylistSkeleton () {
           <SkeletonTrack />
           <SkeletonTrack />
           <SkeletonTrack />
-          <SkeletonTrack />
-          <SkeletonTrack />
-          <SkeletonTrack />
-          <SkeletonTrack />
-          <SkeletonTrack />
-          <SkeletonTrack />
-          <SkeletonTrack />
-        </div>
+        </S.ContentPlaylist>
     )
 }
 
