@@ -3,6 +3,7 @@ import { SidebarPlaylistAll } from '../SidebarPlaylist/SidebarPlaylist'
 import { SidebarPlaylistSkeletonAll } from '../SidebarPlaylistSkeleton/SidebarPlaylistSkeleton'
 import { useState, useEffect } from 'react'
 import * as S from './Sidebar.styles'
+// import {PlaylistPages} from '../../pages/category'
 
 function Sidebar() {
   const [showSkeleton, setShowSkeleton] = useState(true)
@@ -23,6 +24,7 @@ function Sidebar() {
             <SidebarPlaylistSkeletonAll />
           ) : (
             <SidebarPlaylistAll />
+            // <PlaylistPages />
           )}
         </S.SidebarList>
       </S.SidebarBlock>
