@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 const StyledH1 = styled.h1`
@@ -40,27 +40,35 @@ const StyledPText = styled.p`
   letter-spacing: -0.054px;
 `
 
-// const StyledButton = styled.button`
-//   width: 278px;
-//   height: 52px;
-//   border: 0;
-//   border-radius: 0;
-//   background: #580ea2;
-//   border-radius: 6px;
-//   color: white;
+const StyledNavLink = styled(NavLink)`
+  width: 278px;
+  height: 52px;
+  border: 0;
+  border-radius: 0;
+  background: #580ea2;
+  border-radius: 6px;
+  color: white;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  font-family: StratosSkyeng;
+font-size: 18px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 133.333% */
 
-//   &:hover {
+  &:hover {
 
-//     flex-shrink: 0;
-//     cursor: pointer;
-//     transform: translate(0, 0.01em);
-//   }
+    flex-shrink: 0;
+    cursor: pointer;
+    transform: translate(0, 0.01em);
+  }
 
-//   &:active { /* Добавляем псевдокласс :active */
-//   width: 275px; /* Уменьшаем ширину */
-//   height: 51px; /* Уменьшаем высоту */
-
-// `
+  &:active { /* Добавляем псевдокласс :active */
+  width: 275px; /* Уменьшаем ширину */
+  height: 51px; /* Уменьшаем высоту */
+`
 
 export const NotFound = () => {
   return (
@@ -71,9 +79,7 @@ export const NotFound = () => {
         Возможно, она была удалена или перенесена на другой адрес{' '}
       </StyledPText>
       {/* <StyledButton >Вернуться на главную</StyledButton> */}
-      <Link to='/' >
-  Вернуться на главную
-          </Link>
+      <StyledNavLink to="/">Вернуться на главную</StyledNavLink>
     </StyledNotFound>
   )
 }
