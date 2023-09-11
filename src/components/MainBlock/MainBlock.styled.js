@@ -75,6 +75,7 @@ width: 12px;
 height: 12px;
 fill: transparent;
 stroke: #696969;
+margin-right: 30px;
 `
 export const ContentPlaylist = styled.div`
 display: -webkit-box;
