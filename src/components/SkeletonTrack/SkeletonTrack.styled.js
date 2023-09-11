@@ -4,6 +4,7 @@ export const PlaylistItem = styled.div`
   width: 100%;
   display: block;
   margin-bottom: 12px;
+  padding-right: 15px;
 `
 export const PlaylistTrack = styled.div`
   display: -webkit-box;
@@ -91,4 +92,6 @@ animation: pulse 1s infinite;
 
 `
 
-export const SkeletonText = styled.span``
+export const SkeletonText = styled.span`
+color: #696969;
+`

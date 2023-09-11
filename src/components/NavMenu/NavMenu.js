@@ -1,6 +1,7 @@
 import MenuItem from '../MenuBurger/MenuBurger'
 import { useState } from 'react'
 import * as S from './NavMenu.styles'
+// import { Link } from 'react-router-dom'
 
 function NavMenu() {
   const [isMenuVisible, setMenuVisible] = useState(false)
@@ -22,9 +23,7 @@ function NavMenu() {
       </S.NavBurger>
       <S.NavMenu className={`${isMenuVisible ? 'visible' : 'hidden'}`}>
         <S.MenuList>
-          <MenuItem link="#" text="Главное" />
-          <MenuItem link="#" text="Мой плейлист" />
-          <MenuItem link="../signin.html" text="Войти" />
+          <MenuItem />
         </S.MenuList>
       </S.NavMenu>
     </S.MainNav>

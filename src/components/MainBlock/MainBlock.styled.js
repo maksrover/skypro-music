@@ -14,6 +14,7 @@ font-size: 64px;
 line-height: 72px;
 letter-spacing: -0.8px;
 margin-bottom: 45px;
+color: white;
 `
 
 export const CenterblockContent = styled.div`
@@ -74,6 +75,7 @@ width: 12px;
 height: 12px;
 fill: transparent;
 stroke: #696969;
+margin-right: 30px;
 `
 export const ContentPlaylist = styled.div`
 display: -webkit-box;
