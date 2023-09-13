@@ -75,6 +75,13 @@ export const MainApp = styled.div`
     stroke: #ffffff;
     cursor: pointer;
   }
+  margin: 0;
+  padding: 0;
+  background-color: #181818;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 /**убрать стили из Apps */
 export const Apps = styled.div`
@@ -85,7 +92,82 @@ export const Apps = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+//   * {
+//   margin: 0;
+//   padding: 0;
+//   -webkit-box-sizing: border-box;
+//   box-sizing: border-box;
+// }
+
+// *:before,
+// *:after {
+//   -webkit-box-sizing: border-box;
+//   box-sizing: border-box;
+// }
+
+// a,
+// a:visited {
+//   text-decoration: none;
+//   font-family: 'StratosSkyeng', sans-serif;
+//   cursor: pointer;
+//   color: white;
+
+// }
+
+// button,
+// ._btn {
+//   cursor: pointer;
+// }
+
+// ul li {
+//   list-style: none;
+// }
+
+// @font-face {
+//   font-family: 'StratosSkyeng';
+//   src:
+//     local('StratosSkyeng'),
+//     local('StratosSkyeng'),
+//     url('../public/fonts/StratosSkyeng.woff2') format('woff2'),
+//     url('../public/fonts/StratosSkyeng.woff') format('woff');
+//   font-weight: 400;
+//   font-style: normal;
+// }
+
+// html,
+// body {
+//   width: 100%;
+//   height: 100%;
+//   /* font-family: 'StratosSkyeng', sans-serif; */
+//   color: #ffffff;
+// }
+
+// ._btn-icon:hover svg {
+//   fill: transparent;
+//   stroke: #acacac;
+//   cursor: pointer;
+// }
+
+// ._btn-text:active {
+//   border-color: #ad61ff;
+//   color: #ad61ff;
+//   cursor: pointer;
+// }
+
+// ._btn-icon:active svg {
+//   fill: transparent;
+//   stroke: #ffffff;
+//   cursor: pointer;
+// }
+
+// ._btn-icon:active .track-play__like-svg,
+// ._btn-icon:active .track-play__dislike-svg {
+//   fill: #696969;
+//   stroke: #ffffff;
+//   cursor: pointer;
+// }
 `
+
 export const AppHeader = styled.header``
 
 export const Wrapper = styled.div`
@@ -112,6 +194,7 @@ export const Main = styled.main`
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: nowrap;
+  // flex-wrap: wrap;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;

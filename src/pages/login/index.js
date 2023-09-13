@@ -14,30 +14,52 @@ const StyledLogin = styled.div`
   gap: 30px;
 `
 
+// const StyletButton = styled.button`
+//   width: 278px;
+//   height: 52px;
+//   border: 0;
+//   border-radius: 0;
+//   background: #580ea2;
+//   border-radius: 6px;
+//   color: white;
+
+//   &:hover {
+//     flex-shrink: 0;
+//     cursor: pointer;
+//     transform: translate(0, 0.01em);
+//   }
+
+//   &:active {
+//     width: 275px;
+//     height: 51px;
+//     background: #271a58;
+//   }
+// `
+
 const StyledLink = styled(Link)`
-  width: 278px;
-  height: 52px;
-  border: 0;
-  border-radius: 0;
-  background: #580ea2;
-  border-radius: 6px;
-  color: white;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  text-decoration: none;
+width: 278px;
+height: 52px;
+border: 0;
+border-radius: 0;
+background: #580ea2;
+border-radius: 6px;
+color: white;
+display: flex;
+justify-content: center;
+text-decoration: none;
+align-items: center;
 
-  &:hover {
-    flex-shrink: 0;
-    cursor: pointer;
-    transform: translate(0, 0.01em);
-  }
+&:hover {
+  flex-shrink: 0;
+  cursor: pointer;
+  transform: translate(0, 0.01em);
+}
 
-  &:active {
-    width: 275px;
-    height: 51px;
-    background: #271a58;
-  }
+&:active {
+  width: 275px;
+  height: 51px;
+  background: #271a58;
+}
 `
 
 export const Login = ({ user, onAuthButtonClick }) => {

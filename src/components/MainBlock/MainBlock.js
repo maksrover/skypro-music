@@ -1,23 +1,18 @@
-import Search from '../Search/Search'
-import ContentPlaylistSkeleton from '../ContentPlaylistSceleton'
-import FilterMenu from '../FilterMenu/FilterMunu'
-import Playlist from '../Playlist/Playlist'
-import { playlist } from '../ArrayTrack'
-import * as S from './MainBlock.styled'
+import { useState } from 'react';
+import Search from '../Search/Search';
+import ContentPlaylistSkeleton from '../ContentPlaylistSceleton';
+import FilterMenu from '../FilterMenu/FilterMunu';
+import Playlist from '../Playlist/Playlist';
+import DataFetcher from '../../api'; 
+import * as S from './MainBlock.styled';
 
-import { useState, useEffect } from 'react'
+
+
 function MainBlock() {
-  const [showSkeleton, setShowSkeleton] = useState(true)
-  const [tracks, setTracks] = useState([])
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  const [tracks, setTracks] = useState([]);
+  const [addTodoError, setAddTodoError] = useState(null);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSkeleton(false)
-      setTracks(playlist)
-    }, 3000)
-
-    return () => clearTimeout(timer)
-  }, [])
   return (
     <S.MainCenterblock>
       <Search />
@@ -35,6 +30,12 @@ function MainBlock() {
           </S.PlaylistTitileCol04>
         </S.ContentTitle>
         <S.ContentPlaylist>
+          <S.ErrorMessage>{addTodoError}</S.ErrorMessage>
+          <DataFetcher
+            setTracks={setTracks}
+            setAddTodoError={setAddTodoError}
+            setShowSkeleton={setShowSkeleton}
+          />
           {showSkeleton ? (
             <ContentPlaylistSkeleton />
           ) : (
@@ -43,7 +44,7 @@ function MainBlock() {
         </S.ContentPlaylist>
       </S.CenterblockContent>
     </S.MainCenterblock>
-  )
+  );
 }
 
-export default MainBlock
+export default MainBlock;

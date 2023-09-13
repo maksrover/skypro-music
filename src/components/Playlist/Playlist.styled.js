@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+export const Audio = styled.audio`
+margin-left: 300px;
+`
+
 export const ContentPlaylist = styled.div`
 display: -webkit-box;
 display: -ms-flexbox;

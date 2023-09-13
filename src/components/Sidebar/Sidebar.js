@@ -3,10 +3,12 @@ import { SidebarPlaylistAll } from '../SidebarPlaylist/SidebarPlaylist'
 import { SidebarPlaylistSkeletonAll } from '../SidebarPlaylistSkeleton/SidebarPlaylistSkeleton'
 import { useState, useEffect } from 'react'
 import * as S from './Sidebar.styles'
+import DataFetcher from '../../api'
 // import {PlaylistPages} from '../../pages/category'
 
 function Sidebar() {
   const [showSkeleton, setShowSkeleton] = useState(true)
+  const [, setAddTodoError] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -20,6 +22,10 @@ function Sidebar() {
       <SidebarLogin />
       <S.SidebarBlock>
         <S.SidebarList>
+        <DataFetcher
+            setShowSkeleton={setShowSkeleton}
+            setAddTodoError={setAddTodoError}
+          />
           {showSkeleton ? (
             <SidebarPlaylistSkeletonAll />
           ) : (

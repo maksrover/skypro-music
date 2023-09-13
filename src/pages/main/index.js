@@ -1,4 +1,4 @@
-import AudioPlayer from '../../components/AudioPlayer/AudioPlayer'
+// import AudioPlayer from '../../components/AudioPlayer/AudioPlayer'
 import NavMenu from '../../components/NavMenu/NavMenu'
 import MainBlock from '../../components/MainBlock/MainBlock'
 import Sidebar from '../../components/Sidebar/Sidebar'
@@ -19,7 +19,7 @@ export const Main = () => {
               <Sidebar />
               {/* <TrackListFile /> */}
             </S.Main>
-            <AudioPlayer />
+            {/* <AudioPlayer /> */}
             <S.Footer />
           </S.Container>
         </S.Wrapper>

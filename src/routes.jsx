@@ -1,41 +1,34 @@
 import { Routes, Route } from 'react-router-dom'
-
 import { MyPlaylist } from './pages/favorites'
 import { Main } from './pages/main'
-
 import { NotFound } from './pages/NotFound'
 import { PlaylistPages } from './pages/category'
 import { ProtectedRoute } from './components/protected-route'
-import { useState, useEffect  } from 'react'
+import { useState, useEffect } from 'react'
 import { Login } from './pages/login'
 import { Register } from './pages/register'
 
 export const AppRoutes = () => {
   const [user, setUser] = useState(null)
 
-
   useEffect(() => {
-
-    const savedUser = localStorage.getItem('user');
+    const savedUser = localStorage.getItem('user')
     if (savedUser) {
-      setUser(JSON.parse(savedUser));
+      setUser(JSON.parse(savedUser))
     }
-  }, []);
+  }, [])
 
   const handleLogin = () => {
-    const newUser = { login: 'taram' };
-    setUser(newUser);
-    localStorage.setItem('user', JSON.stringify(newUser)); 
-  };
+    const newUser = { login: 'taram' }
+    setUser(newUser)
+    localStorage.setItem('user', JSON.stringify(newUser))
+  }
 
   const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem('user'); 
-  };
+    setUser(null)
+    localStorage.removeItem('user')
+  }
 
-
-  // const handleLogin = () => setUser({login: 'taram'})
-  // const handleLogout = () => setUser(null)
   return (
     <Routes>
       <Route
@@ -59,9 +52,7 @@ export const AppRoutes = () => {
             />
           }
         />
-        {/* <Route path="/category/:id" element={<Playlist />} />
-        <Route path="/favorites" element={<Favorites />} /> */}
-        <Route path="/" element={<Main />} />
+        {/* <Route path="/" element={<Main />} /> */}
         <Route path="*" element={<NotFound />} />
         <Route path="/category/:id" element={<PlaylistPages />} />
         <Route path="/favorites" element={<MyPlaylist />} />
