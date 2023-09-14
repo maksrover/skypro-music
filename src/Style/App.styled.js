@@ -82,6 +82,7 @@ export const MainApp = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  
 `
 /**убрать стили из Apps */
 export const Apps = styled.div`

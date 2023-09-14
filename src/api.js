@@ -1,44 +1,29 @@
-// export async function getPlaylist() {
+// export default async function getPlaylist() {
 //   const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track/all/')
-
-
-//   if
-//   const data = await response.json()
+//     if(!response.ok) {
+//     throw new Error('ошибка сервера')
+//   }
+// const data = await response.json()
 //   return data
 // }
 
+export default async function getPlaylist() {
 
-// // https://painassasin.online/catalog/track/all/
+  // try {
+  const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track/all/')
+  
+  if(!response.ok) {
+    throw new Error('ошибка сервера')
+  }
+  
+  const data = await response.json()
+  return data
 
-import {  useEffect } from 'react';
+// } catch (error) {
+//   // alert("Ошибка сервера вот же")
+//   // setAddTodoError("Не удалось загрузить плейлист, попробуйте позже");
+//   console.log("ошибка");
 
-const DataFetcher = ({ setTracks, setAddTodoError, setShowSkeleton }) => {
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track/all/');
+// }
 
-        if (!response.ok) {
-          throw new Error('Ошибка при загрузке данных');
-        }
-        const data = await response.json();
-        setTracks(data); 
-      } catch (error) {
-        setAddTodoError("Не удалось загрузить плейлист, попробуйте позже");
-      } finally {
-        setShowSkeleton(false);
-      }
-    };
-
-    const timer = setTimeout(() => {
-      fetchData();
-    });
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  return null;
-};
-
-export default DataFetcher;
-
+}

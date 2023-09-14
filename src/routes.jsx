@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 import { Login } from './pages/login'
 import { Register } from './pages/register'
 
-export const AppRoutes = () => {
+export const AppRoutes = ({tracks, showSkeleton, error}) => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export const AppRoutes = () => {
         <Route
           path="/"
           element={
-            <Main
+            <Main tracks={tracks} showSkeleton={showSkeleton} error={error}
               user={user}
               onAuthButtonClick={user ? handleLogout : handleLogin}
             />

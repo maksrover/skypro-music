@@ -1,28 +1,29 @@
-// import { getPlaylist } from '../../api'
 import PlaylistItem from '../PlaylistItem/playlistItem'
 import * as S from './Playlist.styled'
 import AudioPlayer from '../../components/AudioPlayer/AudioPlayer'
 import { useState } from 'react';
-// getPlaylist().then((playlist) => console.log(playlist))
 
-const Playlist = (props) => {
-  const [currentTrackUrl, setCurrentTrackUrl] = useState(null);
+
+const Playlist = ({tracks}) => {
+
   const [showAudioPlayer, setShowAudioPlayer] = useState(null);
+  const [currentTrackUrl, setCurrentTrackUrl] = useState(null);
   const [trackAuthor, setTrackAuthor] = useState(null);
   const [trackName, setTrackName] = useState(null)
 
-  const handlePlaylistItemClick = (trackId, trackUrl, trackAuthor, trackName) => {
+  const handlePlaylistItemClick = (trackId,  trackUrl, author, name) => {
     setShowAudioPlayer(trackId);
     setCurrentTrackUrl(trackUrl);
-    setTrackAuthor(trackAuthor);
-    setTrackName(trackName)
+    setTrackAuthor(author);
+    setTrackName(name)
+
   };
 
   return (
     <>
     <S.ContentPlaylist>
-      {props.tracks.map((track) => {
-        return <PlaylistItem onClick={() => handlePlaylistItemClick(track.id, track.track_file, track.author, track.name)} key={track.id} track={track}/>
+      {tracks.map((track) => {
+        return <PlaylistItem onClick={() => handlePlaylistItemClick(track.id, track.track_file, track.author, track.name)} key={track.id} track={track} />
         
       })}
     </S.ContentPlaylist>
