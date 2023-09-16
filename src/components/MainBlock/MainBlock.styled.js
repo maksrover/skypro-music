@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 
+export const ErrorMessage = styled.p`
+color: #b672ff;
+font-size: 45px;
+`
+
 export const MainCenterblock = styled.div`
 width: auto;
 -webkit-box-flex: 3;

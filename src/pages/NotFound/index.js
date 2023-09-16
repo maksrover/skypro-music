@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
+import * as S from '../../Style/App.styled'
 
 const StyledH1 = styled.h1`
   color: #fff;
@@ -52,11 +53,6 @@ const StyledNavLink = styled(NavLink)`
   display: flex;
   justify-content: center;
   text-decoration: none;
-  font-family: StratosSkyeng;
-font-size: 18px;
-font-style: normal;
-font-weight: 400;
-line-height: 24px; /* 133.333% */
 
   &:hover {
 
@@ -68,10 +64,12 @@ line-height: 24px; /* 133.333% */
   &:active { /* Добавляем псевдокласс :active */
   width: 275px; /* Уменьшаем ширину */
   height: 51px; /* Уменьшаем высоту */
+
 `
 
 export const NotFound = () => {
   return (
+    <S.MainApp>
     <StyledNotFound>
       <StyledH1>404</StyledH1>
       <StyledH2>Такой страницы не существует </StyledH2>
@@ -81,5 +79,6 @@ export const NotFound = () => {
       {/* <StyledButton >Вернуться на главную</StyledButton> */}
       <StyledNavLink to="/">Вернуться на главную</StyledNavLink>
     </StyledNotFound>
+    </S.MainApp>
   )
 }

@@ -2,22 +2,25 @@ import Search from '../Search/Search'
 import ContentPlaylistSkeleton from '../ContentPlaylistSceleton'
 import FilterMenu from '../FilterMenu/FilterMunu'
 import Playlist from '../Playlist/Playlist'
-import { playlist } from '../ArrayTrack'
+// import { playlist } from '../ArrayTrack'
 import * as S from './MainBlock.styled'
 
-import { useState, useEffect } from 'react'
-function MainBlock() {
-  const [showSkeleton, setShowSkeleton] = useState(true)
-  const [tracks, setTracks] = useState([])
+// import { useEffect, useState } from 'react'
+// import { getPlaylist } from '../../api'
+function MainBlock({tracks, showSkeleton, error}) {
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSkeleton(false)
-      setTracks(playlist)
-    }, 3000)
 
-    return () => clearTimeout(timer)
-  }, [])
+  // const [showSkeleton, setShowSkeleton] = useState(true)
+  // const [tracks, setTracks] = useState([])
+
+  //   useEffect(() => {
+  //     getPlaylist().then((track) => {
+  //       setTracks(track)
+  //       setShowSkeleton(false)
+  //     })
+  // }, [])
+
+ 
   return (
     <S.MainCenterblock>
       <Search />
@@ -35,11 +38,20 @@ function MainBlock() {
           </S.PlaylistTitileCol04>
         </S.ContentTitle>
         <S.ContentPlaylist>
-          {showSkeleton ? (
+        {/* <p>{addTodoError}</p> */}
+
+        {error ? (
+          <S.ErrorMessage>{error}</S.ErrorMessage>
+        ) : showSkeleton ? (
+          <ContentPlaylistSkeleton />
+        ) : (
+          <Playlist tracks={tracks} />
+        )}
+          {/* {showSkeleton ? (
             <ContentPlaylistSkeleton />
           ) : (
             <Playlist tracks={tracks} />
-          )}
+          )} */}
         </S.ContentPlaylist>
       </S.CenterblockContent>
     </S.MainCenterblock>

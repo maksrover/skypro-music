@@ -87,7 +87,7 @@ export const DropdownItem1 = styled.ul`
   &::-webkit-scrollbar-track {
     box-shadow: inset 0 0 14px 14px transparent;
     border: solid 20px transparent;
-    color: #4b4949;
+    color: #b672ff;
   }
 
   &::-webkit-scrollbar-thumb {

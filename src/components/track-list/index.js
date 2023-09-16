@@ -1,22 +1,4 @@
-// const TrackListFile = ({playlisttrack}) => {
-//     return(
-//         <ul className="UserList__list">
-//       {playlisttrack.map((list) => (
-//         <li key={list.id} className="UserList__list-item">
 
-//           <p className="UserList__name">
-//             {list.name}
-//           </p>
-//           <p className="UserList__name">
-//             {list.text}
-//           </p>
-//         </li>
-//       ))}
-//     </ul>
-//     )
-// }
-
-// export default TrackListFile
 import styled from 'styled-components'
 const StyledUserList = styled.ul`
 gap: 20px;

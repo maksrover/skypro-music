@@ -1,8 +1,23 @@
+// import { useState } from 'react';
 import * as S from './playlistItem.styled'
 
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const formattedMinutes = String(minutes).padStart(2, '0');
+  const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+  return `${formattedMinutes}:${formattedSeconds}`;
+}
+
 function PlaylistItem(props) {
+  const handleClick = () => {
+    if (props.onClick) {
+      props.onClick();
+    }
+  };
+
   return (
-    <S.PlaylistItem>
+    <S.PlaylistItem onClick={handleClick}>
       <S.PlaylistTrack>
         <S.TrackTitle>
           <S.TrackTitleImage>
@@ -11,8 +26,8 @@ function PlaylistItem(props) {
             </S.TrackTitleSvg>
           </S.TrackTitleImage>
           <S.TrackTitleText>
-            <S.TrackTitleLink href="http://">
-              {props.track.track}
+            <S.TrackTitleLink >
+              {props.track.name}
               <S.TrackTitleSpan></S.TrackTitleSpan>
             </S.TrackTitleLink>
           </S.TrackTitleText>
@@ -31,10 +46,11 @@ function PlaylistItem(props) {
           <S.TrackTimeSvg alt="time">
             <use xlinkHref={props.track.like}></use>
           </S.TrackTimeSvg>
-          <S.TrackTimeText>{props.track.time}</S.TrackTimeText>
+          <S.TrackTimeText>{formatTime(props.track.duration_in_seconds)}</S.TrackTimeText>
         </S.TrackTime>
       </S.PlaylistTrack>
     </S.PlaylistItem>
+    
   )
 }
 
