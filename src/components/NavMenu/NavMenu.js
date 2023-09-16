@@ -7,7 +7,6 @@ function NavMenu() {
   const [isMenuVisible, setMenuVisible] = useState(false)
 
   const toggleMenu = () => {
-    console.log('Toggle menu clicked')
     setMenuVisible(!isMenuVisible)
   }
 
