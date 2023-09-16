@@ -9,6 +9,10 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
   const duration = trackTime
   const [isLooping, setIsLooping] = useState(false);
 
+  const handleShuffle = () => {
+    alert('Еще не реализовано')
+  }
+
   const handleStart = () => {
     audioRef.current.play()
     setIsPlaying(true)
@@ -86,7 +90,7 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
           <S.BarPlayer>
             <S.PlayerControls>
               <S.PlayerBtnPrev>
-                <S.PlayerBtnPrevSvg alt="prev">
+                <S.PlayerBtnPrevSvg  onClick={handleShuffle} alt="prev">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </S.PlayerBtnPrevSvg>
               </S.PlayerBtnPrev>
@@ -123,7 +127,7 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
               <S.PlayerBtnNext>
-                <S.PlayerBtnNextSvg alt="next">
+                <S.PlayerBtnNextSvg onClick={handleShuffle} alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </S.PlayerBtnNextSvg>
               </S.PlayerBtnNext>
@@ -134,7 +138,7 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
                 </S.PlayerBtnRepeatSvg>
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShaffle>
-                <S.BtnShuffleSvg alt="shuffle">
+                <S.BtnShuffleSvg onClick={handleShuffle} alt="shuffle">
                   <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
                 </S.BtnShuffleSvg>
               </S.PlayerBtnShaffle>
