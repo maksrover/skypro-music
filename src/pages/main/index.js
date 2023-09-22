@@ -1,11 +1,9 @@
-// import AudioPlayer from '../../components/AudioPlayer/AudioPlayer'
 import NavMenu from '../../components/NavMenu/NavMenu'
 import MainBlock from '../../components/MainBlock/MainBlock'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import * as S from '../../Style/App.styled'
-// import TrackListFile from '../../components/track-list'
 
-export const Main = ({tracks, showSkeleton, error}) => {
+export const Main = ({tracks, showSkeleton, error, onAuthButtonClick}) => {
   return (
     <S.MainApp>
       <S.AppHeader>
@@ -14,10 +12,8 @@ export const Main = ({tracks, showSkeleton, error}) => {
             <S.Main>
               <NavMenu />
               <MainBlock tracks={tracks} showSkeleton={showSkeleton} error={error}/>
-              <Sidebar  showSkeleton={showSkeleton}/>
-              {/* <TrackListFile /> */}
+              <Sidebar  showSkeleton={showSkeleton} onAuthButtonClick={onAuthButtonClick}/>
             </S.Main>
-            {/* <AudioPlayer /> */}
             <S.Footer />
           </S.Container>
         </S.Wrapper>

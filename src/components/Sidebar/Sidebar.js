@@ -5,26 +5,16 @@ import { SidebarPlaylistSkeletonAll } from '../SidebarPlaylistSkeleton/SidebarPl
 import * as S from './Sidebar.styles'
 // import {PlaylistPages} from '../../pages/category'
 
-function Sidebar({showSkeleton}) {
-  // const [showSkeleton, setShowSkeleton] = useState(true)
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setShowSkeleton(false)
-  //   }, 3000)
-
-  //   return () => clearTimeout(timer)
-  // }, [])
+function Sidebar({showSkeleton, onAuthButtonClick}) {
   return (
     <S.MainSidebar>
-      <SidebarLogin />
+      <SidebarLogin onAuthButtonClick={onAuthButtonClick}/>
       <S.SidebarBlock>
         <S.SidebarList>
           {showSkeleton ? (
             <SidebarPlaylistSkeletonAll />
           ) : (
             <SidebarPlaylistAll />
-            // <PlaylistPages />
           )}
         </S.SidebarList>
       </S.SidebarBlock>

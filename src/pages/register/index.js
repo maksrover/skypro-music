@@ -1,13 +1,17 @@
-import styled from 'styled-components'
-
-const StyledH1 = styled.h1`
-color: white;
-`
+// import { Link } from 'react-router-dom'
+import * as S from './index.styled'
+import RegistrationForm from './RegistrationForm';
 
 export const Register = () => {
-    return(
-        <div>
-            <StyledH1>Регистрация</StyledH1>
-        </div>
-    )
+  return (
+    <div>
+      <S.Wrapper>
+        <S.ContainerSingup>
+          <S.ModalBlock>
+          <RegistrationForm />
+          </S.ModalBlock>
+        </S.ContainerSingup>
+      </S.Wrapper>
+    </div>
+  )
 }

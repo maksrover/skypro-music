@@ -1,7 +1,6 @@
 import MenuItem from '../MenuBurger/MenuBurger'
 import { useState } from 'react'
 import * as S from './NavMenu.styles'
-// import { Link } from 'react-router-dom'
 
 function NavMenu() {
   const [isMenuVisible, setMenuVisible] = useState(false)

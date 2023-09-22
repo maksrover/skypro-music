@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import * as S from './index.styled';
-import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '../../UserContext'; 
+import { useNavigate } from 'react-router-dom'; 
 
-export const Login = ({ user }) => {
+export const Login = ({ user, onAuthButtonClick }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { handleLogin } = useUserContext();
 
-  const handleLoginClick = async () => {
+  const handleLogin = async () => {
     if (!email || !password) {
       setError('Укажи почту || пароль =)');
       return;
@@ -38,11 +36,12 @@ export const Login = ({ user }) => {
         console.log('успех', userData);
         setError(null);
         navigate('/');
-        handleLogin(userData);
-        // localStorage.setItem('user', JSON.stringify(userData));
+        onAuthButtonClick(userData);
       } else {
         const errorData = await response.json();
         console.log('Неверный логин', errorData);
+
+
         setError(errorData.detail);
       }
     } catch (error) {
@@ -80,11 +79,11 @@ export const Login = ({ user }) => {
                 <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>
               )}
 
-<S.ModalBtnEnter>
-        <S.AEnter onClick={handleLoginClick}>
-          {user ? 'Выйти' : 'Войти в IT'}
-        </S.AEnter>
-      </S.ModalBtnEnter>
+              <S.ModalBtnEnter>
+                <S.AEnter  onClick={handleLogin}>
+                  {user ? 'Выйти' : 'Войти в IT'}
+                </S.AEnter>
+              </S.ModalBtnEnter>
               <S.ModalBtnSingap>
                 <S.ASingup to="/register">Зарегистрироваться</S.ASingup>
               </S.ModalBtnSingap>
