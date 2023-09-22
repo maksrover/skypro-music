@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as S from './AudioPlayer.styled'
 import ProgressBar from '../ProgressBar/ProgressBar'
 
+
 function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
   const [isPlaying, setIsPlaying] = useState(true)
   const audioRef = useRef(null)
