@@ -4,7 +4,6 @@
 // import Sidebar from './components/Sidebar/Sidebar'
 import { useEffect, useState } from 'react'
 import * as S from './Style/App.styled'
-// import GlobalStyle from './Style/GlobalStyles'
 import { AppRoutes } from './routes'
 import getPlaylist from './api'
 
