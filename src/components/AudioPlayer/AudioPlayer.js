@@ -40,19 +40,39 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
     setCurrentTime(newTime)
   }
 
+  // useEffect(() => {
+  //   if (audioRef.current) {
+  //     audioRef.current.addEventListener('timeupdate', () => {
+  //       setCurrentTime(audioRef.current.currentTime);
+  //     });
+  //   }
+
+  //   return () => {
+  //     if (audioRef.current) {
+  //       audioRef.current.removeEventListener('timeupdate', () => {});
+  //     }
+  //   };
+  // }, []);
+
+
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.addEventListener('timeupdate', () => {
-        setCurrentTime(audioRef.current.currentTime)
-      })
+      audioRef.current.addEventListener('timeupdate', updateTime)
     }
+
 
     return () => {
       if (audioRef.current) {
-        audioRef.current.removeEventListener('timeupdate', () => {})
+        audioRef.current.removeEventListener('timeupdate', updateTime)
       }
     }
   }, [])
+
+  const updateTime = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime)
+    }
+  }
 
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60)

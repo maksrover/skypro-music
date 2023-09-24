@@ -1,17 +1,13 @@
-// import AudioPlayer from './components/AudioPlayer/AudioPlayer'
-// import NavMenu from './components/NavMenu/NavMenu'
-// import MainBlock from './components/MainBlock/MainBlock'
-// import Sidebar from './components/Sidebar/Sidebar'
 import { useEffect, useState } from 'react'
 import * as S from './Style/App.styled'
 import { AppRoutes } from './routes'
 import getPlaylist from './api'
+import { UserProvider } from './UserContext'
 
 function App() {
-  const [showSkeleton, setShowSkeleton] = useState(true)
-  const [tracks, setTracks] = useState([])
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  const [tracks, setTracks] = useState([]);
   const [error, setError] = useState(null);
-  // const [AddTodoError, setAddTodoError] = useState(null)
 
   useEffect(() => {
     getPlaylist()
@@ -25,11 +21,16 @@ function App() {
       });
   }, []);
 
+  const savedUser = localStorage.getItem('user');
+  const initialUser = savedUser ? JSON.parse(savedUser) : null;
+  
   return (
     <S.Apps>
-      <AppRoutes tracks={tracks} showSkeleton={showSkeleton} error={error} />
+      <UserProvider initialUser={initialUser} >
+        <AppRoutes tracks={tracks} showSkeleton={showSkeleton} error={error} />
+      </UserProvider>
     </S.Apps>
-  )
+  );
 }
 
-export default App
+export default App;
