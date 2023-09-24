@@ -1,5 +1,7 @@
 // import { useState } from 'react';
 import * as S from './playlistItem.styled'
+import { useDispatch, useSelector } from 'react-redux';
+import {setCurrentlyPlaying } from '../../store/useAudioPlayer/AudioPlayer.slise';
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -11,12 +13,19 @@ function formatTime(seconds) {
 
 
 function PlaylistItem(props) {
+  const dispatch = useDispatch();
+  // const isPlaying = useSelector((state) => state.playlist.isPlaying);
+  const currentlyPlayingItem = useSelector((state) => state.playlist.currentlyPlayingItem);
+
   const handleClick = () => {
     if (props.onClick) {
       props.onClick();
+      dispatch(setCurrentlyPlaying(props.track.id)); 
     }
   };
   
+  const isCurrentlyPlaying = props.track.id === currentlyPlayingItem;
+
   return (
     <S.PlaylistItem onClick={handleClick}>
       <S.PlaylistTrack>
@@ -25,6 +34,9 @@ function PlaylistItem(props) {
             <S.TrackTitleSvg alt="music">
               <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
             </S.TrackTitleSvg>
+            {isCurrentlyPlaying  && (
+              <S.BlinkingDot></S.BlinkingDot>
+            )}
           </S.TrackTitleImage>
           <S.TrackTitleText>
             <S.TrackTitleLink >

@@ -1,17 +1,28 @@
 import { useEffect, useRef, useState } from 'react'
 import * as S from './AudioPlayer.styled'
 import ProgressBar from '../ProgressBar/ProgressBar'
+import { useDispatch } from 'react-redux';
+import { playPreviousTrack, playNextTrack } from '../../store/useAudioPlayer/AudioPlayer.slise';
 
-function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
+function AudioPlayer({
+  trackAuthor,
+  trackName,
+  currentTrackUrl,
+  trackTime,
+  // onPlayNext,
+  // onPlayPrevious,
+  onToggleShuffle,
+}) {
   const [isPlaying, setIsPlaying] = useState(true)
   const audioRef = useRef(null)
   const [currentTime, setCurrentTime] = useState(0)
   const duration = trackTime
   const [isLooping, setIsLooping] = useState(false)
-
-  const handleShuffle = () => {
-    alert('Еще не реализовано')
-  }
+  const dispatch = useDispatch();
+  
+  // const handleShuffle = () => {
+  //   alert('Еще не реализовано')
+  // }
 
   const handleStart = () => {
     audioRef.current.play()
@@ -39,7 +50,13 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
     audioRef.current.currentTime = newTime
     setCurrentTime(newTime)
   }
-
+  const handlePlayPrevious = () => {
+    dispatch(playPreviousTrack()); // предыдущий трек
+  };
+  
+  const handlePlayNext = () => {
+    dispatch(playNextTrack()); //  следующий трек
+  };
   // useEffect(() => {
   //   if (audioRef.current) {
   //     audioRef.current.addEventListener('timeupdate', () => {
@@ -54,12 +71,10 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
   //   };
   // }, []);
 
-
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.addEventListener('timeupdate', updateTime)
     }
-
 
     return () => {
       if (audioRef.current) {
@@ -97,7 +112,7 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
           <S.BarPlayer>
             <S.PlayerControls>
               <S.PlayerBtnPrev>
-                <S.PlayerBtnPrevSvg onClick={handleShuffle} alt="prev">
+                <S.PlayerBtnPrevSvg onClick={handlePlayPrevious} alt="prev">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </S.PlayerBtnPrevSvg>
               </S.PlayerBtnPrev>
@@ -131,7 +146,7 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
               <S.PlayerBtnNext>
-                <S.PlayerBtnNextSvg alt="next" onClick={handleShuffle}>
+                <S.PlayerBtnNextSvg alt="next" onClick={handlePlayNext}>
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </S.PlayerBtnNextSvg>
               </S.PlayerBtnNext>
@@ -175,7 +190,7 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
                 </S.PlayerBtnRepeatSvg>
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShaffle>
-                <S.BtnShuffleSvg onClick={handleShuffle} alt="shuffle">
+                <S.BtnShuffleSvg onClick={onToggleShuffle} alt="shuffle">
                   <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
                 </S.BtnShuffleSvg>
               </S.PlayerBtnShaffle>

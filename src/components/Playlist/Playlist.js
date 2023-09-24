@@ -2,12 +2,22 @@ import PlaylistItem from '../PlaylistItem/playlistItem'
 import * as S from './Playlist.styled'
 import AudioPlayer from '../../components/AudioPlayer/AudioPlayer'
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setTracks, playTrack, playNextTrack, playPreviousTrack, toggleShuffle } from '../../store/useAudioPlayer/AudioPlayer.slise';
+import { useEffect } from 'react';
 
 
 const Playlist = ({tracks}) => {
+  const dispatch = useDispatch();
+  // const playlist = useSelector((state) => state.audioPlayer.playlist);
+  // const currentTrackIndex = useSelector((state) => state.audioPlayer.currentTrackIndex);
+  // const isPlaying = useSelector((state) => state.audioPlayer.isPlaying);
+  // const isShuffle = useSelector((state) => state.audioPlayer.isShuffle);
 
   
-
+  useEffect(() => {
+    dispatch(setTracks(tracks));
+  }, [dispatch, tracks]);
 
   const [showAudioPlayer, setShowAudioPlayer] = useState(null);
   const [currentTrackUrl, setCurrentTrackUrl] = useState(null);
@@ -15,14 +25,31 @@ const Playlist = ({tracks}) => {
   const [trackName, setTrackName] = useState(null)
   const [trackTime, settrackTime] = useState(null)
 
-  const handlePlaylistItemClick = (trackId,  trackUrl, author, name, trackTimer ) => {
+  // const handlePlaylistItemClick = (trackId,  trackUrl, author, name, trackTimer ) => {
+    const handlePlaylistItemClick = (trackId,  trackUrl, author, name, trackTimer, trackIndex) => {
+
     setShowAudioPlayer(trackId);
     setCurrentTrackUrl(trackUrl);
     setTrackAuthor(author);
     setTrackName(name);
     settrackTime(trackTimer)
+    dispatch(playTrack(trackIndex));
 
+  };
 
+  // const handlePlayTrack = () => {
+  //   dispatch(playTrack())
+  // }
+  const handlePlayNext = () => {
+    dispatch(playNextTrack());
+  };
+
+  const handlePlayPrevious = () => {
+    dispatch(playPreviousTrack());
+  };
+
+  const handleToggleShuffle = () => {
+    dispatch(toggleShuffle());
   };
 
   return (
@@ -33,7 +60,9 @@ const Playlist = ({tracks}) => {
         
       })}
     </S.ContentPlaylist>
-    {showAudioPlayer ? <AudioPlayer trackAuthor={trackAuthor} trackName={trackName} currentTrackUrl={currentTrackUrl} trackTime={trackTime}/> : null}
+    {showAudioPlayer ? <AudioPlayer trackAuthor={trackAuthor} trackName={trackName} currentTrackUrl={currentTrackUrl} trackTime={trackTime}           onPlayNext={handlePlayNext}
+          onPlayPrevious={handlePlayPrevious}
+          onToggleShuffle={handleToggleShuffle}/> : null}
     </>
   )
 }

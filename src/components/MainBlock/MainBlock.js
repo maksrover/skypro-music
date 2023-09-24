@@ -5,22 +5,8 @@ import Playlist from '../Playlist/Playlist'
 // import { playlist } from '../ArrayTrack'
 import * as S from './MainBlock.styled'
 
-// import { useEffect, useState } from 'react'
-// import { getPlaylist } from '../../api'
 function MainBlock({tracks, showSkeleton, error}) {
 
-
-  // const [showSkeleton, setShowSkeleton] = useState(true)
-  // const [tracks, setTracks] = useState([])
-
-  //   useEffect(() => {
-  //     getPlaylist().then((track) => {
-  //       setTracks(track)
-  //       setShowSkeleton(false)
-  //     })
-  // }, [])
-
- 
   return (
     <S.MainCenterblock>
       <Search />
