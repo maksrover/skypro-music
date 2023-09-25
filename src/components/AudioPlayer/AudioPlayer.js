@@ -59,7 +59,7 @@ function AudioPlayer({
   */
   const handlePlayPrevious = () => {
     dispatch(playPreviousTrack());
-    const previousIndex = (state.playlist.currentlyPlayingItem - 1 + state.playlist.tracks.length) % state.playlist.tracks.length;
+    const previousIndex = (state.playlist.currentTrackIndex - 1 + state.playlist.tracks.length) % state.playlist.tracks.length;
     const previousTrack = state.playlist.tracks[previousIndex].track_file;
     audioRef.current.src = previousTrack;
     audioRef.current.play();
@@ -67,7 +67,7 @@ function AudioPlayer({
 
   const handlePlayNext = () => {
     dispatch(playNextTrack());
-    const nextIndex = (state.playlist.currentlyPlayingItem + 1) % state.playlist.tracks.length;
+    const nextIndex = (state.playlist.currentTrackIndex + 1) % state.playlist.tracks.length;
     const nextTrack = state.playlist.tracks[nextIndex].track_file;
     audioRef.current.src = nextTrack;
     audioRef.current.play();
