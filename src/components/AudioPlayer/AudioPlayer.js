@@ -3,6 +3,7 @@ import * as S from './AudioPlayer.styled'
 import ProgressBar from '../ProgressBar/ProgressBar'
 import { useDispatch } from 'react-redux';
 import { playPreviousTrack, playNextTrack } from '../../store/useAudioPlayer/AudioPlayer.slise';
+import { useSelector } from 'react-redux';
 
 function AudioPlayer({
   trackAuthor,
@@ -50,26 +51,39 @@ function AudioPlayer({
     audioRef.current.currentTime = newTime
     setCurrentTime(newTime)
   }
+  // const handlePlayPrevious = () => {
+  //   dispatch(playPreviousTrack()); // предыдущий трек
+  // };
+  
+  // const handlePlayNext = () => {
+  //   dispatch(playNextTrack()); //  следующий трек
+  // };
+
+  const state = useSelector(state => state)
+  /*
+  Если нажать shaffle и след трек, то в devtools должны начать появляться данные)))
+  Понимаю что косячно все, но не понимаю что где и как именно
+  */
   const handlePlayPrevious = () => {
-    dispatch(playPreviousTrack()); // предыдущий трек
+    // dispatch(playPreviousTrack()); 
+    // // предыдущий трек
+    dispatch(playPreviousTrack());
+    const previousIndex = (state.tracks.currentTrackIndex - 1 + state.tracks.tracks.length) % state.tracks.tracks.length;
+    const previousTrack = state.tracks.tracks[previousIndex].trackUrl;
+    audioRef.current.src = previousTrack;
+    audioRef.current.play();
   };
+
   
   const handlePlayNext = () => {
-    dispatch(playNextTrack()); //  следующий трек
+    // dispatch(playNextTrack());
+    //  //  следующий трек
+    dispatch(playNextTrack());
+    const previousIndex = (state.tracks.currentTrackIndex - 1 + state.tracks.tracks.length) % state.tracks.tracks.length;
+    const previousTrack = state.tracks.tracks[previousIndex].trackUrl;
+    audioRef.current.src = previousTrack;
+    audioRef.current.play();
   };
-  // useEffect(() => {
-  //   if (audioRef.current) {
-  //     audioRef.current.addEventListener('timeupdate', () => {
-  //       setCurrentTime(audioRef.current.currentTime);
-  //     });
-  //   }
-
-  //   return () => {
-  //     if (audioRef.current) {
-  //       audioRef.current.removeEventListener('timeupdate', () => {});
-  //     }
-  //   };
-  // }, []);
 
   useEffect(() => {
     if (audioRef.current) {
