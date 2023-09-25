@@ -20,6 +20,7 @@ function AudioPlayer({
   const duration = trackTime
   const [isLooping, setIsLooping] = useState(false)
   const dispatch = useDispatch();
+  const state = useSelector(state => state)
   
   // const handleShuffle = () => {
   //   alert('Еще не реализовано')
@@ -51,37 +52,24 @@ function AudioPlayer({
     audioRef.current.currentTime = newTime
     setCurrentTime(newTime)
   }
-  // const handlePlayPrevious = () => {
-  //   dispatch(playPreviousTrack()); // предыдущий трек
-  // };
-  
-  // const handlePlayNext = () => {
-  //   dispatch(playNextTrack()); //  следующий трек
-  // };
 
-  const state = useSelector(state => state)
   /*
-  Если нажать shaffle и след трек, то в devtools должны начать появляться данные)))
+  Если нажать shaffle и след трек, то в devtools должны начать появляться данные иногда даже проигрываться)))
   Понимаю что косячно все, но не понимаю что где и как именно
   */
   const handlePlayPrevious = () => {
-    // dispatch(playPreviousTrack()); 
-    // // предыдущий трек
     dispatch(playPreviousTrack());
-    const previousIndex = (state.tracks.currentTrackIndex - 1 + state.tracks.tracks.length) % state.tracks.tracks.length;
-    const previousTrack = state.tracks.tracks[previousIndex].trackUrl;
+    const previousIndex = (state.playlist.currentlyPlayingItem - 1 + state.playlist.tracks.length) % state.playlist.tracks.length;
+    const previousTrack = state.playlist.tracks[previousIndex].track_file;
     audioRef.current.src = previousTrack;
     audioRef.current.play();
   };
 
-  
   const handlePlayNext = () => {
-    // dispatch(playNextTrack());
-    //  //  следующий трек
     dispatch(playNextTrack());
-    const previousIndex = (state.tracks.currentTrackIndex - 1 + state.tracks.tracks.length) % state.tracks.tracks.length;
-    const previousTrack = state.tracks.tracks[previousIndex].trackUrl;
-    audioRef.current.src = previousTrack;
+    const nextIndex = (state.playlist.currentlyPlayingItem + 1) % state.playlist.tracks.length;
+    const nextTrack = state.playlist.tracks[nextIndex].track_file;
+    audioRef.current.src = nextTrack;
     audioRef.current.play();
   };
 
