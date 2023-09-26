@@ -1,34 +1,39 @@
 import { useEffect, useRef, useState } from 'react'
 import * as S from './AudioPlayer.styled'
 import ProgressBar from '../ProgressBar/ProgressBar'
-import { useDispatch } from 'react-redux';
-import { playPreviousTrack, playNextTrack, togglePlayState  } from '../../store/useAudioPlayer/AudioPlayer.slise';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux'
+import {
+  playPreviousTrack,
+  playNextTrack,
+  togglePlayState,
+} from '../../store/useAudioPlayer/AudioPlayer.slise'
+import { useSelector } from 'react-redux'
 
 function AudioPlayer({
-  trackAuthor,
-  trackName,
+  // trackAuthor,
+  // trackName,
   currentTrackUrl,
   trackTime,
   onToggleShuffle,
 }) {
-
   const audioRef = useRef(null)
   const [currentTime, setCurrentTime] = useState(0)
   const duration = trackTime
   const [isLooping, setIsLooping] = useState(false)
-  const isPlaying = useSelector(state => state.playlist.isPlaying);
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state);
+  const isPlaying = useSelector((state) => state.playlist.isPlaying)
+  const dispatch = useDispatch()
+  const state = useSelector((state) => state)
+  const trackAuthor = useSelector((state) => state.playlist.trackAuthor);
+  const trackName = useSelector((state) => state.playlist.trackName);
 
   const togglePlay = () => {
-    const audioElement = audioRef.current;
+    const audioElement = audioRef.current
     if (audioElement.paused) {
-      audioElement.play();
+      audioElement.play()
     } else {
-      audioElement.pause();
+      audioElement.pause()
     }
-    dispatch(togglePlayState());
+    dispatch(togglePlayState())
   }
   const toggleLoop = () => {
     if (isLooping) {
@@ -48,21 +53,23 @@ function AudioPlayer({
   // const audioRef = useRef(); // Assuming you have a useRef for audio
   // currentlyPlayingItem заменил на currentTrackIndex
   const handlePlayPrevious = () => {
-    dispatch(playPreviousTrack());
-    const previousIndex = (state.playlist.currentlyPlayingItem - 1 + state.playlist.tracks.length) % state.playlist.tracks.length;
-    const previousTrack = state.playlist.tracks[previousIndex].track_file;
-    audioRef.current.src = previousTrack;
-    audioRef.current.play();
-  };
+    dispatch(playPreviousTrack())
+    const previousIndex =
+      (state.playlist.currentlyPlayingItem - 1 + state.playlist.tracks.length) %
+      state.playlist.tracks.length
+    const previousTrack = state.playlist.tracks[previousIndex].track_file
+    audioRef.current.src = previousTrack
+    audioRef.current.play()
+  }
 
   const handlePlayNext = () => {
-    dispatch(playNextTrack());
-    const nextIndex = (state.playlist.currentlyPlayingItem + 1) % state.playlist.tracks.length;
-    const nextTrack = state.playlist.tracks[nextIndex].track_file;
-    audioRef.current.src = nextTrack;
-    audioRef.current.play();
-  };
-
+    dispatch(playNextTrack())
+    const nextIndex =
+      (state.playlist.currentlyPlayingItem + 1) % state.playlist.tracks.length
+    const nextTrack = state.playlist.tracks[nextIndex].track_file
+    audioRef.current.src = nextTrack
+    audioRef.current.play()
+  }
 
   useEffect(() => {
     if (audioRef.current) {
@@ -180,6 +187,12 @@ function AudioPlayer({
                       />
                     </svg>
                   )}
+{/* 
+                  {isLooping ? (
+                    <use xlinkHref="img/icon/sprite.svg#icon-repeatoff" />
+                  ) : (
+                    <use xlinkHref="img/icon/sprite.svg#icon-repeaton" />
+                  )} */}
                 </S.PlayerBtnRepeatSvg>
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShaffle>

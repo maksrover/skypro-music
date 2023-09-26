@@ -9,37 +9,24 @@ import { useEffect } from 'react';
 
 const Playlist = ({tracks}) => {
   const dispatch = useDispatch();
-  // const playlist = useSelector((state) => state.audioPlayer.playlist);
-  // const currentTrackIndex = useSelector((state) => state.audioPlayer.currentTrackIndex);
-  // const isPlaying = useSelector((state) => state.audioPlayer.isPlaying);
-  // const isShuffle = useSelector((state) => state.audioPlayer.isShuffle);
-
-  
   useEffect(() => {
     dispatch(setTracks(tracks));
   }, [dispatch, tracks]);
 
   const [showAudioPlayer, setShowAudioPlayer] = useState(null);
   const [currentTrackUrl, setCurrentTrackUrl] = useState(null);
-  const [trackAuthor, setTrackAuthor] = useState(null);
-  const [trackName, setTrackName] = useState(null)
   const [trackTime, settrackTime] = useState(null)
 
-  // const handlePlaylistItemClick = (trackId,  trackUrl, author, name, trackTimer ) => {
-    const handlePlaylistItemClick = (trackId,  trackUrl, author, name, trackTimer, trackIndex) => {
-
+    const handlePlaylistItemClick = (trackId,  trackUrl, author, name, trackTimer) => {
+      console.log(trackId,  trackUrl, author, name, trackTimer);
     setShowAudioPlayer(trackId);
     setCurrentTrackUrl(trackUrl);
-    setTrackAuthor(author);
-    setTrackName(name);
     settrackTime(trackTimer)
-    dispatch(playTrack(trackIndex));
+    dispatch(playTrack(trackId));
 
   };
 
-  // const handlePlayTrack = () => {
-  //   dispatch(playTrack())
-  // }
+
   const handlePlayNext = () => {
     dispatch(playNextTrack());
   };
@@ -60,7 +47,7 @@ const Playlist = ({tracks}) => {
         
       })}
     </S.ContentPlaylist>
-    {showAudioPlayer ? <AudioPlayer trackAuthor={trackAuthor} trackName={trackName} currentTrackUrl={currentTrackUrl} trackTime={trackTime}           onPlayNext={handlePlayNext}
+    {showAudioPlayer ? <AudioPlayer currentTrackUrl={currentTrackUrl} trackTime={trackTime}           onPlayNext={handlePlayNext}
           onPlayPrevious={handlePlayPrevious}
           onToggleShuffle={handleToggleShuffle}/> : null}
     </>
