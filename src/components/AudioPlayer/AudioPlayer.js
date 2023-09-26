@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as S from './AudioPlayer.styled'
 import ProgressBar from '../ProgressBar/ProgressBar'
 import { useDispatch } from 'react-redux';
-import { playPreviousTrack, playNextTrack } from '../../store/useAudioPlayer/AudioPlayer.slise';
+import { playPreviousTrack, playNextTrack, togglePlayState  } from '../../store/useAudioPlayer/AudioPlayer.slise';
 import { useSelector } from 'react-redux';
 
 function AudioPlayer({
@@ -10,34 +10,26 @@ function AudioPlayer({
   trackName,
   currentTrackUrl,
   trackTime,
-  // onPlayNext,
-  // onPlayPrevious,
   onToggleShuffle,
 }) {
-  const [isPlaying, setIsPlaying] = useState(true)
+
   const audioRef = useRef(null)
   const [currentTime, setCurrentTime] = useState(0)
   const duration = trackTime
   const [isLooping, setIsLooping] = useState(false)
+  const isPlaying = useSelector(state => state.playlist.isPlaying);
   const dispatch = useDispatch();
-  const state = useSelector(state => state)
-  
-  // const handleShuffle = () => {
-  //   alert('Еще не реализовано')
-  // }
+  const state = useSelector((state) => state);
 
-  const handleStart = () => {
-    audioRef.current.play()
-    setIsPlaying(true)
+  const togglePlay = () => {
+    const audioElement = audioRef.current;
+    if (audioElement.paused) {
+      audioElement.play();
+    } else {
+      audioElement.pause();
+    }
+    dispatch(togglePlayState());
   }
-
-  const handleStop = () => {
-    audioRef.current.pause()
-    setIsPlaying(false)
-  }
-
-  const togglePlay = isPlaying ? handleStop : handleStart
-
   const toggleLoop = () => {
     if (isLooping) {
       audioRef.current.loop = false
@@ -53,13 +45,11 @@ function AudioPlayer({
     setCurrentTime(newTime)
   }
 
-  /*
-  Если нажать shaffle и след трек, то в devtools должны начать появляться данные иногда даже проигрываться)))
-  Понимаю что косячно все, но не понимаю что где и как именно
-  */
+  // const audioRef = useRef(); // Assuming you have a useRef for audio
+  // currentlyPlayingItem заменил на currentTrackIndex
   const handlePlayPrevious = () => {
     dispatch(playPreviousTrack());
-    const previousIndex = (state.playlist.currentTrackIndex - 1 + state.playlist.tracks.length) % state.playlist.tracks.length;
+    const previousIndex = (state.playlist.currentlyPlayingItem - 1 + state.playlist.tracks.length) % state.playlist.tracks.length;
     const previousTrack = state.playlist.tracks[previousIndex].track_file;
     audioRef.current.src = previousTrack;
     audioRef.current.play();
@@ -67,11 +57,12 @@ function AudioPlayer({
 
   const handlePlayNext = () => {
     dispatch(playNextTrack());
-    const nextIndex = (state.playlist.currentTrackIndex + 1) % state.playlist.tracks.length;
+    const nextIndex = (state.playlist.currentlyPlayingItem + 1) % state.playlist.tracks.length;
     const nextTrack = state.playlist.tracks[nextIndex].track_file;
     audioRef.current.src = nextTrack;
     audioRef.current.play();
   };
+
 
   useEffect(() => {
     if (audioRef.current) {
