@@ -21,10 +21,11 @@ function AudioPlayer({
   const duration = trackTime
   const [isLooping, setIsLooping] = useState(false)
   const isPlaying = useSelector((state) => state.playlist.isPlaying)
+  const isShuffling = useSelector((state) => state.playlist.isShuffling)
   const dispatch = useDispatch()
   const state = useSelector((state) => state)
-  const trackAuthor = useSelector((state) => state.playlist.trackAuthor);
-  const trackName = useSelector((state) => state.playlist.trackName);
+  const trackAuthor = useSelector((state) => state.playlist.trackAuthor)
+  const trackName = useSelector((state) => state.playlist.trackName)
 
   const togglePlay = () => {
     const audioElement = audioRef.current
@@ -49,33 +50,53 @@ function AudioPlayer({
     audioRef.current.currentTime = newTime
     setCurrentTime(newTime)
   }
-
-  // const audioRef = useRef(); // Assuming you have a useRef for audio
-  // currentlyPlayingItem заменил на currentTrackIndex
   const handlePlayPrevious = () => {
-    dispatch(playPreviousTrack())
-    const previousIndex =
-      (state.playlist.currentlyPlayingItem - 1 + state.playlist.tracks.length) %
-      state.playlist.tracks.length
-    const previousTrack = state.playlist.tracks[previousIndex].track_file
-    audioRef.current.src = previousTrack
-    audioRef.current.play()
+    dispatch(playPreviousTrack());
+    const newTrackUrl = state.playlist.currentTrackUrl;
+  
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = newTrackUrl;
+    
+      audioRef.current.addEventListener('loadeddata', () => {
+        audioRef.current.play();
+      });
+  
+      audioRef.current.load();
+    }
   }
-
+  
   const handlePlayNext = () => {
-    dispatch(playNextTrack())
-    const nextIndex =
-      (state.playlist.currentlyPlayingItem + 1) % state.playlist.tracks.length
-    const nextTrack = state.playlist.tracks[nextIndex].track_file
-    audioRef.current.src = nextTrack
-    audioRef.current.play()
-  }
+    dispatch(playNextTrack());
+    const newTrackUrl = state.playlist.currentTrackUrl;
+  
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = newTrackUrl;
+      
+      audioRef.current.addEventListener('loadeddata', () => {
+
+        audioRef.current.play();
+      });
+  
+      audioRef.current.load();
+    }
+  };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.src = state.playlist.currentTrackUrl;
+      audioRef.current.addEventListener('canplaythrough', () => {
+        audioRef.current.play();
+      });
+      audioRef.current.load();
+    }
+  }, [state.playlist.currentTrackUrl]);
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.addEventListener('timeupdate', updateTime)
     }
-
     return () => {
       if (audioRef.current) {
         audioRef.current.removeEventListener('timeupdate', updateTime)
@@ -88,6 +109,18 @@ function AudioPlayer({
       setCurrentTime(audioRef.current.currentTime)
     }
   }
+// когда трек закончился, воспроизводиться следующий
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.addEventListener('ended', handlePlayNext);
+    }
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('ended', handlePlayNext);
+      }
+    }
+  }, [currentTrackUrl]);
 
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60)
@@ -119,29 +152,9 @@ function AudioPlayer({
               <S.PlayerBtnPlay>
                 <S.PlayerBtnPlaySvg onClick={togglePlay} alt="play">
                   {!isPlaying ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="15"
-                      height="20"
-                      viewBox="0 0 15 20"
-                      fill="none"
-                    >
-                      <path
-                        d="M15 10L-1.01012e-06 0.47372L-1.84293e-06 19.5263L15 10Z"
-                        fill="#D9D9D9"
-                      />
-                    </svg>
+                    <use xlinkHref="img/icon/sprite.svg#icon-play" />
                   ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="15"
-                      height="19"
-                      viewBox="0 0 15 19"
-                      fill="none"
-                    >
-                      <rect width="5" height="19" fill="#D9D9D9" />
-                      <rect x="10" width="5" height="19" fill="#D9D9D9" />
-                    </svg>
+                    <use xlinkHref="img/icon/sprite.svg#icon-pause" />
                   )}
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
@@ -153,51 +166,19 @@ function AudioPlayer({
               <S.PlayerBtnRepeat>
                 <S.PlayerBtnRepeatSvg onClick={toggleLoop} alt="repeat">
                   {isLooping ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="15"
-                      height="18"
-                      viewBox="0 0 20 25"
-                      fill="none"
-                    >
-                      <path
-                        d="M10 3L5 0.113249V5.88675L10 3ZM7 14.5C3.96243 14.5 1.5 12.0376 1.5 9H0.5C0.5 12.5899 3.41015 15.5 7 15.5V14.5ZM1.5 9C1.5 5.96243 3.96243 3.5 7 3.5V2.5C3.41015 2.5 0.5 5.41015 0.5 9H1.5Z"
-                        fill="red"
-                      />
-                      <path
-                        d="M10 15L15 17.8868V12.1132L10 15ZM13 3.5C16.0376 3.5 18.5 5.96243 18.5 9H19.5C19.5 5.41015 16.5899 2.5 13 2.5V3.5ZM18.5 9C18.5 12.0376 16.0376 14.5 13 14.5V15.5C16.5899 15.5 19.5 12.5899 19.5 9H18.5Z"
-                        fill="red"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="15"
-                      height="18"
-                      viewBox="0 0 20 25"
-                      fill="none"
-                    >
-                      <path
-                        d="M10 3L5 0.113249V5.88675L10 3ZM7 14.5C3.96243 14.5 1.5 12.0376 1.5 9H0.5C0.5 12.5899 3.41015 15.5 7 15.5V14.5ZM1.5 9C1.5 5.96243 3.96243 3.5 7 3.5V2.5C3.41015 2.5 0.5 5.41015 0.5 9H1.5Z"
-                        fill="#696969"
-                      />
-                      <path
-                        d="M10 15L15 17.8868V12.1132L10 15ZM13 3.5C16.0376 3.5 18.5 5.96243 18.5 9H19.5C19.5 5.41015 16.5899 2.5 13 2.5V3.5ZM18.5 9C18.5 12.0376 16.0376 14.5 13 14.5V15.5C16.5899 15.5 19.5 12.5899 19.5 9H18.5Z"
-                        fill="#696969"
-                      />
-                    </svg>
-                  )}
-{/* 
-                  {isLooping ? (
-                    <use xlinkHref="img/icon/sprite.svg#icon-repeatoff" />
-                  ) : (
                     <use xlinkHref="img/icon/sprite.svg#icon-repeaton" />
-                  )} */}
+                  ) : (
+                    <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
+                  )}
                 </S.PlayerBtnRepeatSvg>
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShaffle>
                 <S.BtnShuffleSvg onClick={onToggleShuffle} alt="shuffle">
-                  <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
+                  {!isShuffling ? (
+                    <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
+                  ) : (
+                    <use xlinkHref="img/icon/sprite.svg#icon-shuffleon" />
+                  )}
                 </S.BtnShuffleSvg>
               </S.PlayerBtnShaffle>
             </S.PlayerControls>
