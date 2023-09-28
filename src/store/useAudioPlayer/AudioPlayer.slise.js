@@ -46,18 +46,15 @@ const playlistSlice = createSlice({
         }
       })
 
-
-      if (currentIndex === state.tracks.length - 1) {
-        return state;
-      }
-
-
       const isShuffle = state.isShuffling
       let nextIndex
 
       if (isShuffle) {
         nextIndex = Math.floor(Math.random() * state.tracks.length);
       } else {
+        if (currentIndex === state.tracks.length - 1) {
+          return state;
+        }  
         nextIndex = (currentIndex + 1) % state.tracks.length;
       }
 
