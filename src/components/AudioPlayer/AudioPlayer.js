@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import * as S from './AudioPlayer.styled'
-import ProgressBar from '../ProgressBar/ProgressBar'
 import { useDispatch } from 'react-redux'
 import {
   playPreviousTrack,
@@ -10,15 +9,11 @@ import {
 import { useSelector } from 'react-redux'
 
 function AudioPlayer({
-  // trackAuthor,
-  // trackName,
   currentTrackUrl,
-  trackTime,
   onToggleShuffle,
 }) {
   const audioRef = useRef(null)
   const [currentTime, setCurrentTime] = useState(0)
-  const duration = trackTime
   const [isLooping, setIsLooping] = useState(false)
   const isPlaying = useSelector((state) => state.playlist.isPlaying)
   const isShuffling = useSelector((state) => state.playlist.isShuffling)
@@ -26,7 +21,7 @@ function AudioPlayer({
   const state = useSelector((state) => state)
   const trackAuthor = useSelector((state) => state.playlist.trackAuthor)
   const trackName = useSelector((state) => state.playlist.trackName)
-
+  const [duration, setDuration] = useState(0);
   const togglePlay = () => {
     const audioElement = audioRef.current
     if (audioElement.paused) {
@@ -56,13 +51,19 @@ function AudioPlayer({
   
     if (audioRef.current) {
       audioRef.current.pause();
-      audioRef.current.src = newTrackUrl;
-    
-      audioRef.current.addEventListener('loadeddata', () => {
-        audioRef.current.play();
-      });
+
+      if (newTrackUrl !== audioRef.current.src) {
+        audioRef.current.src = newTrackUrl;
   
-      audioRef.current.load();
+        audioRef.current.addEventListener('canplay', () => {
+          audioRef.current.play();
+        });
+  
+        audioRef.current.load();
+      } else {
+        audioRef.current.pause();
+        dispatch(togglePlayState());
+      }
     }
   }
   
@@ -72,14 +73,18 @@ function AudioPlayer({
   
     if (audioRef.current) {
       audioRef.current.pause();
-      audioRef.current.src = newTrackUrl;
+      if (newTrackUrl !== audioRef.current.src) {
+        audioRef.current.src = newTrackUrl;
       
-      audioRef.current.addEventListener('loadeddata', () => {
-
-        audioRef.current.play();
-      });
+        audioRef.current.addEventListener('canplay', () => {
+          audioRef.current.play();
+        });
   
-      audioRef.current.load();
+        audioRef.current.load();
+      } else {
+        audioRef.current.pause();
+        dispatch(togglePlayState());
+      }
     }
   };
 
@@ -95,14 +100,24 @@ function AudioPlayer({
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.addEventListener('timeupdate', updateTime)
+      setDuration(audioRef.current.duration);
+
+      audioRef.current.addEventListener('loadedmetadata', () => {
+        setDuration(audioRef.current.duration);
+      });
+
+      audioRef.current.addEventListener('timeupdate', updateTime);
     }
+
     return () => {
       if (audioRef.current) {
-        audioRef.current.removeEventListener('timeupdate', updateTime)
+        audioRef.current.removeEventListener('loadedmetadata', () => {
+          setDuration(audioRef.current.duration);
+        });
+        audioRef.current.removeEventListener('timeupdate', updateTime);
       }
-    }
-  }, [])
+    };
+  }, [currentTrackUrl]);
 
   const updateTime = () => {
     if (audioRef.current) {
@@ -136,11 +151,18 @@ function AudioPlayer({
         <div>{formatTime(currentTime)}</div>/<div>{formatTime(duration)}</div>
       </S.Timer>
       <S.BarContent>
-        <ProgressBar
-          currentTime={currentTime}
-          duration={duration}
-          onChange={handleProgressBarChange}
-        />
+      <S.ProgressInput
+      type="range"
+      min={0}
+      max={duration}
+      value={currentTime}
+      step={0.01}
+      onChange={(event) => {
+        const newTime = parseFloat(event.target.value);
+        handleProgressBarChange(newTime);
+      }}
+      $color="#ff0000"
+    />
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>
