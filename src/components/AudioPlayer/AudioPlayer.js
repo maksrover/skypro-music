@@ -45,6 +45,29 @@ function AudioPlayer({
     audioRef.current.currentTime = newTime
     setCurrentTime(newTime)
   }
+
+  // const handlePlayPrevious = () => {
+  //   dispatch(playPreviousTrack());
+  //   const newTrackUrl = state.playlist.currentTrackUrl;
+  
+  //   if (audioRef.current) {
+  //     audioRef.current.pause();
+
+  //     if (newTrackUrl !== audioRef.current.src) {
+  //       audioRef.current.src = newTrackUrl;
+  
+  //       audioRef.current.addEventListener('canplay', () => {
+  //         audioRef.current.play();
+  //       });
+  
+  //       audioRef.current.load();
+  //     } else {
+  //       // audioRef.current.pause();
+  //       // dispatch(togglePlayState());
+  //       audioRef.current.play();
+  //     }
+  //   }
+  // }
   const handlePlayPrevious = () => {
     dispatch(playPreviousTrack());
     const newTrackUrl = state.playlist.currentTrackUrl;
@@ -55,36 +78,38 @@ function AudioPlayer({
       if (newTrackUrl !== audioRef.current.src) {
         audioRef.current.src = newTrackUrl;
   
-        audioRef.current.addEventListener('canplay', () => {
-          audioRef.current.play();
-        });
   
-        audioRef.current.load();
-      } else {
-        audioRef.current.pause();
-        dispatch(togglePlayState());
-      }
+      audioRef.current.onloadedmetadata = () => {
+        audioRef.current.play(); 
+      };
+      audioRef.current.load();
+    } else {
+      // audioRef.current.pause();
+      // dispatch(togglePlayState());
+      audioRef.current.play();
     }
   }
+}
   
   const handlePlayNext = () => {
     dispatch(playNextTrack());
     const newTrackUrl = state.playlist.currentTrackUrl;
+    const currentIndex = state.playlist.currentIndex;
+    const playlistLength = state.playlist.tracks.length;
   
-    if (audioRef.current) {
-      audioRef.current.pause();
-      if (newTrackUrl !== audioRef.current.src) {
-        audioRef.current.src = newTrackUrl;
-      
-        audioRef.current.addEventListener('canplay', () => {
-          audioRef.current.play();
-        });
-  
-        audioRef.current.load();
-      } else {
+    if (currentIndex < playlistLength - 1) {
+      if (audioRef.current) {
         audioRef.current.pause();
-        dispatch(togglePlayState());
+        audioRef.current.src = newTrackUrl;
+  
+        audioRef.current.onloadedmetadata = () => {
+          audioRef.current.play(); 
+        };
+  
+        audioRef.current.load(); 
       }
+    } else {
+      //ничего не проихсодит
     }
   };
 
@@ -154,7 +179,7 @@ function AudioPlayer({
       <S.ProgressInput
       type="range"
       min={0}
-      max={duration}
+      max={!isNaN(duration) ? duration : 0}
       value={currentTime}
       step={0.01}
       onChange={(event) => {
