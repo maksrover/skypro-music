@@ -18,7 +18,7 @@ const Playlist = ({tracks}) => {
   const [trackTime, settrackTime] = useState(null)
 
     const handlePlaylistItemClick = (trackId,  trackUrl, author, name, trackTimer) => {
-      console.log(trackId,  trackUrl, author, name, trackTimer);
+      // console.log(trackId,  trackUrl, author, name, trackTimer);
     setShowAudioPlayer(trackId);
     setCurrentTrackUrl(trackUrl);
     settrackTime(trackTimer)

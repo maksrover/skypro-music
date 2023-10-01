@@ -8,20 +8,19 @@ import {
 } from '../../store/useAudioPlayer/AudioPlayer.slise'
 import { useSelector } from 'react-redux'
 
-function AudioPlayer({
-  currentTrackUrl,
-  onToggleShuffle,
-}) {
+function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
   const audioRef = useRef(null)
   const [currentTime, setCurrentTime] = useState(0)
   const [isLooping, setIsLooping] = useState(false)
   const isPlaying = useSelector((state) => state.playlist.isPlaying)
   const isShuffling = useSelector((state) => state.playlist.isShuffling)
   const dispatch = useDispatch()
-  const state = useSelector((state) => state)
+  const newTrackUrl = useSelector((state) => state.playlist.currentTrackUrl)
+  const currentIndex = useSelector((state) => state.playlist.currentIndex)
+  const playlistLength = useSelector((state) => state.playlist.tracks.length)
   const trackAuthor = useSelector((state) => state.playlist.trackAuthor)
   const trackName = useSelector((state) => state.playlist.trackName)
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(0)
   const togglePlay = () => {
     const audioElement = audioRef.current
     if (audioElement.paused) {
@@ -46,121 +45,93 @@ function AudioPlayer({
     setCurrentTime(newTime)
   }
 
-  // const handlePlayPrevious = () => {
-  //   dispatch(playPreviousTrack());
-  //   const newTrackUrl = state.playlist.currentTrackUrl;
-  
-  //   if (audioRef.current) {
-  //     audioRef.current.pause();
-
-  //     if (newTrackUrl !== audioRef.current.src) {
-  //       audioRef.current.src = newTrackUrl;
-  
-  //       audioRef.current.addEventListener('canplay', () => {
-  //         audioRef.current.play();
-  //       });
-  
-  //       audioRef.current.load();
-  //     } else {
-  //       // audioRef.current.pause();
-  //       // dispatch(togglePlayState());
-  //       audioRef.current.play();
-  //     }
-  //   }
-  // }
   const handlePlayPrevious = () => {
-    dispatch(playPreviousTrack());
-    const newTrackUrl = state.playlist.currentTrackUrl;
-  
+    dispatch(playPreviousTrack())
+
     if (audioRef.current) {
-      audioRef.current.pause();
+      audioRef.current.pause()
 
       if (newTrackUrl !== audioRef.current.src) {
-        audioRef.current.src = newTrackUrl;
-  
-  
-      audioRef.current.onloadedmetadata = () => {
-        audioRef.current.play(); 
-      };
-      audioRef.current.load();
-    } else {
-      // audioRef.current.pause();
-      // dispatch(togglePlayState());
-      audioRef.current.play();
+        audioRef.current.src = newTrackUrl
+
+        audioRef.current.onloadedmetadata = () => {
+          audioRef.current.play() // Начинаем воспроизведение после загрузки метаданных
+        }
+        audioRef.current.load()
+      } else {
+        audioRef.current.play()
+      }
     }
   }
-}
-  
+
   const handlePlayNext = () => {
-    dispatch(playNextTrack());
-    const newTrackUrl = state.playlist.currentTrackUrl;
-    const currentIndex = state.playlist.currentIndex;
-    const playlistLength = state.playlist.tracks.length;
-  
+    dispatch(playNextTrack())
+
+    // Проверяем, что есть следующий трек в плейлисте
     if (currentIndex < playlistLength - 1) {
       if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = newTrackUrl;
-  
+        audioRef.current.pause()
+        audioRef.current.src = newTrackUrl
+
         audioRef.current.onloadedmetadata = () => {
-          audioRef.current.play(); 
-        };
-  
-        audioRef.current.load(); 
+          audioRef.current.play() // Начинаем воспроизведение после загрузки метаданных
+        }
+
+        audioRef.current.load() // Загружаем новый аудиофайл
       }
     } else {
-      //ничего не проихсодит
+      // Если текущий трек - последний, не выполняем никаких действий
     }
-  };
+  }
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.src = state.playlist.currentTrackUrl;
+      audioRef.current.src = newTrackUrl
       audioRef.current.addEventListener('canplaythrough', () => {
-        audioRef.current.play();
-      });
-      audioRef.current.load();
+        audioRef.current.play()
+      })
+      audioRef.current.load()
     }
-  }, [state.playlist.currentTrackUrl]);
+  }, [newTrackUrl])
 
   useEffect(() => {
     if (audioRef.current) {
-      setDuration(audioRef.current.duration);
+      setDuration(audioRef.current.duration)
 
       audioRef.current.addEventListener('loadedmetadata', () => {
-        setDuration(audioRef.current.duration);
-      });
+        setDuration(audioRef.current.duration)
+      })
 
-      audioRef.current.addEventListener('timeupdate', updateTime);
+      audioRef.current.addEventListener('timeupdate', updateTime)
     }
 
     return () => {
       if (audioRef.current) {
         audioRef.current.removeEventListener('loadedmetadata', () => {
-          setDuration(audioRef.current.duration);
-        });
-        audioRef.current.removeEventListener('timeupdate', updateTime);
+          setDuration(audioRef.current.duration)
+        })
+        audioRef.current.removeEventListener('timeupdate', updateTime)
       }
-    };
-  }, [currentTrackUrl]);
+    }
+  }, [currentTrackUrl])
 
   const updateTime = () => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime)
     }
   }
-// когда трек закончился, воспроизводиться следующий
+  // когда трек закончился, воспроизводиться следующий
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.addEventListener('ended', handlePlayNext);
+      audioRef.current.addEventListener('ended', handlePlayNext)
     }
 
     return () => {
       if (audioRef.current) {
-        audioRef.current.removeEventListener('ended', handlePlayNext);
+        audioRef.current.removeEventListener('ended', handlePlayNext)
       }
     }
-  }, [currentTrackUrl]);
+  }, [currentTrackUrl])
 
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60)
@@ -176,18 +147,18 @@ function AudioPlayer({
         <div>{formatTime(currentTime)}</div>/<div>{formatTime(duration)}</div>
       </S.Timer>
       <S.BarContent>
-      <S.ProgressInput
-      type="range"
-      min={0}
-      max={!isNaN(duration) ? duration : 0}
-      value={currentTime}
-      step={0.01}
-      onChange={(event) => {
-        const newTime = parseFloat(event.target.value);
-        handleProgressBarChange(newTime);
-      }}
-      $color="#ff0000"
-    />
+        <S.ProgressInput
+          type="range"
+          min={0}
+          max={!isNaN(duration) ? duration : 0}
+          value={currentTime}
+          step={0.01}
+          onChange={(event) => {
+            const newTime = parseFloat(event.target.value)
+            handleProgressBarChange(newTime)
+          }}
+          $color="#ff0000"
+        />
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>

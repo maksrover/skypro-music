@@ -16,12 +16,12 @@ const playlistSlice = createSlice({
   reducers: {
     setTracks: (state, action) => {
       state.tracks = action.payload
-      console.log('Список треков:', state.tracks)
+      // console.log('Список треков:', state.tracks)
     },
     playTrack: (state, action) => {
       state.currentlyPlayingItem = action.payload
       // console.log(state.currentlyPlayingItem);
-      console.log('aciton payload:', action.payload)
+      // console.log('aciton payload:', action.payload)
       const selectedTrack = state.tracks.find((track) => {
         if (track.id === action.payload) {
           return true
@@ -35,6 +35,7 @@ const playlistSlice = createSlice({
         state.trackName = selectedTrack.name
         state.trackTime = selectedTrack.duration_in_seconds
       }
+      state.isPlaying = true;
     },
     playNextTrack: (state) => {
       //по индексу определяем что эл-эм первый
@@ -65,7 +66,8 @@ const playlistSlice = createSlice({
       state.trackAuthor = selectedTrack.author
       state.trackName = selectedTrack.name
       state.trackTime = selectedTrack.duration_in_seconds
-      console.log('данные из redux',       state.currentlyPlayingItem);
+      state.isPlaying = true;
+      // console.log('данные из redux',       state.currentlyPlayingItem);
     },
     playPreviousTrack: (state) => {
       const currentIndex = state.tracks.findIndex((track) => {
@@ -75,9 +77,9 @@ const playlistSlice = createSlice({
           return false
         }
       })
-      console.log(currentIndex);
+      // console.log(currentIndex);
       if (currentIndex === 0) {
-        console.log(state.tracks);
+        // console.log(state.tracks);
         return state
       } 
 
@@ -98,6 +100,7 @@ const playlistSlice = createSlice({
       state.trackAuthor = selectedTrack.author
       state.trackName = selectedTrack.name
       state.trackTime = selectedTrack.duration_in_seconds
+      state.isPlaying = true;
       return state
       // console.log('данные из redux',       state.currentlyPlayingItem);
     },
@@ -111,7 +114,7 @@ const playlistSlice = createSlice({
     togglePlayState: (state) => {
       state.isPlaying = !state.isPlaying
       // console.log(isPlaying);
-      console.log(state.isPlaying)
+      // console.log(state.isPlaying)
     },
   },
 })
