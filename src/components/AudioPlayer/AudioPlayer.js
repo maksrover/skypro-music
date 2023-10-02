@@ -43,6 +43,9 @@ function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
   const handleProgressBarChange = (newTime) => {
     audioRef.current.currentTime = newTime
     setCurrentTime(newTime)
+    if (!isPlaying) {
+      dispatch(togglePlayState());
+    }
   }
 
   const handlePlayPrevious = () => {
