@@ -29,10 +29,10 @@ export const BarContent = styled.div`
   flex-direction: column;
 `
 
-export const BarPlayerProgress = styled.div`
+export const ProgressInput = styled.input`
   --progress-height: 8px;
   --progress-color: #b672ff;
-  --progress-color: ${(props) => props.$color ?? "#b672ff"};
+  // --progress-color: ${(props) => props.$color ?? "#b672ff"};
 
   --progress-bg-color: #2e2e2e;
 
@@ -83,8 +83,7 @@ export const BarPlayerProgress = styled.div`
     background-color: var(--progress-color);
     height: var(--progress-height);
   }
-`;
-
+`
 
 export const BarPlayerBlock = styled.div`
   height: 73px;
@@ -126,14 +125,6 @@ export const PlayerControls = styled.div`
   padding: 0 27px 0 31px;
 `
 
-/**
- * Содержит основу стилей
- * .player__btn-prev,
-.player__btn-play,
-.player__btn-next,
-.player__btn-repeat,
-.player__btn-shuffle
- */
 export const PlayerBtn = styled.div`
   padding: 5px;
   display: -webkit-box;

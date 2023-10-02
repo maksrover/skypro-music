@@ -1,3 +1,8 @@
+исходное время 20 часов
+фактическое 35 часов
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

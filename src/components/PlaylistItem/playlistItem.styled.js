@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { keyframes } from 'styled-components';
 
 export const PlaylistItem = styled.div`
   width: 100%;
@@ -51,13 +52,35 @@ export const TrackTitleImage = styled.div`
   margin-right: 17px;
 `
 
+const blinkAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+// Apply the animation to your SVG component conditionally
 export const TrackTitleSvg = styled.svg`
   width: 18px;
   height: 17px;
   fill: transparent;
   stroke: #4e4e4e;
-`
+`;
 export const TrackTitleText = styled.div``
+
+
+export const BlinkingDot = styled.div`
+  width: 150px; /* Adjust the size as needed */
+  height: 15px; /* Adjust the size as needed */
+  background-color: purple;
+  border-radius: 50%;
+  animation: ${blinkAnimation} 1s infinite;
+`;
 
 export const TrackTitleLink = styled.a`
   font-style: normal;

@@ -1,30 +1,35 @@
 import { useEffect, useRef, useState } from 'react'
 import * as S from './AudioPlayer.styled'
-import ProgressBar from '../ProgressBar/ProgressBar'
+import { useDispatch } from 'react-redux'
+import {
+  playPreviousTrack,
+  playNextTrack,
+  togglePlayState,
+} from '../../store/useAudioPlayer/AudioPlayer.slise'
+import { useSelector } from 'react-redux'
 
-function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
-  const [isPlaying, setIsPlaying] = useState(true)
+function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
   const audioRef = useRef(null)
   const [currentTime, setCurrentTime] = useState(0)
-  const duration = trackTime
   const [isLooping, setIsLooping] = useState(false)
-
-  const handleShuffle = () => {
-    alert('Еще не реализовано')
+  const isPlaying = useSelector((state) => state.playlist.isPlaying)
+  const isShuffling = useSelector((state) => state.playlist.isShuffling)
+  const dispatch = useDispatch()
+  const newTrackUrl = useSelector((state) => state.playlist.currentTrackUrl)
+  const currentIndex = useSelector((state) => state.playlist.currentIndex)
+  const playlistLength = useSelector((state) => state.playlist.tracks.length)
+  const trackAuthor = useSelector((state) => state.playlist.trackAuthor)
+  const trackName = useSelector((state) => state.playlist.trackName)
+  const [duration, setDuration] = useState(0)
+  const togglePlay = () => {
+    const audioElement = audioRef.current
+    if (audioElement.paused) {
+      audioElement.play()
+    } else {
+      audioElement.pause()
+    }
+    dispatch(togglePlayState())
   }
-
-  const handleStart = () => {
-    audioRef.current.play()
-    setIsPlaying(true)
-  }
-
-  const handleStop = () => {
-    audioRef.current.pause()
-    setIsPlaying(false)
-  }
-
-  const togglePlay = isPlaying ? handleStop : handleStart
-
   const toggleLoop = () => {
     if (isLooping) {
       audioRef.current.loop = false
@@ -38,41 +43,98 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
   const handleProgressBarChange = (newTime) => {
     audioRef.current.currentTime = newTime
     setCurrentTime(newTime)
+    if (!isPlaying) {
+      dispatch(togglePlayState());
+    }
   }
 
-  // useEffect(() => {
-  //   if (audioRef.current) {
-  //     audioRef.current.addEventListener('timeupdate', () => {
-  //       setCurrentTime(audioRef.current.currentTime);
-  //     });
-  //   }
+  const handlePlayPrevious = () => {
+    dispatch(playPreviousTrack())
 
-  //   return () => {
-  //     if (audioRef.current) {
-  //       audioRef.current.removeEventListener('timeupdate', () => {});
-  //     }
-  //   };
-  // }, []);
+    if (audioRef.current) {
+      audioRef.current.pause()
 
+      if (newTrackUrl !== audioRef.current.src) {
+        audioRef.current.src = newTrackUrl
+
+        audioRef.current.onloadedmetadata = () => {
+          audioRef.current.play() // Начинаем воспроизведение после загрузки метаданных
+        }
+        audioRef.current.load()
+      } else {
+        audioRef.current.play()
+      }
+    }
+  }
+
+  const handlePlayNext = () => {
+    dispatch(playNextTrack())
+
+    // Проверяем, что есть следующий трек в плейлисте
+    if (currentIndex < playlistLength - 1) {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.src = newTrackUrl
+
+        audioRef.current.onloadedmetadata = () => {
+          audioRef.current.play() // Начинаем воспроизведение после загрузки метаданных
+        }
+
+        audioRef.current.load() // Загружаем новый аудиофайл
+      }
+    } else {
+      // Если текущий трек - последний, не выполняем никаких действий
+    }
+  }
 
   useEffect(() => {
     if (audioRef.current) {
+      audioRef.current.src = newTrackUrl
+      audioRef.current.addEventListener('canplaythrough', () => {
+        audioRef.current.play()
+      })
+      audioRef.current.load()
+    }
+  }, [newTrackUrl])
+
+  useEffect(() => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration)
+
+      audioRef.current.addEventListener('loadedmetadata', () => {
+        setDuration(audioRef.current.duration)
+      })
+
       audioRef.current.addEventListener('timeupdate', updateTime)
     }
 
-
     return () => {
       if (audioRef.current) {
+        audioRef.current.removeEventListener('loadedmetadata', () => {
+          setDuration(audioRef.current.duration)
+        })
         audioRef.current.removeEventListener('timeupdate', updateTime)
       }
     }
-  }, [])
+  }, [currentTrackUrl])
 
   const updateTime = () => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime)
     }
   }
+  // когда трек закончился, воспроизводиться следующий
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.addEventListener('ended', handlePlayNext)
+    }
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('ended', handlePlayNext)
+      }
+    }
+  }, [currentTrackUrl])
 
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60)
@@ -88,95 +150,56 @@ function AudioPlayer({ trackAuthor, trackName, currentTrackUrl, trackTime }) {
         <div>{formatTime(currentTime)}</div>/<div>{formatTime(duration)}</div>
       </S.Timer>
       <S.BarContent>
-        <ProgressBar
-          currentTime={currentTime}
-          duration={duration}
-          onChange={handleProgressBarChange}
+        <S.ProgressInput
+          type="range"
+          min={0}
+          max={!isNaN(duration) ? duration : 0}
+          value={currentTime}
+          step={0.01}
+          onChange={(event) => {
+            const newTime = parseFloat(event.target.value)
+            handleProgressBarChange(newTime)
+          }}
+          $color="#ff0000"
         />
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>
               <S.PlayerBtnPrev>
-                <S.PlayerBtnPrevSvg onClick={handleShuffle} alt="prev">
+                <S.PlayerBtnPrevSvg onClick={handlePlayPrevious} alt="prev">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev" />
                 </S.PlayerBtnPrevSvg>
               </S.PlayerBtnPrev>
               <S.PlayerBtnPlay>
                 <S.PlayerBtnPlaySvg onClick={togglePlay} alt="play">
                   {!isPlaying ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="15"
-                      height="20"
-                      viewBox="0 0 15 20"
-                      fill="none"
-                    >
-                      <path
-                        d="M15 10L-1.01012e-06 0.47372L-1.84293e-06 19.5263L15 10Z"
-                        fill="#D9D9D9"
-                      />
-                    </svg>
+                    <use xlinkHref="img/icon/sprite.svg#icon-play" />
                   ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="15"
-                      height="19"
-                      viewBox="0 0 15 19"
-                      fill="none"
-                    >
-                      <rect width="5" height="19" fill="#D9D9D9" />
-                      <rect x="10" width="5" height="19" fill="#D9D9D9" />
-                    </svg>
+                    <use xlinkHref="img/icon/sprite.svg#icon-pause" />
                   )}
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
               <S.PlayerBtnNext>
-                <S.PlayerBtnNextSvg alt="next" onClick={handleShuffle}>
+                <S.PlayerBtnNextSvg alt="next" onClick={handlePlayNext}>
                   <use xlinkHref="img/icon/sprite.svg#icon-next" />
                 </S.PlayerBtnNextSvg>
               </S.PlayerBtnNext>
               <S.PlayerBtnRepeat>
                 <S.PlayerBtnRepeatSvg onClick={toggleLoop} alt="repeat">
                   {isLooping ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="15"
-                      height="18"
-                      viewBox="0 0 20 25"
-                      fill="none"
-                    >
-                      <path
-                        d="M10 3L5 0.113249V5.88675L10 3ZM7 14.5C3.96243 14.5 1.5 12.0376 1.5 9H0.5C0.5 12.5899 3.41015 15.5 7 15.5V14.5ZM1.5 9C1.5 5.96243 3.96243 3.5 7 3.5V2.5C3.41015 2.5 0.5 5.41015 0.5 9H1.5Z"
-                        fill="red"
-                      />
-                      <path
-                        d="M10 15L15 17.8868V12.1132L10 15ZM13 3.5C16.0376 3.5 18.5 5.96243 18.5 9H19.5C19.5 5.41015 16.5899 2.5 13 2.5V3.5ZM18.5 9C18.5 12.0376 16.0376 14.5 13 14.5V15.5C16.5899 15.5 19.5 12.5899 19.5 9H18.5Z"
-                        fill="red"
-                      />
-                    </svg>
+                    <use xlinkHref="img/icon/sprite.svg#icon-repeaton" />
                   ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="15"
-                      height="18"
-                      viewBox="0 0 20 25"
-                      fill="none"
-                    >
-                      <path
-                        d="M10 3L5 0.113249V5.88675L10 3ZM7 14.5C3.96243 14.5 1.5 12.0376 1.5 9H0.5C0.5 12.5899 3.41015 15.5 7 15.5V14.5ZM1.5 9C1.5 5.96243 3.96243 3.5 7 3.5V2.5C3.41015 2.5 0.5 5.41015 0.5 9H1.5Z"
-                        fill="#696969"
-                      />
-                      <path
-                        d="M10 15L15 17.8868V12.1132L10 15ZM13 3.5C16.0376 3.5 18.5 5.96243 18.5 9H19.5C19.5 5.41015 16.5899 2.5 13 2.5V3.5ZM18.5 9C18.5 12.0376 16.0376 14.5 13 14.5V15.5C16.5899 15.5 19.5 12.5899 19.5 9H18.5Z"
-                        fill="#696969"
-                      />
-                    </svg>
+                    <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
                   )}
                 </S.PlayerBtnRepeatSvg>
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShaffle>
-                <S.BtnShuffleSvg onClick={handleShuffle} alt="shuffle">
-                  <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
+                <S.BtnShuffleSvg onClick={onToggleShuffle} alt="shuffle">
+                  {!isShuffling ? (
+                    <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
+                  ) : (
+                    <use xlinkHref="img/icon/sprite.svg#icon-shuffleon" />
+                  )}
                 </S.BtnShuffleSvg>
               </S.PlayerBtnShaffle>
             </S.PlayerControls>
