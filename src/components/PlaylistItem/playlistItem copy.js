@@ -3,8 +3,8 @@ import * as S from './playlistItem.styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentlyPlaying } from '../../store/useAudioPlayer/AudioPlayer.slise'
 import { useState } from 'react'
-import { addToFavorites, delToFavorites } from '../../api'
-import { useUserContext } from '../../UserContext'
+import { addToFavorites } from "../../api";
+import { useUserContext } from '../../UserContext';
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60)
@@ -19,21 +19,8 @@ function PlaylistItem(props) {
   const currentlyPlayingItem = useSelector(
     (state) => state.playlist.currentlyPlayingItem,
   )
-  const { user } = useUserContext()
-  // console.log('трек', props.track)
-
-  let initialLikeStatus = true
-  if (props.track.stared_user) {
-    initialLikeStatus = props.track.stared_user.find((staredUser) => {
-      if (user.email === staredUser.email) {
-        return true
-      } else {
-        return false
-      }
-    })
-  }
-
-  const [isLiked, setIsLiked] = useState(Boolean(initialLikeStatus)) //задать значение из api
+  const { user } = useUserContext();
+  const [isLiked, setIsLiked] = useState(false)
 
   const handleClick = () => {
     if (props.onClick) {
@@ -43,33 +30,18 @@ function PlaylistItem(props) {
   }
 
   const handleClickLike = async () => {
-    setIsLiked(!isLiked)
+    setIsLiked(!isLiked);
     try {
-      if (isLiked) {
-        // для удаление трека из избранного
-        const response = await delToFavorites({
-          accessToken: user.token.access,
-          trackId: props.track.id,
-        })
-        console.log(response)
-      } else {
-        //добавление трека в избранное
-        const response = await addToFavorites({
-          accessToken: user.token.access,
-          trackId: props.track.id,
-        })
-        console.log(response)
-      }
-      //сдлать запрос списка треков, обнвоить стор
+      const response = await addToFavorites({ accessToken: user.token.access, trackId: props.track.id });
+      console.log(response); 
     } catch (error) {
-      
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
   const isCurrentlyPlaying = props.track.id === currentlyPlayingItem
-  // console.log(props.track)
+
   return (
-    <S.PlaylistItem>
+    <S.PlaylistItem >
       <S.PlaylistTrack>
         <S.TrackTitle>
           <S.TrackTitleImage>
