@@ -3,7 +3,7 @@ import * as S from './playlistItem.styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentlyPlaying } from '../../store/useAudioPlayer/AudioPlayer.slise'
 import { useState } from 'react'
-import { addToFavorites, delToFavorites } from '../../api'
+import { addToFavorites, delToFavorites, refreshToken } from '../../api'
 import { useUserContext } from '../../UserContext'
 
 function formatTime(seconds) {
@@ -19,7 +19,7 @@ function PlaylistItem(props) {
   const currentlyPlayingItem = useSelector(
     (state) => state.playlist.currentlyPlayingItem,
   )
-  const { user } = useUserContext()
+  const { user, handleLogin } = useUserContext()
   // console.log('трек', props.track)
 
   let initialLikeStatus = true
@@ -46,7 +46,7 @@ function PlaylistItem(props) {
     setIsLiked(!isLiked)
     try {
       if (isLiked) {
-        // для удаление трека из избранного
+        // для удаления трека из избранного
         const response = await delToFavorites({
           accessToken: user.token.access,
           trackId: props.track.id,
@@ -60,12 +60,23 @@ function PlaylistItem(props) {
         })
         console.log(response)
       }
-      //сдлать запрос списка треков, обнвоить стор
+      //сделать запрос списка треков, обновить стор
     } catch (error) {
-      
-      console.error(error)
+      try {
+        const data = await refreshToken({refreshToken: user.token.refresh})
+        const newAccessToken = data.access
+        handleLogin({...user, token: {access: newAccessToken, refresh: user.token.refresh}})
+        const response = await delToFavorites({
+          accessToken: newAccessToken,
+          trackId: props.track.id,
+        })
+        console.log(response)
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
+
   const isCurrentlyPlaying = props.track.id === currentlyPlayingItem
   // console.log(props.track)
   return (

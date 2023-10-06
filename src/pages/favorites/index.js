@@ -12,21 +12,26 @@ export const MyPlaylist = ({ showSkeleton, onAuthButtonClick }) => {
   const { user, handleLogin } = useUserContext()
 
   useEffect(() => {
-    if (user) {
-      getFavorites({ accessToken: user.token.access })
-        .then((track) => {
+    const fetchData = async () => {
+      if (user) {
+        try {
+          const track = await getFavorites({ accessToken: user.token.access })
           setTracks(track)
-        })
-        .catch(() => {
-          refreshToken({refreshToken: user.token.refresh}).then(data => {
+        } catch (error) {
+          try {
+            const data = await refreshToken({refreshToken: user.token.refresh})
             const newAccessToken = data.access
             handleLogin({...user, token: {access: newAccessToken, refresh: user.token.refresh}})
-            getFavorites({ accessToken: user.token.access })
-          })
-
-          setError('Не удалось загрузить плейлист, попробуйте позже')
-        })
+            const track = await getFavorites({ accessToken: newAccessToken })
+            setTracks(track)
+          } catch (error) {
+            setError('Не удалось загрузить плейлист, попробуйте обновить')
+          }
+        }
+      }
     }
+  
+    fetchData()
   }, [user])
   // console.log("треки", tracks);
   return (
