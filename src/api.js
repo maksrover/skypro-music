@@ -27,6 +27,24 @@ export const getFavorites = async ({accessToken}) => {
     return data
 }
 
+
+export const getCategory = async ({accessToken}) => {
+    const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/", {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    if(!response.ok) {
+        throw new Error('ошибка сервера')
+        // navigate('/login');
+    }
+
+    const data = await response.json()
+    return data
+}
+
 export const addToFavorites = async ({accessToken, trackId}) => {
     const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${trackId}/favorite/`, {
         method: "POST",
