@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import * as S from './index.styled'
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import {getToken} from "../../api";
+import {useUserContext} from "../../UserContext";
 
 
 
@@ -13,6 +15,7 @@ const RegistrationForm = () => {
   const [emailError, setEmailError] = useState(null)
   const [passwordError, setPasswordError] = useState(null)
   const [usernameError, setUsernameError] = useState(null)
+    const { handleLogin } = useUserContext();
 
   const navigate = useNavigate();
 
@@ -46,15 +49,20 @@ const RegistrationForm = () => {
       )
 
       if (response.ok) {
-        const user = await response.json()
-        console.log('User successfully registered:', user)
+        const user = await response.json();
+
+          const token = await getToken({ email, password }); // { refresh, access}
+          handleLogin({...user, token });
+
+
+        // console.log('User successfully registered:', user)
         setEmailError(null)
         setPasswordError(null)
         setUsernameError(null)
-        navigate('/login');
+        navigate('/');
       } else {
         const errorData = await response.json()
-        console.log('Registration failed:', errorData)
+        // console.log('Registration failed:', errorData)
         setEmailError(errorData.email ? errorData.email[0] : null)
         setPasswordError(errorData.password ? errorData.password[0] : null)
         setUsernameError(errorData.username ? errorData.username[0] : null)

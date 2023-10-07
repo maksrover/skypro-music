@@ -3,6 +3,9 @@ import styled from 'styled-components'
 export const MainSidebar = styled.div`
 max-width: 418px;
 padding: 20px 90px 20px 78px;
+//добавил чтобы заместить плейлисты
+    width: 1000px;
+
 `
 
 export const SidebarBlock = styled.div`
@@ -31,4 +34,9 @@ flex-direction: column;
 -webkit-box-align: center;
 -ms-flex-align: center;
 align-items: center;
+`
+
+export const SidebarList1 = styled.div`
+// width: 250px;
+// height: 150px;
 `

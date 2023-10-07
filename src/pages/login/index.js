@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import * as S from './index.styled';
 import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '../../UserContext'; 
+import { useUserContext } from '../../UserContext';
+import {getToken} from "../../api";
 
 export const Login = ({ user }) => {
   const [email, setEmail] = useState('');
@@ -35,14 +36,13 @@ export const Login = ({ user }) => {
 
       if (response.ok) {
         const userData = await response.json();
-        console.log('успех', userData);
+        const token = await getToken({ email, password }); // { refresh, access}
         setError(null);
         navigate('/');
-        handleLogin(userData);
-        // localStorage.setItem('user', JSON.stringify(userData));
+        handleLogin({...userData, token});
       } else {
         const errorData = await response.json();
-        console.log('Неверный логин', errorData);
+        // console.log('Неверный логин', errorData);
         setError(errorData.detail);
       }
     } catch (error) {

@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-// import { UserProvider } from './UserContext'; 
+// import { UserProvider } from './UserContext';
 import { MyPlaylist } from './pages/favorites'
 import { Main } from './pages/main'
 import { NotFound } from './pages/NotFound'
@@ -12,8 +12,8 @@ import { useUserContext } from './UserContext';
 
 
 export const AppRoutes = ({ tracks, showSkeleton, error }) => {
+    // не нужно сюда получать список треков
   const { user, handleLogin, handleLogout } = useUserContext();
-
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
@@ -21,7 +21,6 @@ export const AppRoutes = ({ tracks, showSkeleton, error }) => {
       handleLogin(JSON.parse(savedUser));
     }
   }, []);
-
 
   return (
     <Routes>
@@ -44,7 +43,9 @@ export const AppRoutes = ({ tracks, showSkeleton, error }) => {
         />
         <Route path="*" element={<NotFound />} />
         <Route path="/category/:id" element={<PlaylistPages />} />
-        <Route path="/favorites" element={<MyPlaylist />} />
+        <Route path="/favorites" element={<MyPlaylist tracks={tracks} showSkeleton={showSkeleton} error={error}
+              user={user}
+              onAuthButtonClick={user ? handleLogout : handleLogin}/>} />
       </Route>
     </Routes>
   )

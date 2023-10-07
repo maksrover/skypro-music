@@ -2,26 +2,25 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   tracks: [], // Здесь будет плейлист
-
   currentTrackIndex: 0, // Индекс текущего трека
   isShuffling: false,
-
   currentlyPlayingItem: null,
   isPlaying: true,
+  currentTrackUrl: null,
+  showAudioPlayer: false,
+  // isLiked: true,
 }
 
 const playlistSlice = createSlice({
   name: 'playlist',
   initialState,
   reducers: {
+    // setTracks должен вызываться только тогда, когда ты включаешь трек в другом плейлисте
     setTracks: (state, action) => {
       state.tracks = action.payload
-      // console.log('Список треков:', state.tracks)
     },
     playTrack: (state, action) => {
       state.currentlyPlayingItem = action.payload
-      // console.log(state.currentlyPlayingItem);
-      // console.log('aciton payload:', action.payload)
       const selectedTrack = state.tracks.find((track) => {
         if (track.id === action.payload) {
           return true
@@ -35,10 +34,10 @@ const playlistSlice = createSlice({
         state.trackName = selectedTrack.name
         state.trackTime = selectedTrack.duration_in_seconds
       }
-      state.isPlaying = true;
+      state.isPlaying = true
+      state.showAudioPlayer = true
     },
     playNextTrack: (state) => {
-      //по индексу определяем что эл-эм первый
       const currentIndex = state.tracks.findIndex((track) => {
         if (track.id === state.currentlyPlayingItem) {
           return true
@@ -51,23 +50,22 @@ const playlistSlice = createSlice({
       let nextIndex
 
       if (isShuffle) {
-        nextIndex = Math.floor(Math.random() * state.tracks.length);
+        nextIndex = Math.floor(Math.random() * state.tracks.length)
       } else {
         if (currentIndex === state.tracks.length - 1) {
-          return state;
-        }  
-        nextIndex = (currentIndex + 1) % state.tracks.length;
+          return state
+        }
+        nextIndex = (currentIndex + 1) % state.tracks.length
       }
 
       state.currentlyPlayingItem = state.tracks[nextIndex].id
-      // state.isPlaying = true
       const selectedTrack = state.tracks[nextIndex]
       state.currentTrackUrl = selectedTrack.track_file
       state.trackAuthor = selectedTrack.author
       state.trackName = selectedTrack.name
       state.trackTime = selectedTrack.duration_in_seconds
-      state.isPlaying = true;
-      // console.log('данные из redux',       state.currentlyPlayingItem);
+      state.isPlaying = true
+
     },
     playPreviousTrack: (state) => {
       const currentIndex = state.tracks.findIndex((track) => {
@@ -77,11 +75,10 @@ const playlistSlice = createSlice({
           return false
         }
       })
-      // console.log(currentIndex);
+
       if (currentIndex === 0) {
-        // console.log(state.tracks);
         return state
-      } 
+      }
 
       const isShuffle = state.isShuffling
       let prevIndex
@@ -100,9 +97,8 @@ const playlistSlice = createSlice({
       state.trackAuthor = selectedTrack.author
       state.trackName = selectedTrack.name
       state.trackTime = selectedTrack.duration_in_seconds
-      state.isPlaying = true;
+      state.isPlaying = true
       return state
-      // console.log('данные из redux',       state.currentlyPlayingItem);
     },
     toggleShuffle: (state) => {
       state.isShuffling = !state.isShuffling
@@ -113,8 +109,6 @@ const playlistSlice = createSlice({
     },
     togglePlayState: (state) => {
       state.isPlaying = !state.isPlaying
-      // console.log(isPlaying);
-      // console.log(state.isPlaying)
     },
   },
 })
