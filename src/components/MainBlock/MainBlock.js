@@ -49,17 +49,20 @@ import Playlist from '../Playlist/Playlist'
 import * as S from './MainBlock.styled'
 import getPlaylist from '../../api'
 
-function MainBlock({ showSkeleton }) {
+function MainBlock({showSkeleton}) {
   const [tracks, setTracks] = useState([]);
   const [error, setError] = useState(null);
+  //  const [showSkeleton, setShowSkeleton] = useState(true)
 
   useEffect(() => {
     getPlaylist()
       .then((track) => {
         setTracks(track)
+        // setShowSkeleton(false)
       })
       .catch(() => {
         setError('Не удалось загрузить плейлист, попробуйте позжееееее')
+        // setShowSkeleton(false)
       })
   }, [])
 // console.log("треки",tracks);

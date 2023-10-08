@@ -21,6 +21,7 @@ function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
   const trackAuthor = useSelector((state) => state.playlist.trackAuthor)
   const trackName = useSelector((state) => state.playlist.trackName)
   const [duration, setDuration] = useState(0)
+  
   const togglePlay = () => {
     const audioElement = audioRef.current
     if (audioElement.paused) {
@@ -44,7 +45,7 @@ function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
     audioRef.current.currentTime = newTime
     setCurrentTime(newTime)
     if (!isPlaying) {
-      dispatch(togglePlayState());
+      dispatch(togglePlayState())
     }
   }
 

@@ -21,29 +21,40 @@ export const getFavorites = async ({accessToken}) => {
 
     if(!response.ok) {
         throw new Error('ошибка сервера')
-    }
-
-    const data = await response.json()
-    return data
-}
-
-
-export const getCategory = async ({accessToken}) => {
-    const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/", {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    if(!response.ok) {
-        throw new Error('ошибка сервера')
         // navigate('/login');
     }
 
     const data = await response.json()
     return data
 }
+
+export async function getCategory() {
+    const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/selection/');
+  
+    if (!response.ok) {
+      throw new Error('Ошибка сервера');
+    }
+  
+    const data = await response.json();
+    return data;
+  }
+// export const getCategory = async ({accessToken}) => {
+//     const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/selection/", {
+//         method: "GET",
+//         headers: {
+//             Authorization: `Bearer ${accessToken}`,
+//         },
+//     });
+
+//     if(!response.ok) {
+//         throw new Error('ошибка сервера')
+//         // navigate('/login');
+//     }
+
+//     const data = await response.json()
+//     return data
+// }
+
 
 export const addToFavorites = async ({accessToken, trackId}) => {
     const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${trackId}/favorite/`, {
@@ -60,6 +71,7 @@ export const addToFavorites = async ({accessToken, trackId}) => {
     const data = await response.json()
     return data
 }
+
 
 
 export const refreshToken = async ({refreshToken}) => {

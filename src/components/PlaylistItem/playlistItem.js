@@ -5,6 +5,7 @@ import { setCurrentlyPlaying } from '../../store/useAudioPlayer/AudioPlayer.slis
 import { useState } from 'react'
 import { addToFavorites, delToFavorites, refreshToken } from '../../api'
 import { useUserContext } from '../../UserContext'
+// import { useNavigate } from 'react-router-dom';
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60)
@@ -15,11 +16,13 @@ function formatTime(seconds) {
 }
 
 function PlaylistItem(props) {
+  // const navigate = useNavigate();
   const dispatch = useDispatch()
   const currentlyPlayingItem = useSelector(
     (state) => state.playlist.currentlyPlayingItem,
   )
   const { user, handleLogin } = useUserContext()
+  
   // console.log('трек', props.track)
 
   let initialLikeStatus = true
@@ -42,7 +45,10 @@ function PlaylistItem(props) {
     }
   }
 
+
+  //обновленный
   const handleClickLike = async () => {
+
     setIsLiked(!isLiked)
     try {
       if (isLiked) {
@@ -72,11 +78,41 @@ function PlaylistItem(props) {
         })
         console.log(response)
       } catch (error) {
+        // navigate('/login');
         console.error(error)
       }
     }
   }
 
+
+
+
+
+//НАЧАЛЬНЫЙ
+  // const handleClickLike = async () => {
+  //   setIsLiked(!isLiked)
+  //   try {
+  //     if (isLiked) {
+  //       // для удаление трека из избранного
+  //       const response = await delToFavorites({
+  //         accessToken: user.token.access,
+  //         trackId: props.track.id,
+  //       })
+  //       console.log(response)
+  //     } else {
+  //       //добавление трека в избранное
+  //       const response = await addToFavorites({
+  //         accessToken: user.token.access,
+  //         trackId: props.track.id,
+  //       })
+  //       console.log(response)
+  //     }
+  //     //сдлать запрос списка треков, обнвоить стор
+  //   } catch (error) {
+      
+  //     console.error(error)
+  //   }
+  // }
   const isCurrentlyPlaying = props.track.id === currentlyPlayingItem
   // console.log(props.track)
   return (
