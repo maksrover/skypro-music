@@ -4,7 +4,6 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 import * as S from '../../Style/App.styled'
 
 export const Main = ({tracks, showSkeleton, error, onAuthButtonClick}) => {
-  // нужно получить основной список треков как в favorites/index.js
   return (
     <S.MainApp>
       <S.AppHeader>

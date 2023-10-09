@@ -2,14 +2,26 @@ import Search from '../Search/Search'
 import ContentPlaylistSkeleton from '../ContentPlaylistSceleton'
 import Playlist from '../Playlist/Playlist'
 import * as S from './MainBlock.styled'
-// import { useSelector } from 'react-redux';
+import { useState } from 'react'
 
-function MainBlockAll({ showSkeleton, error, tracks}) {
-// console.log("есть тут треки", tracks);
-// const isLiked = useSelector((state) => state.playlist.isLiked)
+function MainBlockAll({ showSkeleton, error, tracks }) {
+  const [searchValue, setSearchValue] = useState('')
+  const filterTracks = () => {
+    return tracks
+      .filter(
+        (track) =>
+          (searchValue
+            ? track.name.toLowerCase().includes(searchValue.toLowerCase())
+            : track) ||
+          (searchValue
+            ? track.author.toLowerCase().includes(searchValue.toLowerCase())
+            : track),
+      )
+  }
+
   return (
     <S.MainCenterblock>
-      <Search />
+      <Search setSearchValue={setSearchValue} />
       <S.CenterblockH2>Мои треки</S.CenterblockH2>
       {/* <FilterMenu /> */}
       <S.CenterblockContent>
@@ -24,15 +36,15 @@ function MainBlockAll({ showSkeleton, error, tracks}) {
           </S.PlaylistTitileCol04>
         </S.ContentTitle>
         <S.ContentPlaylist>
-        {/* <p>{addTodoError}</p> */}
+          {/* <p>{addTodoError}</p> */}
 
-        {error ? (
-          <S.ErrorMessage>{error}</S.ErrorMessage>
-        ) : showSkeleton ? (
-          <ContentPlaylistSkeleton />
-        ) : (
-          <Playlist tracks={tracks} />
-        )}
+          {error ? (
+            <S.ErrorMessage>{error}</S.ErrorMessage>
+          ) : showSkeleton ? (
+            <ContentPlaylistSkeleton />
+          ) : (
+            <Playlist tracks={(filterTracks())} />
+          )}
         </S.ContentPlaylist>
       </S.CenterblockContent>
     </S.MainCenterblock>

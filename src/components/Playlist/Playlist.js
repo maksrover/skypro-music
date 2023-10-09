@@ -2,24 +2,16 @@ import PlaylistItem from '../PlaylistItem/playlistItem'
 import * as S from './Playlist.styled'
 import { useDispatch } from 'react-redux';
 import { setTracks, playTrack,  } from '../../store/useAudioPlayer/AudioPlayer.slise';
-// import { useEffect } from 'react';
 
 const Playlist = ({tracks}) => {
   const dispatch = useDispatch();
 
-  // удалить эту логику
-  // useEffect(() => {
-  //   dispatch(setTracks(tracks));
-  // }, [dispatch, tracks]);
-
     const handlePlaylistItemClick = (trackId) => {
-      // тут обновить список треков
       dispatch(setTracks(tracks));
     dispatch(playTrack(trackId));
   };
 
-
-
+  console.log(tracks);
   return (
     <>
     <S.ContentPlaylist>

@@ -1,10 +1,14 @@
 
 import { useUserContext } from '../../UserContext';
 import * as S from './SidebarPersonal.styled';
+import {hideAudioPlayer} from '../../store/useAudioPlayer/AudioPlayer.slise'
+import { useDispatch } from 'react-redux';
 
 function SidebarLogin({ onAuthButtonClick }) {
+  const dispatch = useDispatch();
   const handleLogout = () => {
     onAuthButtonClick();
+    dispatch(hideAudioPlayer());
   };
   const { user } = useUserContext();
 

@@ -9,7 +9,9 @@ export const PlaylistPages = ({ showSkeleton, onAuthButtonClick }) => {
 
   const { PLAYLISTTRACK } = usePlaylistTracks();
   const params = useParams()
-  const list = PLAYLISTTRACK.find((list) => list.id === Number(params.id))
+  console.log(PLAYLISTTRACK);
+  const list = PLAYLISTTRACK.find((list) => list.id === +params.id)
+  console.log(list);
   return (
 
       <div>

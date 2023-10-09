@@ -1,8 +1,22 @@
 import { useState, useEffect } from 'react'
-import { playlist } from '../ArrayTrack'
 import * as S from './FilterMunu2.style'
 
-function FilterMenu() {
+const yearSort = [
+  {
+    name: "По умолчанию",
+    value: "default"
+  },
+  {
+    name: "Сначала новые",
+    value: "asc"
+  },
+  {
+    name: "Сначала старые",
+    value: "desc"
+  },
+]
+
+function FilterMenu({tracks, setFilter, setSortedValue, setFilterGenre}) {
   const [activeDropdown, setActiveDropdown] = useState(null)
 
   useEffect(() => {
@@ -46,8 +60,8 @@ function FilterMenu() {
         >
           <S.DropdownItem className="dropdown_item">
             <S.DropdownItem1>
-              {playlist.map((track) => (
-                <S.DropdownEl key={track.id}>{track.author}</S.DropdownEl>
+              {tracks.map((track) => (
+                <S.DropdownEl onClick={() => setFilter(track.author)} key={track.id}>{track.author}</S.DropdownEl>
               ))}
             </S.DropdownItem1>
           </S.DropdownItem>
@@ -68,8 +82,8 @@ function FilterMenu() {
         >
           <S.DropdownItem className="dropdown_item">
             <S.DropdownItem1>
-              {playlist.map((track) => (
-                <S.DropdownEl key={track.id}>{track.year}</S.DropdownEl>
+              {yearSort.map((item, index) => (
+                <S.DropdownEl onClick={() => setSortedValue(item.value)} key={index}>{item.name}</S.DropdownEl>
               ))}
             </S.DropdownItem1>
           </S.DropdownItem>
@@ -90,8 +104,8 @@ function FilterMenu() {
         >
           <S.DropdownItem className="dropdown_item">
             <S.DropdownItem1>
-              {playlist.map((track) => (
-                <S.DropdownEl key={track.id}>{track.genre}</S.DropdownEl>
+              {Array.from(new Set(tracks.map((track) => track.genre))).map((genre, index) => (
+                <S.DropdownEl onClick={() => setFilterGenre(genre)} key={index}>{genre}</S.DropdownEl>
               ))}
             </S.DropdownItem1>
           </S.DropdownItem>

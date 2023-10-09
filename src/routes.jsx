@@ -12,7 +12,7 @@ import { useUserContext } from './UserContext';
 
 
 export const AppRoutes = ({ tracks, showSkeleton, error }) => {
-    // не нужно сюда получать список треков
+
   const { user, handleLogin, handleLogout } = useUserContext();
 
   useEffect(() => {

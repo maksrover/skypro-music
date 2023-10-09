@@ -2,15 +2,27 @@ import Search from '../Search/Search'
 import ContentPlaylistSkeleton from '../ContentPlaylistSceleton'
 import Playlist from '../Playlist/Playlist'
 import * as S from './MainBlock.styled'
+import { useState } from 'react'
 // import { useSelector } from 'react-redux';
 
-function MainBlockCategory({ name, showSkeleton, error, tracks}) {
+function MainBlockCategory({ name, showSkeleton, error, tracks }) {
+  const [searchValue, setSearchValue] = useState('')
 
+  const filterTracks = () => {
+    return tracks.filter(
+      (track) =>
+        (searchValue
+          ? track.name.toLowerCase().includes(searchValue.toLowerCase())
+          : track) ||
+        (searchValue
+          ? track.author.toLowerCase().includes(searchValue.toLowerCase())
+          : track),
+    )
+  }
 
-  
   return (
     <S.MainCenterblock>
-      <Search />
+      <Search setSearchValue={setSearchValue} />
       <S.CenterblockH2>{name}</S.CenterblockH2>
 
       <S.CenterblockContent>
@@ -25,13 +37,13 @@ function MainBlockCategory({ name, showSkeleton, error, tracks}) {
           </S.PlaylistTitileCol04>
         </S.ContentTitle>
         <S.ContentPlaylist>
-        {error ? (
-          <S.ErrorMessage>{error}</S.ErrorMessage>
-        ) : showSkeleton ? (
-          <ContentPlaylistSkeleton />
-        ) : (
-          <Playlist tracks={tracks} />
-        )}
+          {error ? (
+            <S.ErrorMessage>{error}</S.ErrorMessage>
+          ) : showSkeleton ? (
+            <ContentPlaylistSkeleton />
+          ) : (
+            <Playlist tracks={filterTracks()} />
+          )}
         </S.ContentPlaylist>
       </S.CenterblockContent>
     </S.MainCenterblock>

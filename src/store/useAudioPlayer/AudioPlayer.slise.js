@@ -110,6 +110,9 @@ const playlistSlice = createSlice({
     togglePlayState: (state) => {
       state.isPlaying = !state.isPlaying
     },
+    hideAudioPlayer: (state) => {
+      state.showAudioPlayer = false
+    },
   },
 })
 
@@ -121,6 +124,7 @@ export const {
   toggleShuffle,
   setCurrentlyPlaying,
   togglePlayState,
+  hideAudioPlayer,
 } = playlistSlice.actions
 
 export default playlistSlice.reducer

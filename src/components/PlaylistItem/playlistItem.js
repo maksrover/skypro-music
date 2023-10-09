@@ -1,11 +1,9 @@
-// import { useState } from 'react';
 import * as S from './playlistItem.styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentlyPlaying } from '../../store/useAudioPlayer/AudioPlayer.slise'
 import { useState } from 'react'
 import { addToFavorites, delToFavorites, refreshToken } from '../../api'
 import { useUserContext } from '../../UserContext'
-// import { useNavigate } from 'react-router-dom';
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60)
@@ -44,11 +42,8 @@ function PlaylistItem(props) {
       dispatch(setCurrentlyPlaying(props.track.id))
     }
   }
-
-
   //обновленный
   const handleClickLike = async () => {
-
     setIsLiked(!isLiked)
     try {
       if (isLiked) {
@@ -84,37 +79,8 @@ function PlaylistItem(props) {
     }
   }
 
-
-
-
-
-//НАЧАЛЬНЫЙ
-  // const handleClickLike = async () => {
-  //   setIsLiked(!isLiked)
-  //   try {
-  //     if (isLiked) {
-  //       // для удаление трека из избранного
-  //       const response = await delToFavorites({
-  //         accessToken: user.token.access,
-  //         trackId: props.track.id,
-  //       })
-  //       console.log(response)
-  //     } else {
-  //       //добавление трека в избранное
-  //       const response = await addToFavorites({
-  //         accessToken: user.token.access,
-  //         trackId: props.track.id,
-  //       })
-  //       console.log(response)
-  //     }
-  //     //сдлать запрос списка треков, обнвоить стор
-  //   } catch (error) {
-      
-  //     console.error(error)
-  //   }
-  // }
   const isCurrentlyPlaying = props.track.id === currentlyPlayingItem
-  // console.log(props.track)
+
   return (
     <S.PlaylistItem>
       <S.PlaylistTrack>
@@ -142,6 +108,11 @@ function PlaylistItem(props) {
             {props.track.album}
           </S.TrackAlbumLink>
         </S.TrackAlbum>
+        {/* <S.TrackAlbum>
+          <S.TrackAlbumLink href="http://">
+            {props.track.release_date}
+          </S.TrackAlbumLink>
+        </S.TrackAlbum> */}
         <S.TrackTime>
           <S.TrackTimeSvg alt="time" onClick={handleClickLike}>
             {isLiked ? (
