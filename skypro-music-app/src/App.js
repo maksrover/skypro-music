@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
+        <p className='App-text'>
           Здесь скоро будет Skypro.Music
         </p>
       </header>
