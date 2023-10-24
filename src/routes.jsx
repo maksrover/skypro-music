@@ -42,8 +42,8 @@ export const AppRoutes = ({ tracks, showSkeleton, error }) => {
           }
         />
         <Route path="*" element={<NotFound />} />
-        <Route path="/category/:id" element={<PlaylistPages />} />
-        <Route path="/favorites" element={<MyPlaylist tracks={tracks} showSkeleton={showSkeleton} error={error}
+        <Route path="/category/:id" element={<PlaylistPages onAuthButtonClick={user ? handleLogout : handleLogin}/>} />
+        <Route path="/favorites" element={<MyPlaylist showSkeleton={showSkeleton} error={error}
               user={user}
               onAuthButtonClick={user ? handleLogout : handleLogin}/>} />
       </Route>

@@ -52,6 +52,16 @@ export const TrackTitleImage = styled.div`
   margin-right: 17px;
 `
 
+
+// Apply the animation to your SVG component conditionally
+export const TrackTitleSvg = styled.svg`
+  width: 18px;
+  height: 17px;
+  fill: transparent;
+  stroke: #4e4e4e;
+`;
+export const TrackTitleText = styled.div``
+
 const blinkAnimation = keyframes`
   0% {
     opacity: 0;
@@ -64,23 +74,35 @@ const blinkAnimation = keyframes`
   }
 `;
 
-// Apply the animation to your SVG component conditionally
-export const TrackTitleSvg = styled.svg`
-  width: 18px;
-  height: 17px;
-  fill: transparent;
-  stroke: #4e4e4e;
-`;
-export const TrackTitleText = styled.div``
-
 
 export const BlinkingDot = styled.div`
-  width: 150px; /* Adjust the size as needed */
-  height: 15px; /* Adjust the size as needed */
+  padding-right: 20px;
+  width: 150px; 
+  height: 15px; 
   background-color: purple;
   border-radius: 50%;
   animation: ${blinkAnimation} 1s infinite;
+  .active {
+    background-color: red;
+  }
+
+  ${props => props.pause && `
+    animation-play-state: paused;
+  `}
 `;
+// export const BlinkingDot = styled.div`
+//   padding-right: 20px;
+//   width: 150px; 
+//   height: 15px; 
+//   background-color: ${props => props.pause ? 'purple' : 'red'};
+//   border-radius: 50%;
+//   animation: ${props => props.pause ? 'none' : `${blinkAnimation} 1s infinite`};
+//   opacity: ${props => props.pause ? 1 : null};
+  
+//   .active {
+//     background-color: red;
+//   }
+// `;
 
 export const TrackTitleLink = styled.a`
   font-style: normal;

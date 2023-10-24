@@ -5,10 +5,15 @@ import {
   playPreviousTrack,
   playNextTrack,
   togglePlayState,
+    like,
 } from '../../store/useAudioPlayer/AudioPlayer.slise'
 import { useSelector } from 'react-redux'
+import {useUserContext} from "../../UserContext";
+import {getIsLiked} from "../../getIsLiked";
+import { addToFavorites, delToFavorites, refreshToken } from '../../api'
 
 function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
+  const { user } = useUserContext();
   const audioRef = useRef(null)
   const [currentTime, setCurrentTime] = useState(0)
   const [isLooping, setIsLooping] = useState(false)
@@ -20,8 +25,60 @@ function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
   const playlistLength = useSelector((state) => state.playlist.tracks.length)
   const trackAuthor = useSelector((state) => state.playlist.trackAuthor)
   const trackName = useSelector((state) => state.playlist.trackName)
+  const tracks = useSelector((state) => state.playlist.tracks);
   const [duration, setDuration] = useState(0)
-  
+  const trackIdd = useSelector((state) => state.playlist.trackId)
+  // console.log('из аудиоплеера', trackIdd);
+  // const currentId = useSelector((state) => state.palylist.trackId)
+
+  const currentTrack = tracks.find(track => track.track_file === currentTrackUrl);
+  // const currentId = currentTrack?.id;
+  const isLiked = getIsLiked({track: currentTrack, user });
+  const { handleLogin } = useUserContext()
+
+
+
+
+  const handleClickLike = async () => {
+    dispatch(like({ id: trackIdd, user }));
+
+    try {
+      if (isLiked) {
+        // для удаления трека из избранного
+        const response = await delToFavorites({
+          accessToken: user.token.access,
+          trackId: trackIdd,
+        })
+
+        console.log(response)
+      } else {
+        //добавление трека в избранное
+        const response = await addToFavorites({
+          accessToken: user.token.access,
+          trackId: trackIdd,
+        })
+        console.log(response)
+      }
+      //сделать запрос списка треков, обновить стор
+    } catch (error) {
+      try {
+        const data = await refreshToken({refreshToken: user.token.refresh})
+        const newAccessToken = data.access
+        handleLogin({...user, token: {access: newAccessToken, refresh: user.token.refresh}})
+        const response = await delToFavorites({
+          accessToken: newAccessToken,
+          trackId: trackIdd,
+        })
+        console.log(response)
+      } catch (error) {
+        // navigate('/login');
+        console.error(error)
+      }
+    }
+  }
+
+
+
   const togglePlay = () => {
     const audioElement = audioRef.current
     if (audioElement.paused) {
@@ -168,38 +225,38 @@ function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
             <S.PlayerControls>
               <S.PlayerBtnPrev>
                 <S.PlayerBtnPrevSvg onClick={handlePlayPrevious} alt="prev">
-                  <use xlinkHref="img/icon/sprite.svg#icon-prev" />
+                  <use xlinkHref="../img/icon/sprite.svg#icon-prev" />
                 </S.PlayerBtnPrevSvg>
               </S.PlayerBtnPrev>
               <S.PlayerBtnPlay>
                 <S.PlayerBtnPlaySvg onClick={togglePlay} alt="play">
                   {!isPlaying ? (
-                    <use xlinkHref="img/icon/sprite.svg#icon-play" />
+                    <use xlinkHref="../img/icon/sprite.svg#icon-play" />
                   ) : (
-                    <use xlinkHref="img/icon/sprite.svg#icon-pause" />
+                    <use xlinkHref="../img/icon/sprite.svg#icon-pause" />
                   )}
                 </S.PlayerBtnPlaySvg>
               </S.PlayerBtnPlay>
               <S.PlayerBtnNext>
                 <S.PlayerBtnNextSvg alt="next" onClick={handlePlayNext}>
-                  <use xlinkHref="img/icon/sprite.svg#icon-next" />
+                  <use xlinkHref="../img/icon/sprite.svg#icon-next" />
                 </S.PlayerBtnNextSvg>
               </S.PlayerBtnNext>
               <S.PlayerBtnRepeat>
                 <S.PlayerBtnRepeatSvg onClick={toggleLoop} alt="repeat">
                   {isLooping ? (
-                    <use xlinkHref="img/icon/sprite.svg#icon-repeaton" />
+                    <use xlinkHref="../img/icon/sprite.svg#icon-repeaton" />
                   ) : (
-                    <use xlinkHref="img/icon/sprite.svg#icon-repeat" />
+                    <use xlinkHref="../img/icon/sprite.svg#icon-repeat" />
                   )}
                 </S.PlayerBtnRepeatSvg>
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShaffle>
                 <S.BtnShuffleSvg onClick={onToggleShuffle} alt="shuffle">
                   {!isShuffling ? (
-                    <use xlinkHref="img/icon/sprite.svg#icon-shuffle" />
+                    <use xlinkHref="../img/icon/sprite.svg#icon-shuffle" />
                   ) : (
-                    <use xlinkHref="img/icon/sprite.svg#icon-shuffleon" />
+                    <use xlinkHref="../img/icon/sprite.svg#icon-shuffleon" />
                   )}
                 </S.BtnShuffleSvg>
               </S.PlayerBtnShaffle>
@@ -208,7 +265,7 @@ function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
               <S.TrackPlayContain>
                 <S.TrackPlayImage>
                   <S.TrackPlaySvg alt="music">
-                    <use xlinkHref="img/icon/sprite.svg#icon-note" />
+                    <use xlinkHref="../img/icon/sprite.svg#icon-note" />
                   </S.TrackPlaySvg>
                 </S.TrackPlayImage>
                 <S.TrackPlayAutor>
@@ -222,17 +279,16 @@ function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
                   </S.TrackPlayAlbumLink>
                 </S.TrackPlayAlbum>
               </S.TrackPlayContain>
-              <S.TrackPlayLikeDis>
-                <S.TrackPlayLike>
-                  <S.TrackPlayLikeSvg alt="like">
-                    <use xlinkHref="img/icon/sprite.svg#icon-like" />
-                  </S.TrackPlayLikeSvg>
-                </S.TrackPlayLike>
-                <S.TrackPlayDislike>
+              {/* <S.TrackPlayLikeDis onClick={() => dispatch(like({ id: trackIdd, user }))}> */}
+              <S.TrackPlayLikeDis onClick={handleClickLike}>
+
+        
+                    <S.TrackPlayDislike>
                   <S.TrackPlayDislikeSvg alt="dislike">
-                    <use xlinkHref="img/icon/sprite.svg#icon-dislike" />
+                  {!isLiked ? <use xlinkHref="../img/icon/sprite.svg#icon-like" />:<use xlinkHref="../img/icon/sprite.svg#icon-dislike" />}
                   </S.TrackPlayDislikeSvg>
                 </S.TrackPlayDislike>
+            
               </S.TrackPlayLikeDis>
             </S.PlayerTrackPlay>
           </S.BarPlayer>
@@ -240,7 +296,7 @@ function AudioPlayer({ currentTrackUrl, onToggleShuffle }) {
             <S.VolumeContent>
               <S.VolumeImage>
                 <S.PVolumeSvg alt="volume">
-                  <use xlinkHref="img/icon/sprite.svg#icon-volume" />
+                  <use xlinkHref="../img/icon/sprite.svg#icon-volume" />
                 </S.PVolumeSvg>
               </S.VolumeImage>
               <S.VolumeProgress>

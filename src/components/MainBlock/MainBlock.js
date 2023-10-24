@@ -5,15 +5,21 @@ import FilterMenu from '../FilterMenu/FilterMunu'
 import Playlist from '../Playlist/Playlist'
 import * as S from './MainBlock.styled'
 import getPlaylist from '../../api'
+import {useDispatch, useSelector} from "react-redux";
+import { setTracks } from '../../store/useAudioPlayer/AudioPlayer.slise'
 
 function MainBlock({ showSkeleton }) {
-  const [tracks, setTracks] = useState([])
+  const dispatch = useDispatch();
   const [error, setError] = useState(null)
   //  const [showSkeleton, setShowSkeleton] = useState(true)
   const [filterByName, setFilterByName] = useState([])
   const [filterByGenre, setFilterByGenre] = useState([])
   const [sortedValue, setSortedValue] = useState('default')
   const [searchValue, setSearchValue] = useState('')
+  const [selectedFilters, setSelectedFilters] = useState(0);
+  const [selectedFiltersGenre, setSelectedFiltersGenre] = useState(0);
+  const tracks = useSelector(state => state.playlist.tracks);
+
 
   const filterTracks = () => {
     return tracks
@@ -32,24 +38,25 @@ function MainBlock({ showSkeleton }) {
             ? track.author.toLowerCase().includes(searchValue.toLowerCase())
             : track),
       )
-    // .filter((track) =>
-    //   searchValue ? track.author.includes(searchValue) : track,
-    // )
   }
 
   const setFilter = (value) => {
     if (filterByName.includes(value)) {
-      setFilterByName(filterByName.filter((item) => item !== value))
+      setFilterByName(filterByName.filter((item) => item !== value));
+      setSelectedFilters(selectedFilters - 1); // Уменьшить счетчик выбранных фильтров
     } else {
-      setFilterByName([...filterByName, value])
+      setFilterByName([...filterByName, value]);
+      setSelectedFilters(selectedFilters + 1); // Увеличить счетчик выбранных фильтров
     }
-  }
+  };
 
   const setFilterGenre = (value) => {
     if (filterByGenre.includes(value)) {
       setFilterByGenre(filterByGenre.filter((item) => item !== value))
+      setSelectedFiltersGenre(selectedFiltersGenre - 1); // Уменьшить счетчик выбранных фильтров
     } else {
       setFilterByGenre([...filterByGenre, value])
+      setSelectedFiltersGenre(selectedFiltersGenre + 1); // Увеличить счетчик выбранных фильтров
     }
   }
 
@@ -80,7 +87,7 @@ function MainBlock({ showSkeleton }) {
   useEffect(() => {
     getPlaylist()
       .then((track) => {
-        setTracks(track)
+        dispatch(setTracks(track));
         // setShowSkeleton(false)
       })
       .catch(() => {
@@ -99,6 +106,8 @@ function MainBlock({ showSkeleton }) {
         setFilter={setFilter}
         sortedByValue={sortedByValue}
         setFilterGenre={setFilterGenre}
+        selectedFilters={selectedFilters}
+        selectedFiltersGenre={selectedFiltersGenre}
       />
       <S.CenterblockContent>
         <S.ContentTitle>
@@ -107,7 +116,7 @@ function MainBlock({ showSkeleton }) {
           <S.PlaylistTitileCol03>АЛЬБОМ</S.PlaylistTitileCol03>
           <S.PlaylistTitileCol04>
             <S.PlaylistTitileSvg alt="time">
-              <use xlinkHref="img/icon/sprite.svg#icon-watch" />
+              <use xlinkHref="../img/icon/sprite.svg#icon-watch" />
             </S.PlaylistTitileSvg>
           </S.PlaylistTitileCol04>
         </S.ContentTitle>

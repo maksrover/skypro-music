@@ -18,7 +18,7 @@ export const usePlaylistTracks = () => {
     fetchData();
   }, []);
 
-  console.log(tracksData);
+  // console.log(tracksData);
   
   const PLAYLISTTRACK = [
     {

@@ -31,6 +31,27 @@ export const MenuItem = styled.div`
   justify-content: center;
 `
 
+export const FilterCount = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #AD61FF;
+  color: white;
+  font-family: StratosSkyeng;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  // line-height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0px;
+  right: 0;
+  // left: 120px;
+  width: 26px;
+  height: 25.5px;
+`
+
+
 export const FilterButton = styled.button`
   font-style: normal;
   font-weight: 400;
@@ -65,7 +86,10 @@ export const DropdownEl = styled.li`
     border-color: #b672ff;
     text-decoration: underline
     }
-
+  &.active {
+    color: #b672ff;
+    border-color: #b672ff;
+    
 `
 
 export const DropdownItem1 = styled.ul`

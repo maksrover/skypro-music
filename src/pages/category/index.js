@@ -1,20 +1,26 @@
-import { useParams } from 'react-router-dom'
-import { usePlaylistTracks  } from '../../components/constants'
-import * as S from '../../Style/App.styled'
-import NavMenu from '../../components/NavMenu/NavMenu'
-import MainBlockCategory from '../../components/MainBlock/MainBlockCategory'
-import SidebarAll from '../../components/Sidebar/SidebarAll'
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { usePlaylistTracks } from '../../components/constants';
+import * as S from '../../Style/App.styled';
+import NavMenu from '../../components/NavMenu/NavMenu';
+import MainBlockCategory from '../../components/MainBlock/MainBlockCategory';
+import SidebarAll from '../../components/Sidebar/SidebarAll';
+import { setTracks } from '../../store/useAudioPlayer/AudioPlayer.slise';
+import { useEffect } from 'react';
 
 export const PlaylistPages = ({ showSkeleton, onAuthButtonClick }) => {
-
   const { PLAYLISTTRACK } = usePlaylistTracks();
-  const params = useParams()
-  console.log(PLAYLISTTRACK);
-  const list = PLAYLISTTRACK.find((list) => list.id === +params.id)
-  console.log(list);
-  return (
+  const params = useParams();
+  const list = PLAYLISTTRACK.find((list) => list.id === +params.id);
 
-      <div>
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTracks(list.tracks));
+  }, [dispatch, list.tracks]);
+
+  return (
+    <div>
       <S.MainApp>
         <S.AppHeader>
           <S.Wrapper>
@@ -24,9 +30,6 @@ export const PlaylistPages = ({ showSkeleton, onAuthButtonClick }) => {
                 <MainBlockCategory
                   id={list.id} // Передаем id плейлиста в MainBlock
                   name={list.name} // Передаем name плейлиста в MainBlock
-                // {list.name}
-                // {list.id}
-                // {list.text}
                   tracks={list.tracks}
                   showSkeleton={showSkeleton}
                   error={list.error}
@@ -42,7 +45,5 @@ export const PlaylistPages = ({ showSkeleton, onAuthButtonClick }) => {
         </S.AppHeader>
       </S.MainApp>
     </div>
-
-  )
-}
-
+  );
+};

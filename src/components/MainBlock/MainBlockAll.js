@@ -3,9 +3,11 @@ import ContentPlaylistSkeleton from '../ContentPlaylistSceleton'
 import Playlist from '../Playlist/Playlist'
 import * as S from './MainBlock.styled'
 import { useState } from 'react'
+import {useSelector} from "react-redux";
 
-function MainBlockAll({ showSkeleton, error, tracks }) {
+function MainBlockAll({ showSkeleton, error }) {
   const [searchValue, setSearchValue] = useState('')
+  const tracks = useSelector(state => state.playlist.tracks);
   const filterTracks = () => {
     return tracks
       .filter(
@@ -31,7 +33,7 @@ function MainBlockAll({ showSkeleton, error, tracks }) {
           <S.PlaylistTitileCol03>АЛЬБОМ</S.PlaylistTitileCol03>
           <S.PlaylistTitileCol04>
             <S.PlaylistTitileSvg alt="time">
-              <use xlinkHref="img/icon/sprite.svg#icon-watch" />
+              <use xlinkHref="../img/icon/sprite.svg#icon-watch" />
             </S.PlaylistTitileSvg>
           </S.PlaylistTitileCol04>
         </S.ContentTitle>

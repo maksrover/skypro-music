@@ -1,9 +1,9 @@
 import * as S from './playlistItem.styled'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentlyPlaying } from '../../store/useAudioPlayer/AudioPlayer.slise'
-import { useState } from 'react'
+import { setCurrentlyPlaying, like } from '../../store/useAudioPlayer/AudioPlayer.slise'
 import { addToFavorites, delToFavorites, refreshToken } from '../../api'
 import { useUserContext } from '../../UserContext'
+import { getIsLiked } from '../../getIsLiked';
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60)
@@ -19,32 +19,24 @@ function PlaylistItem(props) {
   const currentlyPlayingItem = useSelector(
     (state) => state.playlist.currentlyPlayingItem,
   )
+  const isPlaying = useSelector((state) => state.playlist.isPlaying);
+  console.log(isPlaying);
+
   const { user, handleLogin } = useUserContext()
-  
-  // console.log('трек', props.track)
 
-  let initialLikeStatus = true
-  if (props.track.stared_user) {
-    initialLikeStatus = props.track.stared_user.find((staredUser) => {
-      if (user.email === staredUser.email) {
-        return true
-      } else {
-        return false
-      }
-    })
-  }
-
-  const [isLiked, setIsLiked] = useState(Boolean(initialLikeStatus)) //задать значение из api
+  const isLiked = getIsLiked({ track: props.track, user });
 
   const handleClick = () => {
     if (props.onClick) {
       props.onClick()
       dispatch(setCurrentlyPlaying(props.track.id))
+      console.log('играет', props.track.id);
     }
   }
   //обновленный
   const handleClickLike = async () => {
-    setIsLiked(!isLiked)
+    dispatch(like({ id: props.track.id, user }));
+
     try {
       if (isLiked) {
         // для удаления трека из избранного
@@ -52,6 +44,7 @@ function PlaylistItem(props) {
           accessToken: user.token.access,
           trackId: props.track.id,
         })
+
         console.log(response)
       } else {
         //добавление трека в избранное
@@ -77,6 +70,7 @@ function PlaylistItem(props) {
         console.error(error)
       }
     }
+
   }
 
   const isCurrentlyPlaying = props.track.id === currentlyPlayingItem
@@ -87,9 +81,9 @@ function PlaylistItem(props) {
         <S.TrackTitle>
           <S.TrackTitleImage>
             <S.TrackTitleSvg alt="music">
-              <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+              <use xlinkHref="../img/icon/sprite.svg#icon-note"></use>
             </S.TrackTitleSvg>
-            {isCurrentlyPlaying && <S.BlinkingDot></S.BlinkingDot>}
+            {isCurrentlyPlaying && <S.BlinkingDot pause={!isPlaying}></S.BlinkingDot>}
           </S.TrackTitleImage>
           <S.TrackTitleText>
             <S.TrackTitleLink onClick={handleClick}>
@@ -116,9 +110,9 @@ function PlaylistItem(props) {
         <S.TrackTime>
           <S.TrackTimeSvg alt="time" onClick={handleClickLike}>
             {isLiked ? (
-              <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
+              <use xlinkHref="../img/icon/sprite.svg#icon-dislike"></use>
             ) : (
-              <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+              <use xlinkHref="../img/icon/sprite.svg#icon-like"></use>
             )}
           </S.TrackTimeSvg>
           <S.TrackTimeText>

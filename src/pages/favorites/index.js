@@ -5,9 +5,11 @@ import SidebarAll from '../../components/Sidebar/SidebarAll'
 import { useEffect, useState } from 'react'
 import { getFavorites, refreshToken } from '../../api'
 import { useUserContext } from '../../UserContext'
+import {useDispatch} from "react-redux";
+import {setTracks} from "../../store/useAudioPlayer/AudioPlayer.slise";
 
 export const MyPlaylist = ({ showSkeleton, onAuthButtonClick }) => {
-  const [tracks, setTracks] = useState([])
+  const dispatch = useDispatch();
   const [error, setError] = useState(null)
   const { user, handleLogin } = useUserContext()
 
@@ -17,7 +19,7 @@ export const MyPlaylist = ({ showSkeleton, onAuthButtonClick }) => {
       if (user) {
         try {
           const track = await getFavorites({ accessToken: user.token.access })
-          setTracks(track)
+          dispatch(setTracks(track));
         } catch (error) {
           try {
             const data = await refreshToken({refreshToken: user.token.refresh})
@@ -31,9 +33,9 @@ export const MyPlaylist = ({ showSkeleton, onAuthButtonClick }) => {
         }
       }
     }
-  
+
     fetchData()
-  }, [user])
+  }, [user, ])
 
 
   return (
@@ -45,9 +47,9 @@ export const MyPlaylist = ({ showSkeleton, onAuthButtonClick }) => {
               <S.Main>
                 <NavMenu />
                 <MainBlockAll
-                  tracks={tracks}
                   showSkeleton={showSkeleton}
                   error={error}
+
                 />
                 <SidebarAll
                   showSkeleton={showSkeleton}
