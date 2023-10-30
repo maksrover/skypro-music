@@ -1,0 +1,115 @@
+.center-block {
+    padding: 20px 40px 20px 111px;
+    background-color: #181818;
+    color: #ffffff;
+}
+
+.center-block h2 {
+    font-size: 48px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.filter-title {
+    font-size: 18px;
+    font-weight: 400;
+    margin-right: 15px;
+    color: #d9b6ff;
+}
+
+.filter-button {
+    font-size: 16px;
+    font-weight: 400;
+    border: 1px solid #d9b6ff;
+    border-radius: 60px;
+    padding: 6px 20px;
+    color: #d9b6ff;
+    cursor: pointer;
+}
+
+.filter-button:not(:last-child) {
+    margin-right: 10px;
+}
+
+.content-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.content-title h3 {
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+.content-title a {
+    font-size: 16px;
+    font-weight: 400;
+    color: #d9b6ff;
+    text-decoration: none;
+}
+
+.playlist {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.playlist-item {
+    background-color: #313131;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.playlist-item:hover {
+    background-color: #4e4e4e;
+}
+
+.playlist-title {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: #696969;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.playlist-title svg {
+    width: 12px;
+    height: 12px;
+    fill: transparent;
+    stroke: #696969;
+    margin-right: 5px;
+}
+
+.track-title {
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.track-author {
+    font-size: 16px;
+    font-weight: 400;
+    color: #696969;
+}
+
+.track-time {
+    font-size: 16px;
+    font-weight: 400;
+    text-align: right;
+    color: #696969;
+}

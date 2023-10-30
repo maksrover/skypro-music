@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import "./sidebar.css";
 
 function Sidebar() {
   return (
@@ -7,7 +8,7 @@ function Sidebar() {
         <p className="sidebar__personal-name">Sergey.Ivanov</p>
         <div className="sidebar__icon">
           <svg alt="logout">
-            <use xlinkHref="img/icon/sprite.svg#logout"></use>
+            <use xlinkhref="img/icon/sprite.svg#logout"></use>
           </svg>
         </div>
       </div>
