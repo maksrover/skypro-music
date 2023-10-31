@@ -23,13 +23,13 @@ function Footer() {
           </ul>
         </div>
         <div className="footer__social">
-          <a href="#">
+          <a href="profile.social.twitter">
             <i className="fab fa-facebook"></i>
           </a>
-          <a href="#">
+          <a href="profile.social.twitter">
             <i className="fab fa-twitter"></i>
           </a>
-          <a href="#">
+          <a href="profile.social.twitter">
             <i className="fab fa-instagram"></i>
           </a>
         </div>
