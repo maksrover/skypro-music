@@ -1,26 +1,20 @@
-import React from 'react';
-import './App.css'; 
-
-import NavBar from './components/NavBar.jsx'; 
-import CenterBlock from './components/CenterBlock'; 
-import Sidebar from './components/Sidebar'; 
-import PlayerBar from './components/PlayerBar'; 
-import Footer from './components/Footer'; 
+import "./styles/style.css";
+import CenterBlock from "./components/CenterBlock";
+import Sidebar from "./components/sidebar";
+import MusicPlayer from "./components/musicPlayer";
+import MainNav from "./components/mainNav";
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <div className="wrapper">
-        <div className="container">
-          <main className="main">
-            <CenterBlock />
-            <Sidebar />
-          </main>
-          <PlayerBar />
-        </div>
+    <div className="wrapper">
+      <div className="container">
+        <main className="main">
+          <MainNav />
+          <CenterBlock />
+          <Sidebar />
+          <MusicPlayer />
+        </main>
       </div>
-      <Footer />
     </div>
   );
 }
