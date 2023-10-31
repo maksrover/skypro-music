@@ -6,7 +6,7 @@ function CentralBlock() {
     <div className="main__centerblock centerblock">
       <div className="centerblock__search search">
         <svg className="search__svg">
-          <use xlinkhref="img/icon/sprite.svg#icon-search"></use>
+          <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
         </svg>
         <input
           className="search__text"
@@ -32,7 +32,7 @@ function CentralBlock() {
             <div className="playlist-title__col col03">АЛЬБОМ</div>
             <div className="playlist-title__col col04">
               <svg className="playlist-title__svg" alt="time">
-                <use xlinkhref="img/icon/sprite.svg#icon-watch"></use>
+                <use xlinkHref="img/icon/sprite.svg#icon-watch"></use>
               </svg>
             </div>
           </div>
@@ -42,7 +42,7 @@ function CentralBlock() {
                 <div className="track__title">
                   <div className="track__title-image">
                     <svg className="track__title-svg" alt="music">
-                      <use xlinkhref="img/icon/sprite.svg#icon-note"></use>
+                      <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     </svg>
                   </div>
                   <div className="track__title-text">
@@ -63,7 +63,7 @@ function CentralBlock() {
                 </div>
                 <div className="track__time">
                   <svg className="track__time-svg" alt="time">
-                    <use xlinkhref="img/icon/sprite.svg#icon-like"></use>
+                    <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   </svg>
                   <span className="track__time-text">4:44</span>
                 </div>
