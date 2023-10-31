@@ -198,6 +198,15 @@
     stroke: #696969;
 }
 
+
+
+.track__title {
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
 .volume__content {
     display: -webkit-box;
     display: -ms-flexbox;
