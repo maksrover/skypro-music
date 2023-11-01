@@ -69,6 +69,7 @@ function CentralBlock() {
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       }
