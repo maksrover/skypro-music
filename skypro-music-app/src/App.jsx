@@ -7,6 +7,7 @@ import Sidebar from "./components/Sidebar";
 import PlayerBar from "./components/PlayerBar";
 import Footer from "./components/Footer";
 
+
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function App() {
           <main className="main">
             <NavBar />
             <CenterBlock />
+           
             <Sidebar />
           </main>
           <PlayerBar />
