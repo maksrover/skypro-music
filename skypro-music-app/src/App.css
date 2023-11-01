@@ -8,10 +8,11 @@
 *:after {
   box-sizing: border-box;
 }
+
 .main {
-  
+
   display: flex;
-  
+
   justify-content: space-between;
 
   &__nav {
@@ -28,7 +29,7 @@
 
   &__sidebar {
     max-width: 418px;
-    
+    padding: 20px 90px 20px 78px;
   }
 }
 
@@ -346,6 +347,3 @@ body {
   stroke: #FFFFFF;
   cursor: pointer;
 }
-
-
-
