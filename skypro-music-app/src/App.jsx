@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
-import BlogPost from "./BlogPost"; // Import the BlogPost component
-
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import NavBar from "./components/NavBar.jsx";
 import CenterBlock from "./components/CenterBlock";
 import Sidebar from "./components/Sidebar";
@@ -11,18 +10,19 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <div className="App">
-      <div className="wrapper">
-        <div className="container">
-          <main className="main">
-          <BlogPost />
-            <NavBar />          
-
-            <CenterBlock />
-            <Sidebar />
-          </main>
-          <PlayerBar />
+      <SkeletonTheme baseColor="#202020" highlightColor="#444">
+        <div className="wrapper">
+          <div className="container">
+            <main className="main">
+              <Skeleton count={50} />
+              <NavBar />
+              <CenterBlock />
+              <Sidebar />
+            </main>
+            <PlayerBar />
+          </div>
         </div>
-      </div>
+      </SkeletonTheme>
       <Footer />
     </div>
   );
