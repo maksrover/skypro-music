@@ -9,12 +9,15 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="App">
-      <SkeletonTheme baseColor="#202020" highlightColor="#444">
+    <SkeletonTheme baseColor="#202020" highlightColor="#444">
+      <p>
+        <Skeleton count={10} />
+      </p>
+
+      <div className="App">
         <div className="wrapper">
           <div className="container">
             <main className="main">
-              <Skeleton count={50} />
               <NavBar />
               <CenterBlock />
               <Sidebar />
@@ -22,9 +25,9 @@ function App() {
             <PlayerBar />
           </div>
         </div>
-      </SkeletonTheme>
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </SkeletonTheme>
   );
 }
 
