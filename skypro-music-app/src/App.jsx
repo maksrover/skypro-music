@@ -10,25 +10,23 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 function App() {
   return (
-    <SkeletonTheme baseColor="#202020" highlightColor="#444">
-      <div className="App">
-        <p>
-          <Skeleton count={5} />
-        </p>
-        <div className="wrapper">
-          <div className="container">
-            <main className="main">
-              <NavBar />
+    <div className="App">
+      <div className="wrapper">
+        <div className="container">
+          <main className="main">
+            <NavBar />
 
+            <SkeletonTheme baseColor="#313131" highlightColor="#525252">
               <CenterBlock />
-              <Sidebar />
-            </main>
-            <PlayerBar />
-          </div>
+              <Skeleton count={30} />
+            </SkeletonTheme>
+            <Sidebar />
+          </main>
+          <PlayerBar />
         </div>
-        <Footer />
       </div>
-    </SkeletonTheme>
+      <Footer />
+    </div>
   );
 }
 
