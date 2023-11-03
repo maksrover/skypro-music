@@ -6,7 +6,6 @@ import CenterBlock from "./components/CenterBlock";
 import Sidebar from "./components/Sidebar";
 import PlayerBar from "./components/PlayerBar";
 import Footer from "./components/Footer";
-import "react-loading-skeleton/dist/skeleton.css";
 
 function App() {
   return (
