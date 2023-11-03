@@ -8,7 +8,7 @@ function Sidebar() {
         <p className="sidebar__personal-name">atamyrat.isayev</p>
         <div className="sidebar__icon">
           <svg alt="logout">
-            <use xlinkHref="img/icon/sprite.svg#logout"></use>
+            <use xlinkHref="img/icon/logout.svg"></use>
           </svg>
         </div>
       </div>
