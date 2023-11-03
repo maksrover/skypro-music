@@ -7,7 +7,7 @@ function CenterBlock() {
     <div className="main__centerblock centerblock">
       <div className="centerblock__search search">
         <svg className="search__svg">
-          <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
+          <use xlinkHref="img/icon/logout.svg"></use>
         </svg>
         <input
           className="search__text"
