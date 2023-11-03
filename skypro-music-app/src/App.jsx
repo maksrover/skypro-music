@@ -6,19 +6,20 @@ import CenterBlock from "./components/CenterBlock";
 import Sidebar from "./components/Sidebar";
 import PlayerBar from "./components/PlayerBar";
 import Footer from "./components/Footer";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function App() {
   return (
     <SkeletonTheme baseColor="#202020" highlightColor="#444">
-      <p>
-        <Skeleton count={10} />
-      </p>
-
       <div className="App">
+        <p>
+          <Skeleton count={5} />
+        </p>
         <div className="wrapper">
           <div className="container">
             <main className="main">
               <NavBar />
+
               <CenterBlock />
               <Sidebar />
             </main>
