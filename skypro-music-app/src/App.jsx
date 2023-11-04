@@ -1,5 +1,4 @@
 import React from "react";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import NavBar from "./components/NavBar.jsx";
 import CenterBlock from "./components/CenterBlock";
 import Sidebar from "./components/Sidebar";
@@ -10,19 +9,16 @@ import "./App.css";
 function App() {
   return (
     <div className="App">
-      <SkeletonTheme baseColor="#202020" highlightColor="#444">
-        <div className="wrapper">
-          <div className="container">
-            <main className="main">
-              <Skeleton count={50} />
-              <NavBar />
-              <CenterBlock />
-              <Sidebar />
-            </main>
-            <PlayerBar />
-          </div>
+      <div className="wrapper">
+        <div className="container">
+          <main className="main">
+            <NavBar />
+            <CenterBlock />
+            <Sidebar />
+          </main>
+          <PlayerBar />
         </div>
-      </SkeletonTheme>
+      </div>
       <Footer />
     </div>
   );
