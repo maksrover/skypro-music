@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "./components/NavBar.jsx";
+import NavBar from "./components/NavBar/NavBar";
 import CenterBlock from "./components/CenterBlock";
 import Sidebar from "./components/Sidebar";
 import PlayerBar from "./components/PlayerBar";
