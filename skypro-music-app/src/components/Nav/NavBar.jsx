@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
 import * as S from "./NavBar.styled";
 
-export function NavBar() {
+function NavBar() {
   const [visible, setVisible] = useState(false);
   const toggleVisibility = () => setVisible(!visible);
 
@@ -46,3 +45,5 @@ export function NavBar() {
     </S.MainNav>
   );
 }
+
+export default NavBar;

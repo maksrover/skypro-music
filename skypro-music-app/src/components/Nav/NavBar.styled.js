@@ -22,6 +22,7 @@ export const LogoImage = styled.img`
 `;
 
 export const NavBurger = styled.button`
+  position: fixed;
   width: 20px;
   height: 36px;
   padding: 13px 0;

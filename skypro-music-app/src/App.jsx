@@ -1,6 +1,7 @@
 import React from "react";
-import NavBar from "./components/NavBar/NavBar";
-import CenterBlock from "./components/CenterBlock";
+import { BrowserRouter as Router } from "react-router-dom";
+import NavBar from "./components/Nav/NavBar";
+import CenterBlock from "./components/centerBlockFolder/CenterBlock";
 import Sidebar from "./components/Sidebar";
 import PlayerBar from "./components/PlayerBar";
 import Footer from "./components/Footer";
@@ -8,19 +9,21 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <div className="wrapper">
-        <div className="container">
-          <main className="main">
-            <NavBar />
-            <CenterBlock />
-            <Sidebar />
-          </main>
-          <PlayerBar />
+    <Router>
+      <div className="App">
+        <div className="wrapper">
+          <div className="container">
+            <main className="main">
+              <NavBar />
+              <CenterBlock />
+              <Sidebar />
+            </main>
+            <PlayerBar />
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </Router>
   );
 }
 
