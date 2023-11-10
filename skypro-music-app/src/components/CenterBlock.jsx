@@ -2,7 +2,96 @@ import "./centerBlock.css";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import Filter from "./centerBlockFilter";
+import Filter from "./centerBlockFilter/centerBlockFilter";
+import styled from "styled-components";
+
+const StyledMainCenterblock = styled.nav`
+  width: auto;
+  -webkit-box-flex: 3;
+  -ms-flex-positive: 3;
+  flex-grow: 3;
+  padding: 20px 40px 20px 111px;
+`;
+
+const StyledCenterBlockSearch = styled.nav`
+  width: 100%;
+  border-bottom: 1px solid #4e4e4e;
+  margin-bottom: 51px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+`;
+
+const StyledH2 = styled.nav`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 72px;
+  letter-spacing: -0.8px;
+  margin-bottom: 45px;
+`;
+
+const StyledCenterBlockContent = styled.nav`
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+`;
+
+const StyledSearchSvg = styled.nav`
+  width: 17px;
+  height: 17px;
+  margin-right: 5px;
+  stroke: #ffffff;
+  fill: transparent;
+`;
+
+const StyledSearchText = styled.input`
+  flex-grow: 100;
+  background-color: transparent;
+  border: none;
+  padding: 13px 10px 14px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+
+  &::placeholder {
+    background-color: transparent;
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+`;
+const StyledContentTitle = styled.nav`
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-bottom: 24px;
+`;
 
 function CenterBlock() {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,22 +103,22 @@ function CenterBlock() {
   }, []);
 
   return (
-    <div className="main__centerblock centerblock">
-      <div className="centerblock__search search">
-        <svg className="search__svg">
+    <StyledMainCenterblock>
+      <StyledCenterBlockSearch>
+        <StyledSearchSvg>
           <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
-        </svg>
-        <input
+        </StyledSearchSvg>
+        <StyledSearchText
           className="search__text"
           type="search"
           placeholder="Поиск"
           name="search"
         />
-      </div>
-      <h2 className="centerblock__h2">Треки</h2>
+      </StyledCenterBlockSearch>
+      <StyledH2>Треки</StyledH2>
       <Filter />
-      <div className="centerblock__content">
-        <div className="content__title playlist-title">
+      <StyledCenterBlockContent>
+        <StyledContentTitle>
           <div className="playlist-title__col col01">Трек</div>
           <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
           <div className="playlist-title__col col03">АЛЬБОМ</div>
@@ -38,7 +127,7 @@ function CenterBlock() {
               <use xlinkHref="img/icon/sprite.svg#icon-watch"></use>
             </svg>
           </div>
-        </div>
+        </StyledContentTitle>
 
         <div className="content__playlist playlist">
           <div className="playlist__item">
@@ -1345,8 +1434,8 @@ function CenterBlock() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </StyledCenterBlockContent>
+    </StyledMainCenterblock>
   );
 }
 

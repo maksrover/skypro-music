@@ -125,11 +125,7 @@
 }
 
 .author_content-year {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    align-items: flex-start;
-    justify-content: center;
+
 }
 
 .author-year {
