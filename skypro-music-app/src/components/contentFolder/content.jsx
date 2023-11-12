@@ -1,9 +1,8 @@
 import React from "react";
-import { Playlist } from "../playlistFolder/playlist";
-import * as S from "./content.styled";
-import { PlaylistSkelet } from "../playlistFolder/playlistSkelet";
 
-export function Content({ loading, activTrack, isPlaying, setIsPlaying }) {
+import * as S from "./content.styled";
+
+export function Content() {
   return (
     <S.CenterBlockContent>
       <S.ContentTitle>

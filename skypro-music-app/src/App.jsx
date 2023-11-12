@@ -6,7 +6,7 @@ import { Search } from "./components/searchFolder/search";
 import { Sidebar } from "./components/sideBarFolder/sidebar";
 import * as S from "./app.styled";
 import { Playlist } from "./components/playlistFolder/playlist";
-import { PlaylistSkelet } from "./components/playlistFolder/playlistSkelet";
+
 
 export function App() {
   return (
@@ -18,10 +18,9 @@ export function App() {
             <Search />
             <Content />
 
-            <PlaylistSkelet />
-
-            <Playlist activTrack isPlaying setIsPlaying setActivTrack />
+            <Playlist />
           </S.MainCenterblock>
+
           <Sidebar />
         </S.Main>
         <S.Bar>

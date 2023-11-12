@@ -79,6 +79,7 @@ export const Centerblockh2 = styled.div`
   line-height: 72px;
   letter-spacing: -0.8px;
   margin-bottom: 45px;
+  color: white;
 `;
 
 export const CenterblockFilter = styled.div`
@@ -101,6 +102,7 @@ export const FilterTitle = styled.div`
   font-size: 16px;
   line-height: 24px;
   margin-right: 15px;
+  color: white;
 `;
 
 export const CenterblockFilterItem = styled.div`
