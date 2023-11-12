@@ -1,26 +1,35 @@
 import React from "react";
-import NavBar from "./components/NavBar.jsx";
-import CenterBlock from "./components/CenterBlock";
-import Sidebar from "./components/Sidebar";
-import PlayerBar from "./components/PlayerBar";
-import Footer from "./components/Footer";
-import "./App.css";
+import { Bar } from "./components/barFolder/bar";
+import { Content } from "./components/contentFolder/content";
+import { Nav } from "./components/navFolder/nav";
+import { Search } from "./components/searchFolder/search";
+import { Sidebar } from "./components/sideBarFolder/sidebar";
+import * as S from "./app.styled";
+import { Playlist } from "./components/playlistFolder/playlist";
+import { PlaylistSkelet } from "./components/playlistFolder/playlistSkelet";
 
-function App() {
+export function App() {
   return (
-    <div className="App">
-      <div className="wrapper">
-        <div className="container">
-          <main className="main">
-            <NavBar />
-            <CenterBlock />
-            <Sidebar />
-          </main>
-          <PlayerBar />
-        </div>
-      </div>
-      <Footer />
-    </div>
+    <S.Wrapper>
+      <S.Container>
+        <S.Main>
+          <Nav />
+          <S.MainCenterblock>
+            <Search />
+            <Content />
+
+            <PlaylistSkelet />
+
+            <Playlist activTrack isPlaying setIsPlaying setActivTrack />
+          </S.MainCenterblock>
+          <Sidebar />
+        </S.Main>
+        <S.Bar>
+          <Bar />
+        </S.Bar>
+        <footer></footer>
+      </S.Container>
+    </S.Wrapper>
   );
 }
 
