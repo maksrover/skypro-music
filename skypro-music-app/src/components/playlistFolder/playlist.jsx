@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import * as S from "./playlist.styled";
 import { tracks } from "../data/data";
 
@@ -34,7 +35,12 @@ export function Playlist() {
               </S.TrackTitleImg>
               <S.TrackTitleLink>
                 {isLoading ? (
-                  <Skeleton width={200} height={19} />
+                  <Skeleton
+                    width={55}
+                    height={55}
+                    baseColor="#202020"
+                    highlightColor="#444"
+                  />
                 ) : (
                   `${track.title}`
                 )}
@@ -46,7 +52,12 @@ export function Playlist() {
             <S.TrackAuthor>
               <S.TrackAuthorLink>
                 {isLoading ? (
-                  <Skeleton width={200} height={19} />
+                  <Skeleton
+                    width={55}
+                    height={55}
+                    baseColor="#202020"
+                    highlightColor="#444"
+                  />
                 ) : (
                   `${track.author}`
                 )}
@@ -55,7 +66,12 @@ export function Playlist() {
             <S.TrackAlbum>
               <S.TrackAlbumLink>
                 {isLoading ? (
-                  <Skeleton width={200} height={19} />
+                  <Skeleton
+                    width={55}
+                    height={55}
+                    baseColor="#202020"
+                    highlightColor="#444"
+                  />
                 ) : (
                   `${track.album}`
                 )}

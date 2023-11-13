@@ -6,13 +6,14 @@ import { Search } from "./components/searchFolder/search";
 import { Sidebar } from "./components/sideBarFolder/sidebar";
 import * as S from "./app.styled";
 import { Playlist } from "./components/playlistFolder/playlist";
-
+import { GlobalStyle } from "./components/globalStyle/globalStyle";
 
 export function App() {
   return (
     <S.Wrapper>
       <S.Container>
         <S.Main>
+          <style>{GlobalStyle}</style>
           <Nav />
           <S.MainCenterblock>
             <Search />

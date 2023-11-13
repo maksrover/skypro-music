@@ -6,12 +6,7 @@ export function Bar({ isPlaying, setIsPlaying, activTrack }) {
     <S.Bar>
       <S.BarContent>
         <S.AudioComponent></S.AudioComponent>
-        <S.StyledProgressInput
-          type="range"
-          min={0}
-          step={0.01}
-          $color="#ff0000"
-        />
+        <S.StyledProgressInput />
         <S.BarPlayerProgress></S.BarPlayerProgress>
         <S.BarPlayerBlock>
           <S.BarPlayer>
