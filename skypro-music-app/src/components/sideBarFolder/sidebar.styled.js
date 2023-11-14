@@ -1,11 +1,12 @@
-import styled from "styled-components";
+import  styled  from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const MainSidebar = styled.div`
   max-width: 501px;
   padding: 20px 90px 20px 78px;
 `;
 
-export const SidebarPersonal = styled.div`
+export const SidebarPersonal = styled(NavLink)`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -74,7 +75,7 @@ export const SidebarItem = styled.div`
     margin-bottom: 30px;
 `;
 
-export const SidebarLink = styled.div`
+export const SidebarLink = styled(NavLink)`
   width: 100%;
   height: 100%;
 `;
