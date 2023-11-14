@@ -2,7 +2,7 @@ import React from "react";
 import * as S from "./playlist.styled";
 import { tracks } from "../data/data";
 
-export function Playlist({ setActivTrack, setIsPlaying }) {
+export function Playlist() {
   return (
     <S.ContentPlaylist>
       {tracks.map((track) => (
