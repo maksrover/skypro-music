@@ -1,35 +1,252 @@
 import React from "react";
-import Skeleton from "./skelet";
-
+import Skeleton from "../skeletFolder/skelet";
 import * as S from "./playlist.styled";
 
 export function PlaylistSkelet() {
   return (
     <S.ContentPlaylist>
-      {[1, 2, 3, 4, 5].map((id) => (
-        <S.PlaylistItem key={id}>
-          <S.PlaylistTrack>
-            <S.TrackTitle>
-              <S.TrackTitleImg>
-                <Skeleton width={55} height={55} />
-              </S.TrackTitleImg>
-              <S.TrackTitleLink>
-                <Skeleton width={356} height={19} />
+      <S.PlaylistItem>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
+              <S.TrackTitleSvg alt="music" />
+            </S.TrackTitleImg>
+            <>
+              <S.TrackTitleLink href="http://">
+                <Skeleton width="356px" height="19px" />
+                <S.TrackTitleSpan />
               </S.TrackTitleLink>
-            </S.TrackTitle>
-            <S.TrackAuthor>
-              <S.TrackAuthorLink>
-                <Skeleton width={271} height={19} />
-              </S.TrackAuthorLink>
-            </S.TrackAuthor>
-            <S.TrackAlbum>
-              <S.TrackAlbumLink>
-                <Skeleton width={305} height={19} />
-              </S.TrackAlbumLink>
-            </S.TrackAlbum>
-          </S.PlaylistTrack>
-        </S.PlaylistItem>
-      ))}
+            </>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
+              <Skeleton width="271px" height="19px" />
+            </S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">
+              <Skeleton width="305px" height="19px" />
+            </S.TrackAlbumLink>
+          </S.TrackAlbum>
+        </S.PlaylistTrack>
+        <br></br>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
+              <S.TrackTitleSvg alt="music" />
+            </S.TrackTitleImg>
+            <>
+              <S.TrackTitleLink href="http://">
+                <Skeleton width="356px" height="19px" />
+                <S.TrackTitleSpan />
+              </S.TrackTitleLink>
+            </>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
+              <Skeleton width="271px" height="19px" />
+            </S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">
+              <Skeleton width="305px" height="19px" />
+            </S.TrackAlbumLink>
+          </S.TrackAlbum>
+        </S.PlaylistTrack>
+        <br></br>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
+              <S.TrackTitleSvg alt="music" />
+            </S.TrackTitleImg>
+            <>
+              <S.TrackTitleLink href="http://">
+                <Skeleton width="356px" height="19px" />
+                <S.TrackTitleSpan />
+              </S.TrackTitleLink>
+            </>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
+              <Skeleton width="271px" height="19px" />
+            </S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">
+              <Skeleton width="305px" height="19px" />
+            </S.TrackAlbumLink>
+          </S.TrackAlbum>
+        </S.PlaylistTrack>
+        <br></br>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
+              <S.TrackTitleSvg alt="music" />
+            </S.TrackTitleImg>
+            <>
+              <S.TrackTitleLink href="http://">
+                <Skeleton width="356px" height="19px" />
+                <S.TrackTitleSpan />
+              </S.TrackTitleLink>
+            </>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
+              <Skeleton width="271px" height="19px" />
+            </S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">
+              <Skeleton width="305px" height="19px" />
+            </S.TrackAlbumLink>
+          </S.TrackAlbum>
+        </S.PlaylistTrack>
+        <br></br>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
+              <S.TrackTitleSvg alt="music" />
+            </S.TrackTitleImg>
+            <>
+              <S.TrackTitleLink href="http://">
+                <Skeleton width="356px" height="19px" />
+                <S.TrackTitleSpan />
+              </S.TrackTitleLink>
+            </>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
+              <Skeleton width="271px" height="19px" />
+            </S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">
+              <Skeleton width="305px" height="19px" />
+            </S.TrackAlbumLink>
+          </S.TrackAlbum>
+        </S.PlaylistTrack>
+        <br></br>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
+              <S.TrackTitleSvg alt="music" />
+            </S.TrackTitleImg>
+            <>
+              <S.TrackTitleLink href="http://">
+                <Skeleton width="356px" height="19px" />
+                <S.TrackTitleSpan />
+              </S.TrackTitleLink>
+            </>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
+              <Skeleton width="271px" height="19px" />
+            </S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">
+              <Skeleton width="305px" height="19px" />
+            </S.TrackAlbumLink>
+          </S.TrackAlbum>
+        </S.PlaylistTrack>
+        <br></br>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
+              <S.TrackTitleSvg alt="music" />
+            </S.TrackTitleImg>
+            <>
+              <S.TrackTitleLink href="http://">
+                <Skeleton width="356px" height="19px" />
+                <S.TrackTitleSpan />
+              </S.TrackTitleLink>
+            </>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
+              <Skeleton width="271px" height="19px" />
+            </S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">
+              <Skeleton width="305px" height="19px" />
+            </S.TrackAlbumLink>
+          </S.TrackAlbum>
+        </S.PlaylistTrack>
+        <br></br>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
+              <S.TrackTitleSvg alt="music" />
+            </S.TrackTitleImg>
+            <>
+              <S.TrackTitleLink href="http://">
+                <Skeleton width="356px" height="19px" />
+                <S.TrackTitleSpan />
+              </S.TrackTitleLink>
+            </>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
+              <Skeleton width="271px" height="19px" />
+            </S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">
+              <Skeleton width="305px" height="19px" />
+            </S.TrackAlbumLink>
+          </S.TrackAlbum>
+        </S.PlaylistTrack>
+        <br></br>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
+              <S.TrackTitleSvg alt="music" />
+            </S.TrackTitleImg>
+            <>
+              <S.TrackTitleLink href="http://">
+                <Skeleton width="356px" height="19px" />
+                <S.TrackTitleSpan />
+              </S.TrackTitleLink>
+            </>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
+              <Skeleton width="271px" height="19px" />
+            </S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">
+              <Skeleton width="305px" height="19px" />
+            </S.TrackAlbumLink>
+          </S.TrackAlbum>
+        </S.PlaylistTrack>
+        <br></br>
+        <S.PlaylistTrack>
+          <S.TrackTitle>
+            <S.TrackTitleImg>
+              <S.TrackTitleSvg alt="music" />
+            </S.TrackTitleImg>
+            <>
+              <S.TrackTitleLink href="http://">
+                <Skeleton width="356px" height="19px" />
+                <S.TrackTitleSpan />
+              </S.TrackTitleLink>
+            </>
+          </S.TrackTitle>
+          <S.TrackAuthor>
+            <S.TrackAuthorLink href="http://">
+              <Skeleton width="271px" height="19px" />
+            </S.TrackAuthorLink>
+          </S.TrackAuthor>
+          <S.TrackAlbum>
+            <S.TrackAlbumLink href="http://">
+              <Skeleton width="305px" height="19px" />
+            </S.TrackAlbumLink>
+          </S.TrackAlbum>
+        </S.PlaylistTrack>
+        <br></br>
+      </S.PlaylistItem>
     </S.ContentPlaylist>
   );
 }
