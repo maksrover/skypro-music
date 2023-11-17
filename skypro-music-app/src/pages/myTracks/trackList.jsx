@@ -1,7 +1,7 @@
 import React from "react";
-import * as S from "../components/playlistFolder/playlist.styled";
+import * as S from "../../components/playlistFolder/playlist.styled";
 import * as M from "./myTracks.styled";
-import Skeleton from "../components/skelet/skelet";
+import Skeleton from "../../components/skeletFolder/skelet1";
 
 export function TrackList({ loading }) {
   return (

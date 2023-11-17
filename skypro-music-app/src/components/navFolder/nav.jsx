@@ -1,7 +1,6 @@
 import { useState } from "react";
 import React from "react";
 import * as S from "./nav.styled";
-import { Link } from "react-router-dom";
 
 export function Nav() {
   const [visible, setVisible] = useState(false);

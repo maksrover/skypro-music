@@ -1,8 +1,8 @@
 import React from "react";
 import * as M from "../myTracks/myTracks.styled";
 import * as S from "../mainFolder/main.styled";
-import { Nav } from "../components/navFolder/nav";
-import { Bar } from "../components/barFolder/bar";
+import { Nav } from "../../components/navFolder/nav";
+import { Bar } from "../../components/barFolder/bar";
 import * as N from "./notFound.styled";
 
 export function NotFound() {

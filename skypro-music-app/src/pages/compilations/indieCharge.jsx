@@ -1,9 +1,9 @@
 import React from "react";
 import * as M from "../myTracks/myTracks.styled";
 import * as S from "../mainFolder/main.styled";
-import { Nav } from "../components/navFolder/nav";
+import { Nav } from "../../components/navFolder/nav";
 import { TrackList } from "../myTracks/trackList";
-import { Bar } from "../components/barFolder/bar";
+import { Bar } from "../../components/barFolder/bar";
 
 export function IndieCharge({ loading }) {
   return (

@@ -1,7 +1,7 @@
 import * as S from "../mainFolder/main.styled";
-import { Nav } from "../components/navFolder/nav";
-import { TrackList } from "./trackList";
-import { Bar } from "../components/barFolder/bar";
+import { Nav } from "../../components/navFolder/nav";
+import { TrackList } from "../myTracks/trackList";
+import { Bar } from "../../components/barFolder/bar";
 import * as M from "./myTracks.styled";
 
 export const MyTracks = ({ loading }) => {

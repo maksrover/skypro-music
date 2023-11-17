@@ -7,6 +7,7 @@ import { Sidebar } from "../../components/sideBarFolder/sidebar";
 import * as S from "./main.styled";
 import { PlaylistSkelet } from "../../components/playlistFolder/playlistSkelet";
 import { Playlist } from "../../components/playlistFolder/playlist";
+import { GlobalStyle } from "./globalStyle";
 
 export function Main() {
   const [loading, setLoading] = useState(true);
@@ -20,23 +21,26 @@ export function Main() {
   }, []);
 
   return (
-    <S.Wrapper>
-      <S.Container>
-        <S.Main>
-          <Nav />
-          <S.MainCenterblock>
-            <Search />
-            <Content />
+    <>
+      <GlobalStyle />
+      <S.Wrapper>
+        <S.Container>
+          <S.Main>
+            <Nav />
+            <S.MainCenterblock>
+              <Search />
+              <Content />
 
-            {loading ? <PlaylistSkelet /> : <Playlist />}
-          </S.MainCenterblock>
-          <Sidebar />
-        </S.Main>
-        <S.Bar>
-          <Bar />
-        </S.Bar>
-        <footer></footer>
-      </S.Container>
-    </S.Wrapper>
+              {loading ? <PlaylistSkelet /> : <Playlist />}
+            </S.MainCenterblock>
+            <Sidebar />
+          </S.Main>
+          <S.Bar>
+            <Bar />
+          </S.Bar>
+          <footer></footer>
+        </S.Container>
+      </S.Wrapper>
+    </>
   );
 }
