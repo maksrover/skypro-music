@@ -1,6 +1,5 @@
 import * as S from "../mainFolder/main.styled";
 import * as L from "./login.styled";
-import { useNavigate } from "react-router-dom";
 
 export const Login = ({ onAuthButtonClick }) => {
   return (
