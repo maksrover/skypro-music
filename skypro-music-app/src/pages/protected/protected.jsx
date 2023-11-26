@@ -1,11 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useCookies } from "react-cookie";
 
-export const ProtectedRoute = ({ redirectPath = "/login" }) => {
-  const [cookies] = useCookies(["token"]);
-  const hasToken = !!cookies.token;
-
-  if (!hasToken) {
+export const ProtectedRoute = ({ redirectPath = "/", isAllowed }) => {
+  if (!isAllowed) {
     return <Navigate to={redirectPath} replace={true} />;
   }
 

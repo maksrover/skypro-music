@@ -1,12 +1,23 @@
+import React, { useState } from "react";
 import { GlobalStyle } from "./pages/mainFolder/globalStyle";
-
+import { Main } from "./pages/mainFolder/main";
 import { AppRoutes } from "./routes";
 
 export function App() {
+  const initialUserState = localStorage.getItem("token") === "true";
+  const [isLoggedIn, setIsLoggedIn] = useState(initialUserState);
+
+  const handleLogin = () => {
+    localStorage.setItem("token", "true");
+    setIsLoggedIn(true);
+  };
+
   return (
     <>
       <GlobalStyle />
-      <AppRoutes />
+      <AppRoutes isLoggedIn={isLoggedIn} onAuthButtonClick={handleLogin}>
+        <Main />
+      </AppRoutes>
     </>
   );
 }
