@@ -12,14 +12,6 @@ import { NotFound } from "./pages/404/NotFound";
 export const AppRoutes = ({ isLoggedIn, onAuthButtonClick }) => {
   return (
     <Routes>
-      <Route element={<ProtectedRoute isAllowed={isLoggedIn} />}>
-        <Route path="/favorites" element={<MyTracks />} />
-        <Route path="/category/1" element={<PlaylistOfTheDay />} />
-        <Route path="/" element={<Main />} />
-        <Route path="/category/2" element={<DanceHits />} />
-        <Route path="//category/3" element={<IndieCharge />} />
-      </Route>
-
       <Route
         path="/login"
         element={<Login onAuthButtonClick={onAuthButtonClick} />}
@@ -28,6 +20,13 @@ export const AppRoutes = ({ isLoggedIn, onAuthButtonClick }) => {
         path="/register"
         element={<RegisterUser onAuthButtonClick={onAuthButtonClick} />}
       />
+      <Route element={<ProtectedRoute isAllowed={isLoggedIn} />}>
+        <Route path="/favorites" element={<MyTracks />} />
+        <Route path="/category/1" element={<PlaylistOfTheDay />} />
+        <Route path="/" element={<Main />} />
+        <Route path="/category/2" element={<DanceHits />} />
+        <Route path="/category/3" element={<IndieCharge />} />
+      </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
