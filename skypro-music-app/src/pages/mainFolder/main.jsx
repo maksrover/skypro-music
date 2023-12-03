@@ -8,17 +8,21 @@ import * as S from "./main.styled";
 import { PlaylistSkelet } from "../../components/playlistFolder/playlistSkelet";
 import { Playlist } from "../../components/playlistFolder/playlist";
 import { GlobalStyle } from "./globalStyle";
+import { getTrack } from "../api";
 
 export function Main() {
+  const [tracks, setTrackList] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setLoading(false);
-    }, 5000);
-
-    return () => clearTimeout(timeout);
+    getTrack()
+      .then((tracks) => {
+        setTrackList(tracks);
+        setLoading(false);
+      })
+      .catch((error) => {});
   }, []);
+  console.log(tracks);
 
   return (
     <>
