@@ -2,11 +2,17 @@ import React from "react";
 import * as S from "./playlist.styled";
 import { tracks } from "../data/data";
 
-export function Playlist() {
+export function Playlist({ setActivTrack, setIsPlaying }) {
   return (
     <S.ContentPlaylist>
       {tracks.map((track) => (
-        <S.PlaylistItem key={track.id}>
+        <S.PlaylistItem
+          key={track.id}
+          onClick={() => {
+            setActivTrack(track);
+            setIsPlaying(true);
+          }}
+        >
           <S.PlaylistTrack>
             <S.TrackTitle>
               <S.TrackTitleImg>
