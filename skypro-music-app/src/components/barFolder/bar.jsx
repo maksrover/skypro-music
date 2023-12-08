@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import * as S from "./bar.styled";
 
 export function Bar({ isPlaying, setIsPlaying, activTrack }) {
-  const [isBarPlayerBlockVisible, setIsBarPlayerBlockVisible] = useState(false);
+  const [isBarVisible, setIsBarVisible] = useState(false);
 
-  const toggleBarPlayerBlock = () => {
-    setIsBarPlayerBlockVisible(!isBarPlayerBlockVisible);
+  const toggleBar = () => {
+    setIsBarVisible(!isBarVisible);
   };
 
   const handleClick = (track) => {
     setIsPlaying(!isPlaying);
     activTrack(track);
-    toggleBarPlayerBlock();
+    toggleBar();
   };
 
   return (

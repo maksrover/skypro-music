@@ -15,6 +15,7 @@ export function Main() {
   const [loading, setLoading] = useState(true);
   const [activTrack, setActivTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isBarVisible, setIsBarVisible] = useState(false);
 
   useEffect(() => {
     getTrack()
@@ -24,7 +25,12 @@ export function Main() {
       })
       .catch((error) => {});
   }, []);
-  console.log(tracks);
+
+  const handleTrackClick = (track) => {
+    setActivTrack(track);
+    setIsPlaying(true);
+    setIsBarVisible(true);
+  };
 
   return (
     <>
@@ -35,21 +41,31 @@ export function Main() {
             <Nav />
             <S.MainCenterblock>
               <Search />
-              <Content />
+              <Content
+                loading={loading}
+                activTrack={activTrack}
+                isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
+                setActivTrack={setActivTrack}
+              />
               {loading ? (
                 <PlaylistSkelet />
               ) : (
                 <Playlist
-                  setActivTrack={setActivTrack}
+                  activTrack={activTrack}
+                  isPlaying={isPlaying}
                   setIsPlaying={setIsPlaying}
+                  setActivTrack={handleTrackClick}
                 />
               )}
               <S.Bar>
-                <Bar
-                  isPlaying={isPlaying}
-                  setIsPlaying={setIsPlaying}
-                  activTrack={activTrack}
-                />
+                {activTrack && isBarVisible ? (
+                  <Bar
+                    loading={loading}
+                    activTrack={activTrack}
+                    setIsPlaying={setIsPlaying}
+                  />
+                ) : null}
               </S.Bar>
             </S.MainCenterblock>
             <Sidebar />
