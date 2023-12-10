@@ -7,73 +7,66 @@ import { Search } from "../../components/searchFolder/search";
 import { Sidebar } from "../../components/sideBarFolder/sidebar";
 import * as S from "./main.styled";
 import { PlaylistSkelet } from "../../components/playlistFolder/playlistSkelet";
-import { GlobalStyle } from "./globalStyle";
+
 import { getTrack } from "../api";
 
 export function Main() {
-  const [tracks, setTrackList] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [loading, setLoading] = useState(true);
   const [activTrack, setActivTrack] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isBarVisible, setIsBarVisible] = useState(false);
-
+  const [tracks, setTrackList] = useState([]);
+  const [newApiError, setNewApiError] = useState(null);
   useEffect(() => {
     getTrack()
       .then((tracks) => {
         setTrackList(tracks);
         setLoading(false);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        setNewApiError(error.message);
+      });
   }, []);
-
-  const handleTrackClick = (track) => {
-    setActivTrack(track);
-    setIsPlaying(true);
-    setIsBarVisible(true);
-  };
+  console.log(tracks);
 
   return (
-    <>
-      <GlobalStyle />
-      <S.Wrapper>
-        <S.Container>
-          <S.Main>
-            <Nav />
-            <S.MainCenterblock>
-              <Search />
-              <Content
-                loading={loading}
+    <S.Wrapper>
+      <S.Container>
+        <S.Main>
+          <Nav />
+          <S.MainCenterblock>
+            <Search />
+            <Content
+              loading={loading}
+              activTrack={activTrack}
+              isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
+              setActivTrack={setActivTrack}
+            />
+            {newApiError ? <p>Не удалось загрузить данные</p> : null}
+            {loading ? (
+              <PlaylistSkelet />
+            ) : (
+              <Playlist
                 activTrack={activTrack}
                 isPlaying={isPlaying}
                 setIsPlaying={setIsPlaying}
                 setActivTrack={setActivTrack}
               />
-              {loading ? (
-                <PlaylistSkelet />
-              ) : (
-                <Playlist
-                  activTrack={activTrack}
-                  isPlaying={isPlaying}
-                  setIsPlaying={setIsPlaying}
-                  setActivTrack={handleTrackClick}
-                />
-              )}
-              <S.Bar>
-                {activTrack && isBarVisible ? (
-                  <Bar
-                    loading={loading}
-                    activTrack={activTrack}
-                    setIsPlaying={setIsPlaying}
-                  />
-                ) : null}
-              </S.Bar>
-            </S.MainCenterblock>
-            <Sidebar />
-          </S.Main>
-
-          <footer></footer>
-        </S.Container>
-      </S.Wrapper>
-    </>
+            )}
+          </S.MainCenterblock>
+          <Sidebar loading={loading} activTrack={activTrack} />
+        </S.Main>
+        <S.Bar>
+          {activTrack ? (
+            <Bar
+              activTrack={activTrack}
+              isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
+            />
+          ) : null}
+        </S.Bar>
+        <footer></footer>
+      </S.Container>
+    </S.Wrapper>
   );
 }

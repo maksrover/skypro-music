@@ -1,24 +1,71 @@
-import React, { useState } from "react";
+import React from "react";
 import * as S from "./bar.styled";
+import { useRef, useState, useEffect } from "react";
 
 export function Bar({ isPlaying, setIsPlaying, activTrack }) {
-  const [isBarVisible, setIsBarVisible] = useState(false);
-
-  const toggleBar = () => {
-    setIsBarVisible(!isBarVisible);
+  const [isRepeat, setIsRepeat] = useState(false);
+  const [volume, setVolume] = useState(1);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioComponentRef = useRef(null);
+  const handleClick = () => {
+    if (isPlaying) {
+      audioComponentRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioComponentRef.current.play();
+      setIsPlaying(true);
+    }
   };
-
-  const handleClick = (track) => {
-    setIsPlaying(!isPlaying);
-    activTrack(track);
-    toggleBar();
+  const repeatClick = () => {
+    audioComponentRef.current.loop = !isRepeat;
+    setIsRepeat(!isRepeat);
   };
+  const volumeOnChange = (event) => {
+    const newVolume = audioComponentRef.current.volume;
+    setVolume(newVolume);
+    audioComponentRef.current.volume = event.target.value;
+  };
+  const timeOnChange = (event) => {
+    audioComponentRef.current.currentTime = event.target.value;
+  };
+  useEffect(() => {
+    const ref = audioComponentRef.current;
 
+    const timeUpdate = () => {
+      if (ref.currentTime && ref.duration) {
+        setCurrentTime(ref.currentTime);
+        setDuration(ref.duration);
+      } else {
+        setCurrentTime(0);
+        setDuration(0);
+      }
+    };
+    ref.addEventListener("timeupdate", timeUpdate);
+
+    return () => {
+      ref.removeEventListener("timeupdate", timeUpdate);
+    };
+  });
+  const buttonPlug = () => alert("Еще не реализовано");
   return (
     <S.Bar>
       <S.BarContent>
-        <S.AudioComponent></S.AudioComponent>
-        <S.StyledProgressInput />
+        <S.AudioComponent
+          controls
+          src={activTrack.track_file}
+          ref={audioComponentRef}
+          autoPlay
+        ></S.AudioComponent>
+        <S.StyledProgressInput
+          type="range"
+          min={0}
+          max={duration}
+          value={currentTime}
+          step={0.01}
+          onChange={timeOnChange}
+          $color="#ff0000"
+        />
         <S.BarPlayerProgress></S.BarPlayerProgress>
         <S.BarPlayerBlock>
           <S.BarPlayer>
@@ -29,7 +76,11 @@ export function Bar({ isPlaying, setIsPlaying, activTrack }) {
                 </S.PlayerBtnPrevSvg>
               </S.PlayerBtnPrev>
               <S.PlayerBtnPlay>
-                <S.PlayerBtnPlaySvg className="_btn" alt="play">
+                <S.PlayerBtnPlaySvg
+                  className="_btn"
+                  alt="play"
+                  onClick={handleClick}
+                >
                   {isPlaying ? (
                     <use xlinkHref="/img/icon/sprite.svg#icon-pause"></use>
                   ) : (
@@ -42,13 +93,17 @@ export function Bar({ isPlaying, setIsPlaying, activTrack }) {
                   <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
                 </S.PlayerBtnNextSvg>
               </S.BtnNext>
-              <S.PlayerBtnRepeat className="_btn-icon">
-                <S.BtnRepeatSvg className="player__btn-repeat-svg" alt="repeat">
+              <S.PlayerBtnRepeat className="_btn-icon" onClick={repeatClick}>
+                <S.BtnRepeatSvg
+                  className="player__btn-repeat-svg"
+                  alt="repeat"
+                  $isRepeat={isRepeat}
+                >
                   <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                 </S.BtnRepeatSvg>
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShuffle className="_btn-icon">
-                <S.PlayerBtnShuffleSvg alt="shuffle">
+                <S.PlayerBtnShuffleSvg alt="shuffle" onClick={buttonPlug}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
                 </S.PlayerBtnShuffleSvg>
               </S.PlayerBtnShuffle>
@@ -61,8 +116,16 @@ export function Bar({ isPlaying, setIsPlaying, activTrack }) {
                     <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                   </S.TrackPlaySvg>
                 </S.TrackPlayImage>
-                <S.TrackPlayAuthor></S.TrackPlayAuthor>
-                <S.TrackPlayAlbum></S.TrackPlayAlbum>
+                <S.TrackPlayAuthor>
+                  <S.TrackPlayAuthorLink href="http://">
+                    {activTrack.name}
+                  </S.TrackPlayAuthorLink>
+                </S.TrackPlayAuthor>
+                <S.TrackPlayAlbum>
+                  <S.TrackPlayAlbumLink href="http://">
+                    {activTrack.author}
+                  </S.TrackPlayAlbumLink>
+                </S.TrackPlayAlbum>
               </S.TrackPlayContain>
 
               <S.TrackPlayLikeDis>
@@ -91,9 +154,11 @@ export function Bar({ isPlaying, setIsPlaying, activTrack }) {
                   className="_btn"
                   type="range"
                   name="range"
+                  value={volume}
                   min={0}
                   max={1}
                   step={0.01}
+                  onChange={volumeOnChange}
                 />
               </S.VolumeProgress>
             </S.VolumeContent>
