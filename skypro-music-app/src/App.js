@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AppRoutes } from "./routes";
 
 export function App() {
-  const initialUserState = localStorage.getItem("user") === "true";
+  const initialUserState = localStorage.getItem("token") === "true";
   const [isLoggedIn, setIsLoggedIn] = useState(initialUserState);
   const handleLogin = () => {
     localStorage.setItem("isLoggedIn", "setIsLoggedIn");

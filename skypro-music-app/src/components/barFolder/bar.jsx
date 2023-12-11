@@ -1,6 +1,5 @@
-import React from "react";
 import * as S from "./bar.styled";
-import { useRef, useState, useEffect } from "react";
+import { React, useRef, useState, useEffect } from "react";
 
 export function Bar({ isPlaying, setIsPlaying, activTrack }) {
   const [isRepeat, setIsRepeat] = useState(false);
@@ -9,13 +8,17 @@ export function Bar({ isPlaying, setIsPlaying, activTrack }) {
   const [duration, setDuration] = useState(0);
   const audioComponentRef = useRef(null);
   const handleClick = () => {
+    const audioRef = audioComponentRef.current;
+
     if (isPlaying) {
-      audioComponentRef.current.pause();
-      setIsPlaying(false);
+      audioRef.pause();
     } else {
-      audioComponentRef.current.play();
-      setIsPlaying(true);
+      audioRef.play().catch((error) => {
+        console.error("Error playing audio:", error);
+      });
     }
+
+    setIsPlaying(!isPlaying);
   };
   const repeatClick = () => {
     audioComponentRef.current.loop = !isRepeat;
@@ -82,7 +85,16 @@ export function Bar({ isPlaying, setIsPlaying, activTrack }) {
                   onClick={handleClick}
                 >
                   {isPlaying ? (
-                    <use xlinkHref="/img/icon/sprite.svg#icon-pause"></use>
+                    <svg
+                      width="15"
+                      height="19"
+                      viewBox="0 0 15 19"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect width="5" height="19" fill="#D9D9D9" />
+                      <rect x="10" width="5" height="19" fill="#D9D9D9" />
+                    </svg>
                   ) : (
                     <use xlinkHref="/img/icon/sprite.svg#icon-play"></use>
                   )}
