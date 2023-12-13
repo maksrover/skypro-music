@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./playlist.styled";
-import { tracks } from "../data/data";
+import { getTrack } from "../../pages/api";
 
 export function Playlist({ setActivTrack, setIsPlaying }) {
+  const [tracks, setTracks] = useState([]);
+
+  useEffect(() => {
+    getTrack()
+      .then((tracks) => {
+        setTracks(tracks);
+      })
+      .catch((error) => {
+        console.error("Error fetching tracks:", error);
+      });
+  }, []);
+
   return (
     <S.ContentPlaylist>
       {tracks.map((track) => (
