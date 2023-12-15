@@ -34,7 +34,7 @@ export function Playlist({ setActivTrack, setIsPlaying }) {
               </S.TrackTitleImg>
               <>
                 <S.TrackTitleLink>
-                  {track.title} <S.TrackTitleSpan></S.TrackTitleSpan>
+                  {track.name} <S.TrackTitleSpan></S.TrackTitleSpan>
                 </S.TrackTitleLink>
               </>
             </S.TrackTitle>
