@@ -3,6 +3,7 @@ export async function getTrack() {
     "https://skypro-music-api.skyeng.tech/catalog/track/all/"
   );
   const trackData = await trackResponse.json();
+  console.log(trackData);
 
   if (!trackData) {
     throw new Error("Failed to fetch tracks");

@@ -48,7 +48,7 @@ export function Playlist({ setActivTrack, setIsPlaying }) {
             <S.TrackTimeSvg alt="time">
               <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
             </S.TrackTimeSvg>
-            <S.TrackTimeText> {track.time} </S.TrackTimeText>
+            <S.TrackTimeText> {track.duration_in_seconds} </S.TrackTimeText>
           </S.PlaylistTrack>
         </S.PlaylistItem>
       ))}
