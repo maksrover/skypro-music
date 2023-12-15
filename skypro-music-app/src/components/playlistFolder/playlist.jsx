@@ -5,6 +5,14 @@ import { getTrack } from "../../pages/api";
 export function Playlist({ setActivTrack, setIsPlaying }) {
   const [tracks, setTracks] = useState([]);
 
+  const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+      2,
+      "0"
+    )}`;
+  };
   useEffect(() => {
     getTrack()
       .then((tracks) => {
@@ -48,7 +56,10 @@ export function Playlist({ setActivTrack, setIsPlaying }) {
             <S.TrackTimeSvg alt="time">
               <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
             </S.TrackTimeSvg>
-            <S.TrackTimeText> {track.duration_in_seconds} </S.TrackTimeText>
+            <S.TrackTimeText>
+              {" "}
+              {formatTime(track.duration_in_seconds)}{" "}
+            </S.TrackTimeText>
           </S.PlaylistTrack>
         </S.PlaylistItem>
       ))}
