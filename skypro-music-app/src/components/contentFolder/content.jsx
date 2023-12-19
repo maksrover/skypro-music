@@ -2,7 +2,7 @@ import React from "react";
 
 import * as S from "./content.styled";
 
-export function Content({ loading, activTrack, isPlaying, setIsPlaying }) {
+export function Content() {
   return (
     <S.CenterBlockContent>
       <S.ContentTitle>
@@ -16,5 +16,5 @@ export function Content({ loading, activTrack, isPlaying, setIsPlaying }) {
         </S.PlaylistTitlecol04>
       </S.ContentTitle>
     </S.CenterBlockContent>
-  )
+  );
 }

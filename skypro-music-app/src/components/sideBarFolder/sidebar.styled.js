@@ -23,7 +23,7 @@ export const SidebarPersonal = styled(NavLink)`
   padding: 12px 0 15px 0;
 `;
 
-export const SidebarPersonalName = styled.p`
+export const SidebarPersonalName = styled.a`
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
