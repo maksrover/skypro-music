@@ -1,14 +1,23 @@
 import Skeleton from "../skeletFolder/skelet";
-import React from "react";
+
 import * as S from "./sidebar.styled";
+import { AuthContext } from "../../pages/authContext/AuthContext";
+import React, { useContext } from "react";
 
 export function Sidebar({ loading }) {
+  const { user, logout } = useContext(AuthContext);
+  console.log("User:", user);
   return (
     <div>
       {loading ? (
         <S.MainSidebar>
           <S.SidebarPersonal>
-            <S.SidebarAvatar src="/img/outsvg.svg" alt="out" />
+            <S.SidebarPersonalName>{user.username}</S.SidebarPersonalName>
+            <S.SidebarAvatar
+              onClick={() => logout()}
+              src="/img/outsvg.svg"
+              alt="out"
+            />
           </S.SidebarPersonal>
           <S.SidebarBlock>
             <S.SidebarList>

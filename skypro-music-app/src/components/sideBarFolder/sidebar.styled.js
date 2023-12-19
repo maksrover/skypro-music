@@ -1,4 +1,4 @@
-import  styled  from "styled-components";
+import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 export const MainSidebar = styled.div`
@@ -28,7 +28,7 @@ export const SidebarPersonalName = styled.p`
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #ffffff;
+  color: white;
   margin-right: 16px;
 `;
 
