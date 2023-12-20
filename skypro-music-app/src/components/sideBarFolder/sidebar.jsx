@@ -1,5 +1,4 @@
 import Skeleton from "../skeletFolder/skelet";
-
 import * as S from "./sidebar.styled";
 import { AuthContext } from "../../pages/authContext/AuthContext";
 import React, { useContext } from "react";
@@ -7,18 +6,19 @@ import React, { useContext } from "react";
 export function Sidebar({ loading }) {
   const { user, logout } = useContext(AuthContext);
   console.log("User:", user);
+
   return (
     <div>
-      {loading ? (
-        <S.MainSidebar>
-          <S.SidebarPersonal>
-            <S.SidebarPersonalName>{user.username}</S.SidebarPersonalName>
-            <S.SidebarAvatar
-              onClick={() => logout()}
-              src="/img/outsvg.svg"
-              alt="out"
-            />
-          </S.SidebarPersonal>
+      <S.MainSidebar>
+        <S.SidebarPersonal>
+          <S.SidebarPersonalName>{user.username}</S.SidebarPersonalName>
+          <S.SidebarAvatar
+            onClick={() => logout()}
+            src="/img/outsvg.svg"
+            alt="out"
+          />
+        </S.SidebarPersonal>
+        {loading ? (
           <S.SidebarBlock>
             <S.SidebarList>
               <S.SidebarItem>
@@ -38,12 +38,7 @@ export function Sidebar({ loading }) {
               </S.SidebarItem>
             </S.SidebarList>
           </S.SidebarBlock>
-        </S.MainSidebar>
-      ) : (
-        <S.MainSidebar>
-          <S.SidebarPersonal to="/login">
-            <S.SidebarAvatar src="/img/outsvg.svg" alt="out" />
-          </S.SidebarPersonal>
+        ) : (
           <S.SidebarBlock>
             <S.SidebarList>
               <S.SidebarItem>
@@ -72,8 +67,8 @@ export function Sidebar({ loading }) {
               </S.SidebarItem>
             </S.SidebarList>
           </S.SidebarBlock>
-        </S.MainSidebar>
-      )}
+        )}
+      </S.MainSidebar>
     </div>
   );
 }
