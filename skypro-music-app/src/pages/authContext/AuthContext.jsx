@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getAllTrack, getPauseTrack, getTracksListShuffled } from "./slice";
+
 export const AuthContext = createContext(null);
 
 function getAuthFromLocalStorege() {

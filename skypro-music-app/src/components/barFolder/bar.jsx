@@ -1,32 +1,21 @@
+import React from "react";
 import * as S from "./bar.styled";
-import { React, useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export function Bar({ isPlaying, setIsPlaying, activTrack }) {
-  const formatTime = (timeInSeconds) => {
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = Math.floor(timeInSeconds % 60);
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-      2,
-      "0"
-    )}`;
-  };
   const [isRepeat, setIsRepeat] = useState(false);
   const [volume, setVolume] = useState(1);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioComponentRef = useRef(null);
   const handleClick = () => {
-    const audioRef = audioComponentRef.current;
-
     if (isPlaying) {
-      audioRef.pause();
+      audioComponentRef.current.pause();
+      setIsPlaying(false);
     } else {
-      audioRef.play().catch((error) => {
-        console.error("Error playing audio:", error);
-      });
+      audioComponentRef.current.play();
+      setIsPlaying(true);
     }
-
-    setIsPlaying(!isPlaying);
   };
   const repeatClick = () => {
     audioComponentRef.current.loop = !isRepeat;
@@ -77,7 +66,7 @@ export function Bar({ isPlaying, setIsPlaying, activTrack }) {
           onChange={timeOnChange}
           $color="#ff0000"
         />
-        <S.BarPlayerProgress>{formatTime(currentTime)}</S.BarPlayerProgress>
+        <S.BarPlayerProgress></S.BarPlayerProgress>
         <S.BarPlayerBlock>
           <S.BarPlayer>
             <S.PlayerControls>

@@ -3,6 +3,6 @@ import { sliceTrackList } from "./pages/authContext/slice";
 
 export const store = configureStore({
   reducer: {
-    music: sliceTrackList,
+    music: sliceTrackList.reducer,
   },
 });

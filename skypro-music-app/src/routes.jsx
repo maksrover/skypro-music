@@ -1,31 +1,43 @@
 import { Routes, Route } from "react-router-dom";
-
 import { Main } from "./pages/mainFolder/main";
-import { MyTracks } from "./pages/myTracks/myTracks";
-import { PlaylistOfTheDay } from "./pages/compilations/playlistOfTheDay";
-import { DanceHits } from "./pages/compilations/DanceHits";
-import { IndieCharge } from "./pages/compilations/indieCharge";
-import { ProtectedRoute } from "./pages/protected/protected";
-import { NotFound } from "./pages/404/NotFound";
+import { Favorites } from "./pages/Favorites/Favorites";
+import { Category } from "./pages/Category/Category";
+import { NotFound } from "./pages/NotFound/NotFound";
+
+import { ProtectedRoute } from "./components/protected-route/protected";
+import { useState } from "react";
 
 import AuthPage from "./pages/authPage/authPage";
 import { AuthProvider } from "./pages/authContext/AuthContext";
 
+import { ThemeContext, themes } from "./pages/Theme/ThemeContext";
+
 export const AppRoutes = () => {
+  const [currentTheme, setCurrentTheme] = useState(themes.dark);
+
+  const toggleTheme = () => {
+    if (currentTheme === themes.dark) {
+      setCurrentTheme(themes.light);
+      return;
+    }
+
+    setCurrentTheme(themes.dark);
+  };
+
   return (
     <AuthProvider>
-      <Routes>
-        <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<Main />} />
-          <Route path="/favorites" element={<MyTracks />} />
-          <Route path="/category/:id" element={<PlaylistOfTheDay />} />
-          <Route path="/category/:id" element={<DanceHits />} />
-          <Route path="/category/:id" element={<IndieCharge />} />
-        </Route>
-        <Route path="/login" element={<AuthPage isLoginMode={true} />} />
-        <Route path="/register" element={<AuthPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <ThemeContext.Provider value={{ toggleTheme, theme: currentTheme }}>
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Main />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/category/:id" element={<Category />} />
+          </Route>
+          <Route path="/login" element={<AuthPage isLoginMode={true} />} />
+          <Route path="/register" element={<AuthPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ThemeContext.Provider>
     </AuthProvider>
   );
 };

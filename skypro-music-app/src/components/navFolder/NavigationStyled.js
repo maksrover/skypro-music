@@ -1,29 +1,25 @@
-// nav.styled.js
-
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 
-export const MainNav = styled.nav`
+export const Nav = styled.nav`
   width: 244px;
   background-color: #181818;
   padding: 20px 0 20px 36px;
+  background: ${(props) => props.theme.background};
 `;
 
-export const NavLogo = styled.div`
+export const Logo = styled.div`
   width: 113.33px;
   height: 43px;
   padding: 13px 0 13px 0;
   background-color: transparent;
   margin-bottom: 20px;
 `;
-
-export const LogoImage = styled.img`
+export const LogoImg = styled.img`
   width: 113.33px;
   height: 17px;
   color: #181818;
 `;
-
-export const NavBurger = styled.button`
+export const NavBurger = styled.div`
   width: 20px;
   height: 36px;
   padding: 13px 0;
@@ -37,35 +33,18 @@ export const NavBurger = styled.button`
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  background-color: rgba(28, 28, 28, 0);
-  border: none;
+  cursor: pointer;
 `;
 
-export const BurgerLine = styled.span`
+export const NavBurgerLine = styled.span`
   display: inline-block;
   width: 100%;
   height: 1px;
-  background-color: #d3d3d3;
+  background-color: ${(props) => props.theme.backgroundBurgerLine};
 `;
 
-export const NavMenu = styled.div`
+export const NavMenu = styled.nav`
   display: block;
   visibility: visible;
-`;
-
-export const MenuList = styled.ul`
-  padding: 18px 0 10px 0;
-`;
-
-export const MenuItem = styled.li`
-  padding: 5px 0;
-  margin-bottom: 16px;
-`;
-
-export const MenuLink = styled(NavLink)`
-  color: #ffffff;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  text-decoration: none; /* Add this line to remove underline */
+  cursor: pointer;
 `;

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   trackList: [],
-  currentTrack: null,
+  activeTrack: false,
   shuffledList: [],
   isShuffledTrackList: false,
   $isPlaying: false,
@@ -13,10 +13,10 @@ export const sliceTrackList = createSlice({
   initialState,
   reducers: {
     getAllTrack: (state, action) => {
-      state.currentTrack = action.payload;
+      state.activeTrack = action.payload;
       state.trackList = action.payload.allTracks;
       state.shuffledList = action.payload.allTracks;
-      console.log((state.currentTrack = action.payload));
+      console.log((state.activeTrack = action.payload));
     },
     getPlayTrack: (state) => {
       state.$isPlaying = true;
@@ -31,11 +31,11 @@ export const sliceTrackList = createSlice({
 
       const tracksIndex = allTrackList.findIndex((track) => {
         console.log(track.id);
-        return track.id === state.currentTrack.id;
+        return track.id === state.activeTrack.id;
       });
 
       if (allTrackList[tracksIndex + 1]) {
-        state.currentTrack = allTrackList[tracksIndex + 1];
+        state.activeTrack = allTrackList[tracksIndex + 1];
       }
     },
     getPrevTrack: (state) => {
@@ -45,11 +45,11 @@ export const sliceTrackList = createSlice({
 
       const tracksIndex = allTrackList.findIndex((track) => {
         console.log(track.id);
-        return track.id === state.currentTrack.id;
+        return track.id === state.activeTrack.id;
       });
 
       if (allTrackList[tracksIndex - 1]) {
-        state.currentTrack = allTrackList[tracksIndex - 1];
+        state.activeTrack = allTrackList[tracksIndex - 1];
       }
     },
     getTracksListShuffled: (state) => {
@@ -66,4 +66,5 @@ export const {
   getPrevTrack,
   getTracksListShuffled,
 } = sliceTrackList.actions;
+
 export default sliceTrackList.reducer;
