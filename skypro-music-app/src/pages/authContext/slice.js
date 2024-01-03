@@ -29,13 +29,13 @@ export const sliceTrackList = createSlice({
         ? state.shuffledList.sort(() => Math.random() - 0.5)
         : state.trackList;
 
-      const tracksIndex = allTrackList.findIndex((track) => {
-        console.log(track.id);
-        return track.id === state.activeTrack.id;
-      });
+      const tracksIndex = allTrackList.findIndex(
+        (track) => track.id === state.activeTrack.id
+      );
 
       if (allTrackList[tracksIndex + 1]) {
         state.activeTrack = allTrackList[tracksIndex + 1];
+        state.$isPlaying = true; // Start playing the next track
       }
     },
     getPrevTrack: (state) => {
@@ -43,13 +43,13 @@ export const sliceTrackList = createSlice({
         ? state.shuffledList
         : state.trackList;
 
-      const tracksIndex = allTrackList.findIndex((track) => {
-        console.log(track.id);
-        return track.id === state.activeTrack.id;
-      });
+      const tracksIndex = allTrackList.findIndex(
+        (track) => track.id === state.activeTrack.id
+      );
 
       if (allTrackList[tracksIndex - 1]) {
         state.activeTrack = allTrackList[tracksIndex - 1];
+        state.$isPlaying = true; // Start playing the previous track
       }
     },
     getTracksListShuffled: (state) => {

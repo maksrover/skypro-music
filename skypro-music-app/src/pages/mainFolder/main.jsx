@@ -6,7 +6,7 @@ import * as S from "./main.styled";
 
 import { useThemeContext } from "../Theme/ThemeContext.jsx";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export function Main() {
   const currentTrack = useSelector((state) => state.music.activeTrack);
@@ -25,7 +25,7 @@ export function Main() {
           <PlayList />
           <MainSidebar />
         </S.Main>
-        {currentTrack ? <Player /> : null}
+        <Player />
 
         <footer className="footer"></footer>
       </S.Container>

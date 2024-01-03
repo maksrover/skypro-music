@@ -78,10 +78,10 @@ function Player() {
     };
   }, [dispatch]);
 
-  const updateVolume = (event) => {
-    const newVolume = event.target.value;
-    audioRef.current.volume = newVolume;
+  const volumeOnChange = (event) => {
+    const newVolume = audioRef.current.volume;
     setVolume(newVolume);
+    audioRef.current.volume = event.target.value;
   };
 
   const handelLoop = () => {
@@ -98,14 +98,12 @@ function Player() {
 
   useEffect(() => {
     if (currentTrack) {
-      // Check if audio is paused, then play
       if (audioRef.current.paused) {
         audioRef.current.play().catch((error) => {
           console.error("Error playing audio:", error);
         });
       }
     } else {
-      // Check if audio is playing, then pause
       if (!audioRef.current.paused) {
         audioRef.current.pause();
       }
@@ -156,6 +154,8 @@ function Player() {
                     onClick={handleClick}
                   >
                     {$isPlaying ? (
+                      <use xlinkHref="/img/icon/sprite.svg#icon-play"></use>
+                    ) : (
                       <svg
                         width="15"
                         height="19"
@@ -166,8 +166,6 @@ function Player() {
                         <rect width="5" height="19" fill="#D9D9D9" />
                         <rect x="10" width="5" height="19" fill="#D9D9D9" />
                       </svg>
-                    ) : (
-                      <use xlinkHref="/img/icon/sprite.svg#icon-play"></use>
                     )}
                   </S.BarPlayerBtnPlaySvg>
                 </S.BarPlayerBtnPlay>
@@ -248,7 +246,7 @@ function Player() {
                     max={1}
                     step={0.01}
                     value={volume}
-                    onChange={updateVolume}
+                    onChange={volumeOnChange}
                   />
                 </S.VolumeProgress>
               </S.VolumeContent>

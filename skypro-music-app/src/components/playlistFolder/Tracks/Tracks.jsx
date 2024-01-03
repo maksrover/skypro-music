@@ -18,7 +18,7 @@ const Track = ({
 }) => {
   const dispach = useDispatch();
   const $isPlaying = useSelector((state) => state.music.$isPlaying);
-  const currentTrack = useSelector((state) => state.music.currentTrack);
+  const currentTrack = useSelector((state) => state.music.activeTrack);
   const { theme } = useThemeContext();
   const formattedDuration = moment
     .utc(duration_in_seconds * 1000)
@@ -26,7 +26,6 @@ const Track = ({
 
   return (
     <S.PlaylistItem
-      
       onClick={() =>
         dispach(
           getAllTrack({
@@ -39,7 +38,6 @@ const Track = ({
           })
         )
       }
-      
     >
       <S.PlaylistTrack key={item.id}>
         <S.TrackTitle>

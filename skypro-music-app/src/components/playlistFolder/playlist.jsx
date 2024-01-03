@@ -5,7 +5,6 @@ import BlockSearch from "../searchFolder/BlockSearch.jsx";
 import Track from "./Tracks/Tracks";
 import { getTrack } from "../../api/api.js";
 import { useThemeContext } from "../../pages/Theme/ThemeContext.jsx";
-import { useSelector } from "react-redux";
 
 import * as S from "./playlist.styled";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -16,9 +15,6 @@ function PlayList() {
   const [allTracks, setTracks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { theme } = useThemeContext();
-
-  const $isPlaying = useSelector((state) => state.music.$isPlaying);
-  const currentTrack = useSelector((state) => state.music.currentTrack);
 
   useEffect(() => {
     console.log(allTracks);
@@ -39,7 +35,7 @@ function PlayList() {
 
   return (
     <S.MainCenterblock>
-      <Player currentTrack={currentTrack} $isPlaying={$isPlaying} />
+      <Player />
       <BlockSearch />
       <S.CenterblockHeading theme={theme}>Треки</S.CenterblockHeading>
       <BlockFilter />
