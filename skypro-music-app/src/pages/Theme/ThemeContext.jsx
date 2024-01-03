@@ -18,8 +18,32 @@ export const themes = {
     iconTheme: "./img/icon/sprite.svg#icon-them-white",
     iconSearch: "./img/icon/sprite.svg#icon-search-black",
     iconLogout: "/img/outsvg.svg",
-    iconPlay: "/img/icon/sprite.svg#icon-play-black",
-    iconPause: "/img/pause.svg",
+    iconPlay: (
+      <svg
+        width="15"
+        height="20"
+        viewBox="0 0 15 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15 10L-1.01012e-06 0.47372L-1.84293e-06 19.5263L15 10Z"
+          fill="#D9D9D9"
+        />
+      </svg>
+    ),
+    iconPause: (
+      <svg
+        width="15"
+        height="19"
+        viewBox="0 0 15 19"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="5" height="19" fill="#D9D9D9" />
+        <rect x="10" width="5" height="19" fill="#D9D9D9" />
+      </svg>
+    ),
     iconNext: "/img/icon/sprite.svg#icon-next-white",
     iconPrev: "/img/icon/sprite.svg#icon-prev-white",
   },
@@ -40,8 +64,6 @@ export const themes = {
     iconTheme: "./img/icon/sprite.svg#icon-them",
     iconSearch: "./img/icon/sprite.svg#icon-search",
     iconLogout: "/img/outsvg.svg",
-    iconPlay: "/img/icon/sprite.svg#icon-play",
-    iconPause: "/img/icon/pause.svg",
     iconNext: "/img/icon/sprite.svg#icon-next",
     iconPrev: "/img/icon/sprite.svg#icon-prev",
   },

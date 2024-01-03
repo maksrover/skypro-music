@@ -17,7 +17,7 @@ const Track = ({
   item,
 }) => {
   const dispach = useDispatch();
-  const $isPlaying = useSelector((state) => state.music.$isPlaying);
+  const $isPlaying = useSelector((state) => state.music.isPlaying);
   const currentTrack = useSelector((state) => state.music.activeTrack);
   const { theme } = useThemeContext();
   const formattedDuration = moment

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Player from "../Player/Player.jsx";
+
 import BlockFilter from "../FilterFolder/BlockFilter.jsx";
 import BlockSearch from "../searchFolder/BlockSearch.jsx";
 import Track from "./Tracks/Tracks";
@@ -12,9 +12,10 @@ import SkeletonTrack from "../Skeletons/SkeletonTrack";
 
 function PlayList() {
   const [errorTrack, setErrorTrack] = useState(null);
+
   const [allTracks, setTracks] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
-  const { theme } = useThemeContext();
 
   useEffect(() => {
     console.log(allTracks);
@@ -24,7 +25,9 @@ function PlayList() {
     getTrack()
       .then((tracks) => {
         setTracks(tracks);
+        // setIsLoading(false);
       })
+
       .catch((error) => {
         setErrorTrack(error.message);
       })
@@ -33,11 +36,14 @@ function PlayList() {
       });
   }, []);
 
+  const { theme } = useThemeContext();
+
   return (
     <S.MainCenterblock>
-      <Player />
       <BlockSearch />
+
       <S.CenterblockHeading theme={theme}>Треки</S.CenterblockHeading>
+
       <BlockFilter />
       <S.CenterblockContent>
         <S.ContentTitle>

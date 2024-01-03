@@ -15,7 +15,7 @@ import {
 
 function Player() {
   const currentTrack = useSelector((state) => state.music.activeTrack);
-  const $isPlaying = useSelector((state) => state.music.$isPlaying);
+  const $isPlaying = useSelector((state) => state.music.isPlaying);
   const isShuffledTrackList = useSelector(
     (state) => state.music.isShuffledTrackList
   );
@@ -154,8 +154,6 @@ function Player() {
                     onClick={handleClick}
                   >
                     {$isPlaying ? (
-                      <use xlinkHref="/img/icon/sprite.svg#icon-play"></use>
-                    ) : (
                       <svg
                         width="15"
                         height="19"
@@ -166,6 +164,8 @@ function Player() {
                         <rect width="5" height="19" fill="#D9D9D9" />
                         <rect x="10" width="5" height="19" fill="#D9D9D9" />
                       </svg>
+                    ) : (
+                      <use xlinkHref="/img/icon/sprite.svg#icon-play"></use>
                     )}
                   </S.BarPlayerBtnPlaySvg>
                 </S.BarPlayerBtnPlay>

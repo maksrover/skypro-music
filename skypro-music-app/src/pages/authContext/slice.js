@@ -5,7 +5,7 @@ const initialState = {
   activeTrack: false,
   shuffledList: [],
   isShuffledTrackList: false,
-  $isPlaying: false,
+  isPlaying: false,
 };
 
 export const sliceTrackList = createSlice({
@@ -19,10 +19,10 @@ export const sliceTrackList = createSlice({
       console.log((state.activeTrack = action.payload));
     },
     getPlayTrack: (state) => {
-      state.$isPlaying = true;
+      state.isPlaying = true;
     },
     getPauseTrack: (state) => {
-      state.$isPlaying = false;
+      state.isPlaying = false;
     },
     getNextTrack: (state) => {
       const allTrackList = state.isShuffledTrackList
@@ -49,7 +49,7 @@ export const sliceTrackList = createSlice({
 
       if (allTrackList[tracksIndex - 1]) {
         state.activeTrack = allTrackList[tracksIndex - 1];
-        state.$isPlaying = true; // Start playing the previous track
+        state.isPlaying = true; // Start playing the previous track
       }
     },
     getTracksListShuffled: (state) => {
