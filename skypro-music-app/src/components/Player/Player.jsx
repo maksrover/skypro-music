@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import React from "react";
 
 import moment from "moment";
@@ -12,9 +12,54 @@ import {
   getPrevTrack,
   getTracksListShuffled,
 } from "../../pages/authContext/slice";
+import {
+  useAddMyTracksMutation,
+  useAllTracksQuery,
+  useDeleteMyTrackMutation,
+  useGetAllTracksIdQuery,
+} from "../../api/apiMusic";
+import { AuthContext } from "../../pages/authContext/AuthContext";
 
 function Player() {
   const currentTrack = useSelector((state) => state.music.activeTrack);
+
+  const { data } = useGetAllTracksIdQuery({ id: currentTrack.id });
+
+  const { user, logout } = useContext(AuthContext);
+
+  const isLiked = useMemo(
+    () => data?.stared_user?.some((el) => el.id === user.id),
+    [data?.stared_user, user]
+  );
+
+  const [addMyTracks, { error: likeError }] = useAddMyTracksMutation();
+  const [deleteMytrack, { error: dislikeError }] = useDeleteMyTrackMutation();
+  const { refetch } = useAllTracksQuery();
+  if (
+    (likeError && likeError.status === 401) ||
+    (dislikeError && dislikeError.status === 401)
+  ) {
+    logout();
+  }
+
+  const handleAddMyTrack = async (event) => {
+    try {
+      event.stopPropagation();
+      const token = localStorage.getItem("access");
+      await addMyTracks({ id: data.id, token }).unwrap();
+      refetch();
+    } catch (error) {}
+  };
+
+  const handleDeleteMyTrack = async (event) => {
+    try {
+      event.stopPropagation();
+      const token = localStorage.getItem("access");
+      await deleteMytrack({ id: data.id, token }).unwrap();
+      refetch();
+    } catch (error) {}
+  };
+
   const $isPlaying = useSelector((state) => state.music.isPlaying);
   const isShuffledTrackList = useSelector(
     (state) => state.music.isShuffledTrackList
@@ -69,19 +114,36 @@ function Player() {
       dispatch(getNextTrack());
     };
 
+    const handleCanplaythrough = () => {
+      audio.play();
+      dispatch(getPlayTrack());
+    };
+
     audio.addEventListener("timeupdate", updateTime);
     audio.addEventListener("ended", getEndedTrack);
-
+    audio.addEventListener("encanplaythroughded", handleCanplaythrough);
     return () => {
       audio.removeEventListener("timeupdate", updateTime);
       audio.removeEventListener("ended", getEndedTrack);
+      audio.removeEventListener("canplaythrough", handleCanplaythrough);
     };
   }, [dispatch]);
 
-  const volumeOnChange = (event) => {
-    const newVolume = audioRef.current.volume;
+  const updateVolume = (event) => {
+    const newVolume = event.target.value;
+    console.log(newVolume);
+    audioRef.current.volume = newVolume;
+    console.log(audioRef.current.volume);
     setVolume(newVolume);
-    audioRef.current.volume = event.target.value;
+  };
+
+  const startHandel = () => {
+    audioRef.current.play();
+    dispatch(getPlayTrack());
+  };
+  const stopHandel = () => {
+    audioRef.current.pause();
+    dispatch(getPauseTrack());
   };
 
   const handelLoop = () => {
@@ -96,31 +158,15 @@ function Player() {
 
   const toggleLoop = isLoop ? handeStopLoop : handelLoop;
 
+  const togglePlay = $isPlaying ? stopHandel : startHandel;
+
   useEffect(() => {
     if (currentTrack) {
-      if (audioRef.current.paused) {
-        audioRef.current.play().catch((error) => {
-          console.error("Error playing audio:", error);
-        });
-      }
+      startHandel();
     } else {
-      if (!audioRef.current.paused) {
-        audioRef.current.pause();
-      }
+      stopHandel();
     }
   }, [currentTrack]);
-
-  const handleClick = () => {
-    if (audioRef.current.paused) {
-      audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
-      });
-    } else {
-      audioRef.current.pause();
-    }
-
-    dispatch($isPlaying ? getPauseTrack() : getPlayTrack());
-  };
   return (
     <>
       <audio loop={false} ref={audioRef} src={currentTrack.track_file}></audio>
@@ -151,22 +197,11 @@ function Player() {
                   <S.BarPlayerBtnPlaySvg
                     theme={theme}
                     alt="play"
-                    onClick={handleClick}
+                    onClick={togglePlay}
                   >
-                    {$isPlaying ? (
-                      <svg
-                        width="15"
-                        height="19"
-                        viewBox="0 0 15 19"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="5" height="19" fill="#D9D9D9" />
-                        <rect x="10" width="5" height="19" fill="#D9D9D9" />
-                      </svg>
-                    ) : (
-                      <use xlinkHref="/img/icon/sprite.svg#icon-play"></use>
-                    )}
+                    <use
+                      xlinkHref={$isPlaying ? theme.iconPause : theme.iconPlay}
+                    ></use>
                   </S.BarPlayerBtnPlaySvg>
                 </S.BarPlayerBtnPlay>
                 <S.BarPlayerBtnNext onClick={handelNextTrack}>
@@ -219,15 +254,29 @@ function Player() {
 
                 <S.TrackPlayLikeDis>
                   <S.TrackPlayLike>
-                    <S.TrackPlayLikeSvg alt="like">
-                      <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                    </S.TrackPlayLikeSvg>
+                    {isLiked ? (
+                      <S.TrackPlayLikeFlex>
+                        <S.TrackPlayLikeSvg
+                          alt="like"
+                          onClick={handleDeleteMyTrack}
+                        >
+                          <use xlinkHref="img/icon/sprite.svg#icon-like-active"></use>
+                        </S.TrackPlayLikeSvg>
+                        <S.TrackPlayDisLikeSvg
+                          alt="dislike"
+                          onClick={handleDeleteMyTrack}
+                        >
+                          <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
+                        </S.TrackPlayDisLikeSvg>
+                      </S.TrackPlayLikeFlex>
+                    ) : (
+                      <S.TrackPlayLikeSvg alt="like" onClick={handleAddMyTrack}>
+                        <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+                      </S.TrackPlayLikeSvg>
+                    )}
                   </S.TrackPlayLike>
-                  <S.TrackPlayDislike>
-                    <S.TrackPlayDisLikeSvg alt="dislike">
-                      <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
-                    </S.TrackPlayDisLikeSvg>
-                  </S.TrackPlayDislike>
+
+                  <S.TrackPlayDislike></S.TrackPlayDislike>
                 </S.TrackPlayLikeDis>
               </S.PlayerTrackPlay>
             </S.BarPlayer>
@@ -246,7 +295,7 @@ function Player() {
                     max={1}
                     step={0.01}
                     value={volume}
-                    onChange={volumeOnChange}
+                    onChange={updateVolume}
                   />
                 </S.VolumeProgress>
               </S.VolumeContent>

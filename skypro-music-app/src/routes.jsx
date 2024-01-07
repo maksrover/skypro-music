@@ -11,6 +11,7 @@ import AuthPage from "./pages/authPage/authPage";
 import { AuthProvider } from "./pages/authContext/AuthContext";
 
 import { ThemeContext, themes } from "./pages/Theme/ThemeContext";
+import { PageLayout } from "./components/pageLayot/pageLayot";
 
 export const AppRoutes = () => {
   const [currentTheme, setCurrentTheme] = useState(themes.dark);
@@ -29,9 +30,11 @@ export const AppRoutes = () => {
       <ThemeContext.Provider value={{ toggleTheme, theme: currentTheme }}>
         <Routes>
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Main />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/category/:id" element={<Category />} />
+            <Route path="/" element={<PageLayout />}>
+              <Route index element={<Main />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/category/:id" element={<Category />} />
+            </Route>
           </Route>
           <Route path="/login" element={<AuthPage isLoginMode={true} />} />
           <Route path="/register" element={<AuthPage />} />

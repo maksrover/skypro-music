@@ -103,3 +103,17 @@ export const getUserToken = async ({ email, password }) => {
   });
   return response.json();
 };
+
+const refreshUrl = "https://skypro-music-api.skyeng.tech/user/token/refresh/";
+export const refreshToken = async ({ refresh }) => {
+  const response = await fetch(refreshUrl, {
+    method: "POST",
+    body: JSON.stringify({
+      refresh,
+    }),
+    headers: {
+      "content-type": " application/json",
+    },
+  });
+  return response.json();
+};

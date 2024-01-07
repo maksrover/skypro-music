@@ -35,7 +35,7 @@ export const sliceTrackList = createSlice({
 
       if (allTrackList[tracksIndex + 1]) {
         state.activeTrack = allTrackList[tracksIndex + 1];
-        state.$isPlaying = true; // Start playing the next track
+        state.isPlaying = true;
       }
     },
     getPrevTrack: (state) => {
@@ -49,7 +49,7 @@ export const sliceTrackList = createSlice({
 
       if (allTrackList[tracksIndex - 1]) {
         state.activeTrack = allTrackList[tracksIndex - 1];
-        state.isPlaying = true; // Start playing the previous track
+        state.isPlaying = true;
       }
     },
     getTracksListShuffled: (state) => {

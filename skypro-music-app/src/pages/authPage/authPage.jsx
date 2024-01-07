@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./authPage.styled";
 import { useContext, useEffect, useState } from "react";
-import { loginUser, registerUser } from "../auth";
-import { getUserToken } from "../auth";
-import { AuthContext } from "../authContext/AuthContext";
+import { loginUser, refreshToken, registerUser } from "../../api/auth";
+import { getUserToken } from "../../api/auth";
+import { AuthContext } from "../../pages/authContext/AuthContext";
 
 export default function AuthPage({ isLoginMode = false }) {
-  const { login, user } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isLodingButton, setIsLodingButton] = useState(false);
@@ -31,7 +31,15 @@ export default function AuthPage({ isLoginMode = false }) {
       }
       setIsLodingButton(true);
       const userData = await loginUser({ email, password });
-      console.log(userData);
+
+      const token = await getUserToken({ email, password });
+      localStorage.setItem("access", token.access.toString());
+      localStorage.setItem("refresh", token.refresh.toString());
+      setInterval(async () => {
+        const refresh = localStorage.getItem("refresh");
+        const refreshedToken = await refreshToken({ refresh });
+        localStorage.setItem("access", refreshedToken.access.toString());
+      }, 190 * 1000);
       login(userData);
       navigate("/");
     } catch (error) {
@@ -65,7 +73,13 @@ export default function AuthPage({ isLoginMode = false }) {
       const user = await registerUser({ email, password, username: email });
 
       const token = await getUserToken({ email, password });
-      console.log(token);
+      localStorage.setItem("access", token.access.toString());
+      localStorage.setItem("refresh", token.refresh.toString());
+      setInterval(async () => {
+        const refresh = localStorage.getItem("refresh");
+        const refreshedToken = await refreshToken({ refresh });
+        localStorage.setItem("access", refreshedToken.access.toString());
+      }, 190 * 1000);
       login(user);
       navigate("/");
     } catch (error) {
@@ -76,10 +90,6 @@ export default function AuthPage({ isLoginMode = false }) {
   };
 
   useEffect(() => {
-    console.log(user);
-  }, [user]);
-
-  useEffect(() => {
     setError(null);
   }, [isLoginMode, email, password, repeatPassword]);
 
@@ -88,7 +98,7 @@ export default function AuthPage({ isLoginMode = false }) {
       <S.ModalForm>
         <Link to="/login">
           <S.ModalLogo>
-            <S.ModalLogoImage src="/img/logo.png" alt="logo" />
+            <S.ModalLogoImage src="/img/logo_modal.png" alt="logo" />
           </S.ModalLogo>
         </Link>
         {isLoginMode ? (

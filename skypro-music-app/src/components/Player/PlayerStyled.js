@@ -23,7 +23,7 @@ export const BarPlayerProgress = styled.input`
 
   --progress-bg-color: ${(props) => props.theme.progressBgColor};
 
-  margin: 5px;
+  margin: 0;
   width: 100%;
   height: var(--progress-height);
   -webkit-appearance: none;
@@ -225,6 +225,7 @@ export const TrackPlayerContain = styled.div`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  margin-right: 1rem;
 `;
 export const TrackPlayImg = styled.div`
   width: 51px;
@@ -256,7 +257,6 @@ export const TrackPlayerAuthor = styled.div`
   -ms-grid-column: 2;
   grid-area: author;
   min-width: 49px;
-  min-height: 40px;
 `;
 export const TrackPlayerAuthorLink = styled.a`
   font-style: normal;
@@ -271,7 +271,6 @@ export const TrackPlayAlbum = styled.div`
   -ms-grid-column: 2;
   grid-area: album;
   min-width: 49px;
-  min-height: 40px;
 `;
 export const TrackPlayAlbumLink = styled.a`
   font-style: normal;
@@ -296,11 +295,10 @@ export const TrackPlayLikeDis = styled.div`
 `;
 export const TrackPlayLike = styled.div`
   padding: 5px;
-  &:hover svg {
-    fill: transparent;
-    stroke: #acacac;
-    cursor: pointer;
-  }
+`;
+export const TrackPlayLikeFlex = styled.div`
+  display: flex;
+  column-gap: 1.5rem;
 `;
 export const TrackPlayDislike = styled(TrackPlayLike)`
   margin-left: 28.5px;
@@ -310,12 +308,22 @@ export const TrackPlayLikeSvg = styled.svg`
   height: 12px;
   fill: transparent;
   stroke: #696969;
+  &:hover {
+    fill: transparent;
+    stroke: #ffffff;
+    cursor: pointer;
+  }
 `;
 export const TrackPlayDisLikeSvg = styled.svg`
   width: 14.34px;
   height: 13px;
   fill: transparent;
   stroke: #696969;
+  &:hover {
+    fill: transparent;
+    stroke: #acacac;
+    cursor: pointer;
+  }
 `;
 export const BarVolumeBlock = styled.div`
   width: auto;
