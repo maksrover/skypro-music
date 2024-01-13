@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   trackList: [],
-  activeTrack: false,
+  activeTrack: null,
   shuffledList: [],
   isShuffledTrackList: false,
   isPlaying: false,
@@ -14,9 +14,8 @@ export const sliceTrackList = createSlice({
   reducers: {
     getAllTrack: (state, action) => {
       state.activeTrack = action.payload;
-      state.trackList = action.payload.allTracks;
+      state.trackList = action.payload.data;
       state.shuffledList = action.payload.allTracks;
-      console.log((state.activeTrack = action.payload));
     },
     getPlayTrack: (state) => {
       state.isPlaying = true;
@@ -29,13 +28,12 @@ export const sliceTrackList = createSlice({
         ? state.shuffledList.sort(() => Math.random() - 0.5)
         : state.trackList;
 
-      const tracksIndex = allTrackList.findIndex(
-        (track) => track.id === state.activeTrack.id
-      );
+      const tracksIndex = allTrackList.findIndex((track) => {
+        return track.id === state.activeTrack.id;
+      });
 
       if (allTrackList[tracksIndex + 1]) {
         state.activeTrack = allTrackList[tracksIndex + 1];
-        state.isPlaying = true;
       }
     },
     getPrevTrack: (state) => {
@@ -49,7 +47,6 @@ export const sliceTrackList = createSlice({
 
       if (allTrackList[tracksIndex - 1]) {
         state.activeTrack = allTrackList[tracksIndex - 1];
-        state.isPlaying = true;
       }
     },
     getTracksListShuffled: (state) => {
