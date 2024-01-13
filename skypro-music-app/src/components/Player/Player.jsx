@@ -22,7 +22,6 @@ import { AuthContext } from "../../pages/authContext/AuthContext";
 
 function Player() {
   const currentTrack = useSelector((state) => state.music.activeTrack);
-
   const { data } = useGetAllTracksIdQuery({ id: currentTrack.id });
 
   const { user, logout } = useContext(AuthContext);
@@ -61,6 +60,7 @@ function Player() {
   };
 
   const $isPlaying = useSelector((state) => state.music.isPlaying);
+
   const isShuffledTrackList = useSelector(
     (state) => state.music.isShuffledTrackList
   );
@@ -74,8 +74,6 @@ function Player() {
   const [volume, setVolume] = useState(1);
   const formatedDuration = moment.utc(duration * 1000).format("mm:ss");
   const formatedCurrentTime = moment.utc(currentTime * 1000).format("mm:ss");
-
-  const audioRef = useRef(null);
 
   const handelNextTrack = () => {
     dispatch(getNextTrack());
@@ -96,10 +94,8 @@ function Player() {
 
   useEffect(() => {
     const audio = audioRef.current;
-
     audio.volume = 0.5;
     setVolume(audio.volume);
-
     const updateTime = () => {
       if (audio.currentTime && audio.duration) {
         setDuration(audio.duration);
@@ -109,7 +105,6 @@ function Player() {
         setCurrentTime(0);
       }
     };
-
     const getEndedTrack = () => {
       dispatch(getNextTrack());
     };
@@ -118,7 +113,6 @@ function Player() {
       audio.play();
       dispatch(getPlayTrack());
     };
-
     audio.addEventListener("timeupdate", updateTime);
     audio.addEventListener("ended", getEndedTrack);
     audio.addEventListener("encanplaythroughded", handleCanplaythrough);
@@ -128,7 +122,6 @@ function Player() {
       audio.removeEventListener("canplaythrough", handleCanplaythrough);
     };
   }, [dispatch]);
-
   const updateVolume = (event) => {
     const newVolume = event.target.value;
     console.log(newVolume);
@@ -136,6 +129,8 @@ function Player() {
     console.log(audioRef.current.volume);
     setVolume(newVolume);
   };
+
+  const audioRef = useRef(null);
 
   const startHandel = () => {
     audioRef.current.play();
@@ -149,8 +144,8 @@ function Player() {
   const handelLoop = () => {
     audioRef.current.loop = true;
     setIsLoop(true);
+    console.log("loop");
   };
-
   const handeStopLoop = () => {
     audioRef.current.loop = false;
     setIsLoop(false);
@@ -167,6 +162,7 @@ function Player() {
       stopHandel();
     }
   }, [currentTrack]);
+
   return (
     <>
       <audio loop={false} ref={audioRef} src={currentTrack.track_file}></audio>
@@ -199,9 +195,20 @@ function Player() {
                     alt="play"
                     onClick={togglePlay}
                   >
-                    <use
-                      xlinkHref={$isPlaying ? theme.iconPause : theme.iconPlay}
-                    ></use>
+                    {$isPlaying ? (
+                      <svg
+                        width="15"
+                        height="19"
+                        viewBox="0 0 15 19"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="5" height="19" fill="#D9D9D9" />
+                        <rect x="10" width="5" height="19" fill="#D9D9D9" />
+                      </svg>
+                    ) : (
+                      <use xlinkHref="/img/icon/sprite.svg#icon-play"></use>
+                    )}
                   </S.BarPlayerBtnPlaySvg>
                 </S.BarPlayerBtnPlay>
                 <S.BarPlayerBtnNext onClick={handelNextTrack}>
@@ -306,5 +313,4 @@ function Player() {
     </>
   );
 }
-
 export default Player;

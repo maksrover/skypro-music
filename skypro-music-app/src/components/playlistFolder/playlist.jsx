@@ -1,42 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import BlockFilter from "../FilterFolder/BlockFilter.jsx";
 import BlockSearch from "../searchFolder/BlockSearch.jsx";
 import Track from "./Tracks/Tracks";
-import { getTrack } from "../../api/api.js";
-import { useThemeContext } from "../../pages/Theme/ThemeContext.jsx";
 
-import * as S from "./playlist.styled";
 import "react-loading-skeleton/dist/skeleton.css";
 import SkeletonTrack from "../Skeletons/SkeletonTrack";
+import * as S from "./playlist.styled.js";
+
+import { useThemeContext } from "../../pages/Theme/ThemeContext.jsx";
+import { useAllTracksQuery } from "../../api/apiMusic.js";
 
 function PlayList() {
-  const [errorTrack, setErrorTrack] = useState(null);
-
-  const [allTracks, setTracks] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    console.log(allTracks);
-  }, [allTracks]);
-
-  useEffect(() => {
-    getTrack()
-      .then((tracks) => {
-        setTracks(tracks);
-        // setIsLoading(false);
-      })
-
-      .catch((error) => {
-        setErrorTrack(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
   const { theme } = useThemeContext();
+  const { data = [], isLoading } = useAllTracksQuery();
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <S.MainCenterblock>
@@ -56,21 +37,19 @@ function PlayList() {
             </S.PlaylistTitleSvg>
           </S.TitleCol4>
         </S.ContentTitle>
-        {errorTrack ? (
-          <p>Не удалось загрузить плейлист, попробуйте позже</p>
-        ) : null}
+
         <S.ContentPlaylist theme={theme}>
           {isLoading ? (
             <SkeletonTrack />
           ) : (
-            allTracks.map((item) => {
+            data.map((item) => {
               return (
                 <Track
-                  isLoading={isLoading}
                   key={item.id}
                   item={item}
                   {...item}
-                  allTracks={allTracks}
+                  data={data}
+                  isFavoriteLike={false}
                 />
               );
             })
