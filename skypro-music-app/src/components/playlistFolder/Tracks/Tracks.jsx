@@ -27,7 +27,7 @@ const Track = ({
   isFavoriteLike,
 }) => {
   const { user, logout } = useContext(AuthContext);
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   const $isPlaying = useSelector((state) => state.music.isPlaying);
   const currentTrack = useSelector((state) => state.music.activeTrack);
   const { theme } = useThemeContext();
@@ -84,7 +84,7 @@ const Track = ({
             <S.TrackTitleLink
               theme={theme}
               onClick={() =>
-                dispach(
+                dispatch(
                   getAllTrack({
                     name,
                     author,
@@ -112,7 +112,22 @@ const Track = ({
         <div className="track__time">
           {isLiked || isFavoriteLike ? (
             <S.TrackTimeSvg alt="time" onClick={handleDeleteMyTrack}>
-              <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
+              <svg
+                width="16"
+                height="14"
+                viewBox="0 0 16 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8.10894 12.709C13.9894 9.20898 17.0547 3.9182 13.7001 1.47632C11.4999 -0.125251 9.04083 1.15074 8.10894 1.9647H8.08743H8.08737H8.06586C7.13397 1.15074 4.67486 -0.125251 2.47467 1.47632C-0.8799 3.9182 2.18537 9.20898 8.06586 12.709H8.08737H8.08743H8.10894Z"
+                  fill="#B672FF"
+                />
+                <path
+                  d="M8.08737 1.9647H8.10894C9.04083 1.15074 11.4999 -0.125251 13.7001 1.47632C17.0547 3.9182 13.9894 9.20898 8.10894 12.709H8.08737M8.08743 1.9647H8.06586C7.13397 1.15074 4.67486 -0.125251 2.47467 1.47632C-0.8799 3.9182 2.18537 9.20898 8.06586 12.709H8.08743"
+                  stroke="#B672FF"
+                />
+              </svg>
             </S.TrackTimeSvg>
           ) : (
             <S.TrackTimeSvg alt="time" onClick={handleAddMyTrack}>
