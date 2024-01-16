@@ -19,7 +19,7 @@ export const registerUser = async ({ email, password, username }) => {
   }
 
   const newUserRegister = await response.json();
-  console.log(newUserRegister);
+ 
   if (response.status === 400) {
     const userEmailError = newUserRegister.email
       ? `Email: ${newUserRegister.email}`
@@ -58,7 +58,7 @@ export const loginUser = async ({ email, password }) => {
   });
 
   const authUserLogin = await response.json();
-  console.log(authUserLogin);
+ 
 
   if (response.status === 400) {
     const userEmailError = authUserLogin.email

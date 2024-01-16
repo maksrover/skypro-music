@@ -16,7 +16,7 @@ function PlayList() {
   const { data = [], isLoading } = useAllTracksQuery();
 
   useEffect(() => {
-    console.log(data);
+  
   }, [data]);
 
   return (

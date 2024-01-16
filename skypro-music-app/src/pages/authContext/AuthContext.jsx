@@ -11,7 +11,7 @@ function getAuthFromLocalStorege() {
 
     return auth;
   } catch (error) {
-    console.log(error);
+   
     return null;
   }
 }
@@ -26,8 +26,7 @@ export const AuthProvider = ({ children }) => {
   const login = (newUser) => {
     setUser(newUser);
     localStorage.setItem("auth", JSON.stringify(newUser));
-    const myValue = localStorage.getItem("auth");
-    console.log(JSON.parse(myValue));
+
     navigate("/");
   };
 
