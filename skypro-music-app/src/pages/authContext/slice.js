@@ -4,8 +4,9 @@ const initialState = {
   trackList: [],
   activeTrack: null,
   shuffledList: [],
-  isShuffledTrackList: [],
+  isShuffledTrackList: false,
   isPlaying: false,
+  filters: { genre: [], author: [], years: [] },
 };
 
 export const sliceTrackList = createSlice({
@@ -41,9 +42,9 @@ export const sliceTrackList = createSlice({
         ? state.shuffledList
         : state.trackList;
 
-      const tracksIndex = allTrackList.findIndex(
-        (track) => track.id === state.activeTrack.id
-      );
+      const tracksIndex = allTrackList.findIndex((track) => {
+        return track.id === state.activeTrack.id;
+      });
 
       if (allTrackList[tracksIndex - 1]) {
         state.activeTrack = allTrackList[tracksIndex - 1];
@@ -63,5 +64,4 @@ export const {
   getPrevTrack,
   getTracksListShuffled,
 } = sliceTrackList.actions;
-
 export default sliceTrackList.reducer;

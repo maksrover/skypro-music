@@ -12,7 +12,7 @@ function Navigation({ user, cancelHandler }) {
   return (
     <S.Nav theme={theme}>
       <S.Logo>
-        <S.LogoImg src={theme.iconLogo} alt="logo" />
+        <S.LogoImg src="/img/logo.png" alt="logo" />
       </S.Logo>
       <S.NavBurger theme={theme} onClick={showMenu}>
         <S.NavBurgerLine theme={theme}></S.NavBurgerLine>

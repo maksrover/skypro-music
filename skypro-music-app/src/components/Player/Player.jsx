@@ -124,9 +124,9 @@ function Player() {
   }, [dispatch]);
   const updateVolume = (event) => {
     const newVolume = event.target.value;
-   
+
     audioRef.current.volume = newVolume;
-    
+
     setVolume(newVolume);
   };
 
@@ -144,7 +144,6 @@ function Player() {
   const handelLoop = () => {
     audioRef.current.loop = true;
     setIsLoop(true);
-   
   };
   const handeStopLoop = () => {
     audioRef.current.loop = false;

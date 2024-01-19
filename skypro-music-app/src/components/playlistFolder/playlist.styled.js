@@ -1,6 +1,6 @@
 import { css, keyframes } from "styled-components";
-
 import styled from "styled-components";
+  
 export const MainCenterblock = styled.div`
   width: auto;
   -webkit-box-flex: 3;
@@ -25,8 +25,6 @@ export const CenterblockContent = styled.div`
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  min-height: 0px;
-  height: 70vh;
 `;
 export const ContentTitle = styled.div`
   display: -webkit-box;
@@ -81,6 +79,7 @@ export const ContentPlaylist = styled.div`
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+  height: 680px;
   overflow-y: auto;
   padding-right: 10px;
 
