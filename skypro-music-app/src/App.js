@@ -1,16 +1,13 @@
-import React from 'react';
-import './App.css';
+import { GlobalStyled } from "./pages/mainFolder/globalStyle";
+
+import { AppRoutes } from "./routes";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p className='App-text'>
-          Здесь скоро будет Skypro.Music
-        </p>
-      </header>
-    </div>
+    <>
+      <AppRoutes />
+      <GlobalStyled />
+    </>
   );
 }
-
 export default App;
