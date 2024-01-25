@@ -5,14 +5,72 @@ const initialState = {
   activeTrack: null,
   shuffledList: [],
   isShuffledTrackList: false,
-  isPlaying: false,
-  filters: { genre: [], author: [], years: [] },
+  isPlaying: true,
+  filteredTracks: [],
+  tracksForFilter: [],
+  isFiltred: false,
+  filters: { genre: "", author: "", years: "", search: "" },
 };
 
 export const sliceTrackList = createSlice({
   name: "music",
   initialState,
   reducers: {
+    getCleanTheFilter: (state) => {
+      if (state.filters.author) {
+        state.filteredTracks = state.filteredTracks.filter(
+          (elem) => elem.author !== state.filters.author
+        );
+
+        state.isFiltred = false;
+        return;
+      }
+    },
+    setFilters: (state, action) => {
+      state.filters[action.payload.nameFilter] = action.payload.valueFilter;
+      state.filteredTracks = state.tracksForFilter;
+
+      if (
+        !state.filters.genre &&
+        !state.filters.author &&
+        !state.filters.years &&
+        !state.filters.search
+      ) {
+        state.isFiltred = false;
+        return;
+      }
+
+      state.isFiltred = true;
+
+      if (state.filters.genre) {
+        state.filteredTracks = state.filteredTracks.filter(
+          (elem) => elem.genre === state.filters.genre
+        );
+      }
+
+      if (state.filters.author) {
+        state.filteredTracks = state.filteredTracks.filter(
+          (elem) => elem.author === state.filters.author
+        );
+      }
+      if (state.filters.years) {
+        state.filteredTracks = state.filteredTracks.filter(
+          (elem) => elem.years === state.filters.years
+        );
+      }
+      if (state.filters.search) {
+        state.filteredTracks = state.filteredTracks.filter((track) => {
+          return (
+            track.name
+              .toLowerCase()
+              .includes(state.filters.search.toLowerCase()) ||
+            track.author
+              .toLowerCase()
+              .includes(state.filters.search.toLowerCase())
+          );
+        });
+      }
+    },
     getAllTrack: (state, action) => {
       state.activeTrack = action.payload;
       state.trackList = action.payload.data;
@@ -53,6 +111,9 @@ export const sliceTrackList = createSlice({
     getTracksListShuffled: (state) => {
       state.isShuffledTrackList = !state.isShuffledTrackList;
     },
+    setTrackListForFilter: (state, action) => {
+      state.tracksForFilter = action.payload;
+    },
   },
 });
 
@@ -63,5 +124,8 @@ export const {
   getNextTrack,
   getPrevTrack,
   getTracksListShuffled,
+  setFilters,
+  setTrackListForFilter,
+  getCleanTheFilter,
 } = sliceTrackList.actions;
 export default sliceTrackList.reducer;

@@ -1,5 +1,3 @@
-import React, { useEffect } from "react";
-
 import BlockFilter from "../FilterFolder/BlockFilter.jsx";
 import BlockSearch from "../searchFolder/BlockSearch.jsx";
 import Track from "./Tracks/Tracks";
@@ -10,14 +8,23 @@ import * as S from "./playlist.styled.js";
 
 import { useThemeContext } from "../../pages/Theme/ThemeContext.jsx";
 import { useAllTracksQuery } from "../../api/apiMusic.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setTrackListForFilter } from "../../pages/authContext/slice.js";
 
 function PlayList() {
   const { theme } = useThemeContext();
   const { data = [], isLoading } = useAllTracksQuery();
 
+  const filtredDataRedux = useSelector((state) => state.music.filteredTracks);
+  const initialTracks = useSelector((state) => state.music.tracksForFilter);
+  const isFiltred = useSelector((state) => state.music.isFiltred);
+  let newFiltredData = isFiltred ? filtredDataRedux : initialTracks;
+
+  const dispatch = useDispatch();
   useEffect(() => {
-  
-  }, [data]);
+    dispatch(setTrackListForFilter(data));
+  }, [isLoading]);
 
   return (
     <S.MainCenterblock>
@@ -42,7 +49,7 @@ function PlayList() {
           {isLoading ? (
             <SkeletonTrack />
           ) : (
-            data.map((item) => {
+            newFiltredData.map((item) => {
               return (
                 <Track
                   key={item.id}

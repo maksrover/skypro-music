@@ -3,11 +3,15 @@ import * as S from "./BlockFilterStyled";
 import { useState } from "react";
 import { useThemeContext } from "../../pages/Theme/ThemeContext";
 import { useAllTracksQuery } from "../../api/apiMusic";
+import { useDispatch, useSelector } from "react-redux";
+import { getCleanTheFilter, setFilters } from "../../pages/authContext/slice";
 
 function BlockFilter() {
   const { data = [] } = useAllTracksQuery();
   const { theme } = useThemeContext();
   const [genre, setGenre] = useState([]);
+  const [dataTrack, setDataTrack] = useState([]);
+  const dispatch = useDispatch();
 
   const [filter, setShowFilter] = useState(false);
 
@@ -42,11 +46,28 @@ function BlockFilter() {
       console.log(ganreSet);
       setGenre(Array.from(ganreSet));
     }
-  }, [data]);
+    if (data.length > 0) {
+      const dataSet = new Set();
+      data.forEach((element) => {
+        dataSet.add(element.release_date);
+      });
 
-  const handleFilter = (filter, value) => {};
+      setDataTrack(Array.from(dataSet));
+    }
+  }, [data]);
+  const filtredDataRedux = useSelector((state) => state.music.filteredTracks);
+  const isFiltred = useSelector((state) => state.music.isFiltred);
+  const handleFilter = (nameFilter, valueFilter) => {
+    if (filtredDataRedux) {
+      dispatch(getCleanTheFilter());
+    } else {
+      dispatch(setFilters({ nameFilter, valueFilter }));
+    }
+  };
+
   return (
     <S.CenterBlockFilter theme={theme}>
+    
       <S.FilterTitle theme={theme}>Искать по:</S.FilterTitle>
       {filter ? (
         <S.BtnActive theme={theme} onClick={showFilterAuthor}>
@@ -58,7 +79,9 @@ function BlockFilter() {
                   <S.MenuItem
                     key={item.id}
                     theme={theme}
-                    onClick={() => handleFilter("author", item.author)}
+                    onClick={() => {
+                      handleFilter("author", item.author);
+                    }}
                   >
                     {item.author}
                   </S.MenuItem>
@@ -78,16 +101,13 @@ function BlockFilter() {
           году выпуска
           <S.MenuFilter theme={theme}>
             <S.MenuList theme={theme}>
-              <S.MenuItem theme={theme}>2013</S.MenuItem>
-              <S.MenuItem theme={theme}>2014</S.MenuItem>
-              <S.MenuItem theme={theme}>2015</S.MenuItem>
-              <S.MenuItem theme={theme}>2016</S.MenuItem>
-              <S.MenuItem theme={theme}>2017</S.MenuItem>
-              <S.MenuItem theme={theme}>2018</S.MenuItem>
-              <S.MenuItem theme={theme}>2019</S.MenuItem>
-              <S.MenuItem theme={theme}>2020</S.MenuItem>
-              <S.MenuItem theme={theme}>2020</S.MenuItem>
-              <S.MenuItem theme={theme}>2021</S.MenuItem>
+              {dataTrack.map((item) => {
+                return (
+                  <S.MenuItem theme={theme} key={item}>
+                    {item}
+                  </S.MenuItem>
+                );
+              })}
             </S.MenuList>
           </S.MenuFilter>
         </S.BtnActive>
