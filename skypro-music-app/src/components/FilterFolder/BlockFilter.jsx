@@ -4,7 +4,11 @@ import { useState } from "react";
 import { useThemeContext } from "../../pages/Theme/ThemeContext";
 import { useAllTracksQuery } from "../../api/apiMusic";
 import { useDispatch, useSelector } from "react-redux";
-import { getCleanTheFilter, setFilters } from "../../pages/authContext/slice";
+import {
+  getCleanTheFilter,
+  selectedFiltered,
+  setFilters,
+} from "../../pages/authContext/slice";
 
 function BlockFilter() {
   const { data = [] } = useAllTracksQuery();
@@ -43,7 +47,7 @@ function BlockFilter() {
       data.forEach((element) => {
         ganreSet.add(element.genre);
       });
-      console.log(ganreSet);
+
       setGenre(Array.from(ganreSet));
     }
     if (data.length > 0) {
@@ -57,17 +61,18 @@ function BlockFilter() {
   }, [data]);
   const filtredDataRedux = useSelector((state) => state.music.filteredTracks);
   const isFiltred = useSelector((state) => state.music.isFiltred);
-  const handleFilter = (nameFilter, valueFilter) => {
-    if (filtredDataRedux) {
-      dispatch(getCleanTheFilter());
-    } else {
-      dispatch(setFilters({ nameFilter, valueFilter }));
+  const filteredAuthorGenreYears = useSelector(
+    (state) => state.music.filteredAuthorGenreYears
+  );
+  const handleFilter = ({ nameFilter, valueFilter }) => {
+    dispatch(setFilters({ nameFilter, valueFilter }));
+    if (!filteredAuthorGenreYears.includes(valueFilter)) {
+      dispatch(selectedFiltered({ nameFilter, valueFilter }));
     }
   };
 
   return (
     <S.CenterBlockFilter theme={theme}>
-    
       <S.FilterTitle theme={theme}>Искать по:</S.FilterTitle>
       {filter ? (
         <S.BtnActive theme={theme} onClick={showFilterAuthor}>
@@ -80,7 +85,10 @@ function BlockFilter() {
                     key={item.id}
                     theme={theme}
                     onClick={() => {
-                      handleFilter("author", item.author);
+                      handleFilter({
+                        nameFilter: "author",
+                        valueFilter: item.author,
+                      });
                     }}
                   >
                     {item.author}

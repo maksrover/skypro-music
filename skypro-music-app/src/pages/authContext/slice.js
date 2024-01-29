@@ -8,6 +8,7 @@ const initialState = {
   isPlaying: true,
   filteredTracks: [],
   tracksForFilter: [],
+  filteredAuthorGenreYears: [],
   isFiltred: false,
   filters: { genre: "", author: "", years: "", search: "" },
 };
@@ -25,6 +26,10 @@ export const sliceTrackList = createSlice({
         state.isFiltred = false;
         return;
       }
+    },
+    selectedFiltered: (state, action) => {
+      const author = [...state.filteredAuthorGenreYears, action.payload];
+      state.filteredAuthorGenreYears = author;
     },
     setFilters: (state, action) => {
       state.filters[action.payload.nameFilter] = action.payload.valueFilter;
@@ -127,5 +132,6 @@ export const {
   setFilters,
   setTrackListForFilter,
   getCleanTheFilter,
+  selectedFiltered,
 } = sliceTrackList.actions;
 export default sliceTrackList.reducer;

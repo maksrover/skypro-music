@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useThemeContext } from "../../../pages/Theme/ThemeContext";
 import { useMyFavoriteTracksQuery } from "../../../api/apiMusic";
+import { AuthContext } from "../../../pages/authContext/AuthContext";
 import BlockFilter from "../../FilterFolder/BlockFilter";
 import BlockSearch from "../../searchFolder/BlockSearch";
 import * as S from "../playlist.styled";
@@ -9,8 +10,22 @@ import Track from "../Tracks/Tracks";
 const MyPlayList = () => {
   const { theme } = useThemeContext();
   const token = localStorage.getItem("access");
+  const { logout } = useContext(AuthContext);
+  const {
+    data = [],
+    isLoading,
+    error: likeError,
+    error: dislikeError,
+  } = useMyFavoriteTracksQuery({ token });
 
-  const { data = [], isLoading } = useMyFavoriteTracksQuery({ token });
+  useEffect(() => {
+    if (
+      (likeError && likeError.status === 401) ||
+      (dislikeError && dislikeError.status === 401)
+    ) {
+      logout();
+    }
+  });
 
   return (
     <S.MainCenterblock>
