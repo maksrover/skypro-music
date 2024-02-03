@@ -57,7 +57,6 @@ const PlayListCategory = () => {
       <S.CenterblockHeading theme={theme}>
         {category.title}
       </S.CenterblockHeading>
-      {/* <h1 onClick={handelTrack}>Нажать</h1> */}
 
       <BlockFilter />
       <S.CenterblockContent>
@@ -71,9 +70,7 @@ const PlayListCategory = () => {
             </S.PlaylistTitleSvg>
           </S.TitleCol4>
         </S.ContentTitle>
-        {/* {Error ? (
-          <p>Не удалось загрузить плейлист, попробуйте позже</p>
-        ) : null} */}
+
         <S.ContentPlaylist theme={theme}>
           {dataItem?.map((item) => {
             return (
