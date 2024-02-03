@@ -1,18 +1,30 @@
 import styled from "styled-components";
 
 export const CenterBlockFilter = styled.div`
-  display: -webkit-box;
-  display: -ms-flexbox;
+  position: relative;
+  // display: -webkit-box;
+  // display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
+  // -webkit-box-orient: horizontal;
+  // -webkit-box-direction: normal;
+  // -ms-flex-direction: row;
+  // flex-direction: row;
+  // -webkit-box-align: center;
+  // -ms-flex-align: center;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 51px;
   color: ${(props) => props.theme.color};
+`;
+
+export const itemAuthorGenreBlockFilter = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const itemYearsBlockFilter = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const FilterTitle = styled.div`
@@ -21,6 +33,49 @@ export const FilterTitle = styled.div`
   font-size: 16px;
   line-height: 24px;
   margin-right: 15px;
+`;
+
+export const filterCountAuthor = styled.div`
+  position: absolute;
+  top: -14px;
+  left: 210px;
+  border: 1px solid #d9b6ff;
+  border-radius: 50%;
+  background: #8215f9;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  opacity: 1;
+  z-index: 1;
+  color: ${(props) => props.theme.colorCount};
+`;
+export const filterCountGenre = styled.div`
+  position: absolute;
+  top: -14px;
+  left: 310px;
+  border: 1px solid #d9b6ff;
+  border-radius: 50%;
+  background: #8215f9;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  opacity: 1;
+  z-index: 1;
+  color: ${(props) => props.theme.colorCount};
+`;
+export const filterCountYears = styled.div`
+  position: absolute;
+  top: -14px;
+  right: 0px;
+  border: 1px solid #d9b6ff;
+  border-radius: 50%;
+  background: #8215f9;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  opacity: 1;
+  z-index: 1;
+  color: ${(props) => props.theme.colorCount};
 `;
 export const FilterButton = styled.div`
   font-style: normal;
@@ -119,7 +174,44 @@ export const MenuItem = styled.li`
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: ${(props) => props.theme.color};
+  color: ${(props) =>
+    props.$isAuthorClick && props.$isAuthorSelector
+      ? "#d9b6ff"
+      : props.theme.color};
+  &:hover {
+    color: ${(props) => props.theme.colorBtnHover};
+    text-decoration: underline;
+  }
+`;
+export const MenuItemGenre = styled.li`
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: ${(props) =>
+    props.$isGenreClick && props.$isGenreSelector
+      ? "#d9b6ff"
+      : props.theme.color};
+  &:hover {
+    color: ${(props) => props.theme.colorBtnHover};
+    text-decoration: underline;
+  }
+`;
+export const MenuItemYears = styled.li`
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: ${(props) =>
+    props.$isYearsClick && props.$isYearsSelector
+      ? "#d9b6ff"
+      : props.theme.color};
   &:hover {
     color: ${(props) => props.theme.colorBtnHover};
     text-decoration: underline;

@@ -14,6 +14,12 @@ export default function AuthPage({ isLoginMode = false }) {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
+  const handleEnterKey = (event) => {
+    if (event.key === "Enter") {
+      isLoginMode ? handleLogin({ email, password }) : handleRegister();
+    }
+  };
+
   const handleLogin = async ({ email, password }) => {
     try {
       if (email === "" && password === "") {
@@ -112,6 +118,7 @@ export default function AuthPage({ isLoginMode = false }) {
                 onChange={(event) => {
                   setEmail(event.target.value);
                 }}
+                onKeyPress={handleEnterKey}
               />
               <S.ModalInput
                 type="password"
@@ -121,6 +128,7 @@ export default function AuthPage({ isLoginMode = false }) {
                 onChange={(event) => {
                   setPassword(event.target.value);
                 }}
+                onKeyPress={handleEnterKey}
               />
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
@@ -149,6 +157,7 @@ export default function AuthPage({ isLoginMode = false }) {
                 onChange={(event) => {
                   setEmail(event.target.value);
                 }}
+                onKeyPress={handleEnterKey}
               />
               <S.ModalInput
                 type="password"
@@ -158,6 +167,7 @@ export default function AuthPage({ isLoginMode = false }) {
                 onChange={(event) => {
                   setPassword(event.target.value);
                 }}
+                onKeyPress={handleEnterKey}
               />
               <S.ModalInput
                 type="password"
@@ -167,13 +177,14 @@ export default function AuthPage({ isLoginMode = false }) {
                 onChange={(event) => {
                   setRepeatPassword(event.target.value);
                 }}
+                onKeyPress={handleEnterKey}
               />
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons onClick={handleRegister} disabled={isLodingButton}>
               {isLodingButton ? (
                 <S.PrimaryButtonDisabled>
-                  Регестрируемся...
+                  Регистрируемся...
                 </S.PrimaryButtonDisabled>
               ) : (
                 <S.PrimaryButton>Зарегистрироваться</S.PrimaryButton>
