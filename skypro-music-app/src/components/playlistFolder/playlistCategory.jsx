@@ -1,38 +1,63 @@
-import BlockFilter from "../FilterFolder/BlockFilter.jsx";
-import BlockSearch from "../searchFolder/BlockSearch.jsx";
-import Track from "./Tracks/Tracks";
-
-import "react-loading-skeleton/dist/skeleton.css";
-import SkeletonTrack from "../Skeletons/SkeletonTrack.jsx";
-import * as S from "./playlist.styled.js";
-
-import { useThemeContext } from "../../pages/Theme/ThemeContext.jsx";
-import { useAllTracksQuery } from "../../api/apiMusic.js";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { setTrackListForFilter } from "../../pages/authContext/slice.js";
+import React, { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useThemeContext } from "../../pages/Theme/ThemeContext";
+import {
+  useGetSelectionCategoryQuery,
+  useMyFavoriteTracksQuery,
+} from "../../api/apiMusic";
+import { AuthContext } from "../../pages/authContext/AuthContext";
+import BlockFilter from "../FilterFolder/BlockFilter";
+import BlockSearch from "../searchFolder/BlockSearch";
+import * as S from "../playlistFolder/playlist.styled";
+import Track from "../playlistFolder/Tracks/Tracks";
 
 const PlayListCategory = () => {
   const { theme } = useThemeContext();
-  const { data = [], isLoading } = useAllTracksQuery();
+  const params = useParams();
+  console.log(params);
+  const token = localStorage.getItem("access");
+  const { logout } = useContext(AuthContext);
+  const { error: likeError, error: dislikeError } = useMyFavoriteTracksQuery({
+    token,
+  });
 
-  const filtredDataRedux = useSelector((state) => state.music.filteredTracks);
-  const initialTracks = useSelector((state) => state.music.tracksForFilter);
-  const isFiltred = useSelector((state) => state.music.isFiltred);
-  let newFiltredData = isFiltred ? filtredDataRedux : initialTracks;
-
-  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setTrackListForFilter(data));
-  }, [isLoading]);
+    if (
+      (likeError && likeError.status === 401) ||
+      (dislikeError && dislikeError.status === 401)
+    ) {
+      logout();
+    }
+  });
 
+  const { data = [] } = useGetSelectionCategoryQuery({ id: params.id });
+  const ArrCategorys = [
+    {
+      id: 1,
+      title: "Плейлист дня",
+    },
+    {
+      id: 2,
+      title: "100 хитов",
+    },
+    {
+      id: 3,
+      title: "Инди-заряд",
+    },
+  ];
+  const category = ArrCategorys.find(
+    (categor) => categor.id === Number(params.id)
+  );
+
+  const dataItem = data.items;
   return (
     <S.MainCenterblock>
       <BlockSearch />
 
       <S.CenterblockHeading theme={theme}>
-    
+        {category.title}
       </S.CenterblockHeading>
+      {/* <h1 onClick={handelTrack}>Нажать</h1> */}
 
       <BlockFilter />
       <S.CenterblockContent>
@@ -46,23 +71,21 @@ const PlayListCategory = () => {
             </S.PlaylistTitleSvg>
           </S.TitleCol4>
         </S.ContentTitle>
-
+        {/* {Error ? (
+          <p>Не удалось загрузить плейлист, попробуйте позже</p>
+        ) : null} */}
         <S.ContentPlaylist theme={theme}>
-          {isLoading ? (
-            <SkeletonTrack />
-          ) : (
-            newFiltredData.map((item) => {
-              return (
-                <Track
-                  key={item.id}
-                  item={item}
-                  {...item}
-                  data={data}
-                  isFavoriteLike={false}
-                />
-              );
-            })
-          )}
+          {dataItem?.map((item) => {
+            return (
+              <Track
+                key={item.id}
+                item={item}
+                {...item}
+                data={dataItem}
+                isCategoryLike={false}
+              />
+            );
+          })}
         </S.ContentPlaylist>
       </S.CenterblockContent>
     </S.MainCenterblock>
