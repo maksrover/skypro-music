@@ -14,7 +14,7 @@ import Track from "../playlistFolder/Tracks/Tracks";
 const PlayListCategory = () => {
   const { theme } = useThemeContext();
   const params = useParams();
-  console.log(params);
+
   const token = localStorage.getItem("access");
   const { logout } = useContext(AuthContext);
   const { error: likeError, error: dislikeError } = useMyFavoriteTracksQuery({
