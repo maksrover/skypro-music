@@ -8,36 +8,67 @@ const initialState = {
   isPlaying: true,
   filteredTracks: [],
   tracksForFilter: [],
-  filteredAuthorGenreYears: [],
   isFiltred: false,
-  filters: { genre: "", author: "", years: "", search: "" },
+  $isAuthorClick: false,
+  $isGenreClick: false,
+  $isYearsClick: false,
+  countYears: 0,
+  filters: {
+    genre: [],
+    author: [],
+    years: "По умолчанию",
+    search: "",
+    searchFavorite: "",
+  },
 };
 
 export const sliceTrackList = createSlice({
   name: "music",
   initialState,
   reducers: {
-    getCleanTheFilter: (state) => {
-      if (state.filters.author) {
-        state.filteredTracks = state.filteredTracks.filter(
-          (elem) => elem.author !== state.filters.author
-        );
+    clearTheFilter: (state, action) => {
+      state.filters = {
+        genre: [],
+        author: [],
+        years: "По умолчанию",
+        search: "",
+      };
 
-        state.isFiltred = false;
-        return;
-      }
+      state.countYears = 0;
+      state.isFiltred = false;
     },
     selectedFiltered: (state, action) => {
       const author = [...state.filteredAuthorGenreYears, action.payload];
       state.filteredAuthorGenreYears = author;
     },
     setFilters: (state, action) => {
-      state.filters[action.payload.nameFilter] = action.payload.valueFilter;
-      state.filteredTracks = state.tracksForFilter;
+      // state.filters[action.payload.nameFilter] = action.payload.valueFilter;
 
       if (
-        !state.filters.genre &&
-        !state.filters.author &&
+        action.payload.nameFilter !== "search" &&
+        action.payload.nameFilter !== "years"
+      ) {
+        if (
+          state.filters[action.payload.nameFilter].includes(
+            action.payload.valueFilter
+          )
+        ) {
+          state.filters[action.payload.nameFilter] = state.filters[
+            action.payload.nameFilter
+          ].filter((elem) => elem !== action.payload.valueFilter);
+        } else {
+          state.filters[action.payload.nameFilter].push(
+            action.payload.valueFilter
+          );
+        }
+      } else {
+        state.filters[action.payload.nameFilter] = action.payload.valueFilter;
+      }
+      state.filteredTracks = state.tracksForFilter;
+      //console.log(state.filters[action.payload.nameFilter]);
+      if (
+        !state.filters.genre.length > 0 &&
+        !state.filters.author.length > 0 &&
         !state.filters.years &&
         !state.filters.search
       ) {
@@ -46,24 +77,67 @@ export const sliceTrackList = createSlice({
       }
 
       state.isFiltred = true;
-
-      if (state.filters.genre) {
-        state.filteredTracks = state.filteredTracks.filter(
-          (elem) => elem.genre === state.filters.genre
-        );
-      }
-
-      if (state.filters.author) {
-        state.filteredTracks = state.filteredTracks.filter(
-          (elem) => elem.author === state.filters.author
-        );
-      }
       if (state.filters.years) {
-        state.filteredTracks = state.filteredTracks.filter(
-          (elem) => elem.years === state.filters.years
-        );
+        state.$isYearsClick = true;
+        if (state.filters.years === "Сначала старые") {
+          state.countYears = state.countYears = 1;
+          state.filteredTracks = [...state.filteredTracks].sort(
+            (a, b) => new Date(a.release_date) - new Date(b.release_date)
+          );
+        }
+        if (state.filters.years === "Сначала новые") {
+          state.countYears = state.countYears = 1;
+          state.filteredTracks = [...state.filteredTracks].sort(
+            (a, b) => new Date(b.release_date) - new Date(a.release_date)
+          );
+        }
+        if (state.filters.years === "По умолчанию") {
+          state.countYears = state.countYears = 0;
+          state.filteredTracks = state.tracksForFilter;
+        }
       }
+
+      if (state.filters.genre.length > 0) {
+        state.$isGenreClick = true;
+        state.filteredTracks = state.filters.genre
+          .map((elemFilter) => {
+            return state.filteredTracks.filter(
+              (elem) => elem.genre === elemFilter
+            );
+          })
+          .flat();
+      }
+
+      if (state.filters.author.length > 0) {
+        state.$isAuthorClick = true;
+        state.filteredTracks = state.filters.author
+          .map((authorItem) => {
+            return state.filteredTracks.filter(
+              (elem) => elem.author === authorItem
+            );
+          })
+          .flat();
+        //console.log(state.filteredTracks);
+        // state.filteredAuthorGenreYears.push(action.payload.filters);
+      }
+
+      // console.log(state.filteredAuthorGenreYears);
+
       if (state.filters.search) {
+        state.filteredTracks = state.filteredTracks.filter((track) => {
+          return (
+            track.name
+              .toLowerCase()
+              .includes(state.filters.search.toLowerCase()) ||
+            track.author
+              .toLowerCase()
+              .includes(state.filters.search.toLowerCase())
+          );
+        });
+      }
+    },
+    getSearchFavorite: (state, action) => {
+      if (state.filters.searchFavorite) {
         state.filteredTracks = state.filteredTracks.filter((track) => {
           return (
             track.name
@@ -93,6 +167,7 @@ export const sliceTrackList = createSlice({
         : state.trackList;
 
       const tracksIndex = allTrackList.findIndex((track) => {
+        // console.log(track.id);
         return track.id === state.activeTrack.id;
       });
 
@@ -106,6 +181,7 @@ export const sliceTrackList = createSlice({
         : state.trackList;
 
       const tracksIndex = allTrackList.findIndex((track) => {
+        // console.log(track.id);
         return track.id === state.activeTrack.id;
       });
 
@@ -131,7 +207,8 @@ export const {
   getTracksListShuffled,
   setFilters,
   setTrackListForFilter,
-  getCleanTheFilter,
+  clearTheFilter,
   selectedFiltered,
+  getSearchFavorite,
 } = sliceTrackList.actions;
 export default sliceTrackList.reducer;

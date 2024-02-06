@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useThemeContext } from "../../pages/Theme/ThemeContext";
 import { useAllTracksQuery } from "../../api/apiMusic";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilters } from "../../pages/authContext/slice";
+import { clearTheFilter, setFilters } from "../../pages/authContext/slice";
 
-export function BlockFilter() {
+function BlockFilter() {
   const { data = [] } = useAllTracksQuery();
   const { theme } = useThemeContext();
   const [genre, setGenre] = useState([]);
@@ -51,11 +51,11 @@ export function BlockFilter() {
       data.forEach((element) => {
         dataSet.add(element.release_date);
       });
-
+      // console.log(ganreSet);
       setDataTrack(["По умолчанию", "Сначала старые", "Сначала новые"]);
     }
   }, [data]);
-
+  // const filtredDataRedux = useSelector((state) => state.music.filteredTracks);
   const filterCount = useSelector((state) => state.music.filters);
   const $isAuthorClick = useSelector((state) => state.music.$isAuthorClick);
   const $isGenreClick = useSelector((state) => state.music.$isGenreClick);
@@ -66,6 +66,9 @@ export function BlockFilter() {
   );
   const handleFilter = ({ nameFilter, valueFilter }) => {
     dispatch(setFilters({ nameFilter, valueFilter }));
+  };
+  const handlerClearFiltered = () => {
+    dispatch(clearTheFilter());
   };
   useEffect(() => {
     //console.log(filteredAuthorGenreYears);
@@ -149,6 +152,12 @@ export function BlockFilter() {
             жанру
           </S.FilterButton>
         )}
+        <S.clearFilteredButton
+          onClick={() => handlerClearFiltered()}
+          theme={theme}
+        >
+          Очистить фильтр
+        </S.clearFilteredButton>
       </S.itemAuthorGenreBlockFilter>
       <S.itemYearsBlockFilter>
         <S.FilterTitle theme={theme}>Сортировать по:</S.FilterTitle>

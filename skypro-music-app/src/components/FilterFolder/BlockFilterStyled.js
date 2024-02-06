@@ -103,6 +103,32 @@ export const FilterButton = styled.div`
   }
 `;
 
+export const clearFilteredButton = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  border: 1px solid #ffffff;
+  border-radius: 60px;
+  padding: 6px 20px;
+  position: relative;
+  border-color: ${(props) => props.theme.borderColorButton};
+
+  &:hover {
+    border-color: ${(props) => props.theme.borderColorButton};
+    color: ${(props) => props.theme.colorBtnHover};
+    cursor: pointer;
+  }
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+  &:active {
+    border-color: ${(props) => props.theme.borderColorButton};
+    color: ${(props) => props.theme.colorBtnHover};
+    cursor: pointer;
+  }
+`;
+
 export const BtnActive = styled(FilterButton)`
   cursor: pointer;
   border-color: ${(props) => props.theme.borderColorButton};
