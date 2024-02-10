@@ -1,30 +1,34 @@
-import BlockFilter from "../FilterFolder/BlockFilter.jsx";
-import BlockSearch from "../searchFolder/BlockSearch.jsx";
+import BlockFilter from "../FilterFolder/BlockFilter";
+import BlockSearch from "../searchFolder/BlockSearch";
+
 import Track from "./Tracks/Tracks";
 
 import "react-loading-skeleton/dist/skeleton.css";
-import SkeletonTrack from "../Skeletons/SkeletonTrack";
-import * as S from "./playlist.styled.js";
-
-import { useThemeContext } from "../../pages/Theme/ThemeContext.jsx";
-import { useAllTracksQuery } from "../../api/apiMusic.js";
+import SkeletonTrack from "../../components/Skeletons/SkeletonTrack";
+import * as S from "./playlist.styled";
+import { useThemeContext } from "../../pages/Theme/ThemeContext";
+import { useAllTracksQuery } from "../../api/apiMusic";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setTrackListForFilter } from "../../pages/authContext/slice.js";
+import {
+  clearTheFilter,
+  setTrackListForFilter,
+} from "../../pages/authContext/slice";
 
 function PlayList() {
   const { theme } = useThemeContext();
-  const { data = [], isLoading } = useAllTracksQuery();
-
+  const { data, isLoading } = useAllTracksQuery();
   const filtredDataRedux = useSelector((state) => state.music.filteredTracks);
   const initialTracks = useSelector((state) => state.music.tracksForFilter);
   const isFiltred = useSelector((state) => state.music.isFiltred);
   let newFiltredData = isFiltred ? filtredDataRedux : initialTracks;
 
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(setTrackListForFilter(data));
-  }, [isLoading]);
+    dispatch(clearTheFilter());
+    dispatch(setTrackListForFilter(data || []));
+  }, [dispatch, data, isLoading]);
 
   return (
     <S.MainCenterblock>
