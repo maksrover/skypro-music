@@ -11,7 +11,7 @@ import { useAllTracksQuery } from "../../api/apiMusic";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
-  clearTheFilter,
+  setFilters,
   setTrackListForFilter,
 } from "../../pages/authContext/slice";
 
@@ -21,14 +21,16 @@ function PlayList() {
   const filtredDataRedux = useSelector((state) => state.music.filteredTracks);
   const initialTracks = useSelector((state) => state.music.tracksForFilter);
   const isFiltred = useSelector((state) => state.music.isFiltred);
+  const valueSearch = useSelector((state) => state.music.search);
+
   let newFiltredData = isFiltred ? filtredDataRedux : initialTracks;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(clearTheFilter());
     dispatch(setTrackListForFilter(data || []));
-  }, [dispatch, data, isLoading]);
+    dispatch(setFilters({ nameFilter: "search", valueFilter: valueSearch }));
+  }, [dispatch, data, isLoading, valueSearch]);
 
   return (
     <S.MainCenterblock>
@@ -36,7 +38,9 @@ function PlayList() {
 
       <S.CenterblockHeading theme={theme}>Треки</S.CenterblockHeading>
 
+      {<PlayList /> ? null : <BlockFilter />}
       <BlockFilter />
+
       <S.CenterblockContent>
         <S.ContentTitle>
           <S.TitleCol1>Трек</S.TitleCol1>

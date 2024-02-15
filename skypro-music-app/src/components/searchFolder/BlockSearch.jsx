@@ -1,7 +1,8 @@
-import { useThemeContext } from "../../pages/Theme/ThemeContext.jsx";
-import * as S from "./BlockSearchStyled.js";
 import { useDispatch } from "react-redux";
-import { setFilters } from "../../pages/authContext/slice.js";
+import { useThemeContext } from "../../pages/Theme/ThemeContext";
+import { setFilters } from "../../pages/authContext/slice";
+
+import * as S from "./BlockSearchStyled";
 
 function BlockSearch() {
   const { theme } = useThemeContext();
@@ -10,7 +11,6 @@ function BlockSearch() {
   const onChandeSearchValue = (value) => {
     dispatch(setFilters({ nameFilter: "search", valueFilter: value }));
   };
-
   return (
     <S.CenterBlockSearch theme={theme}>
       <S.SearchSvg theme={theme}>

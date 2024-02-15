@@ -3,11 +3,11 @@ import PlayList from "../../components/playlistFolder/playlist";
 import MainSidebar from "../../components/sideBarFolder/MainSidebar";
 import * as S from "./main.styled";
 
-export function Main() {
+export function Main({ search, setSearch }) {
   return (
     <S.Main>
       <Navigation />
-      <PlayList />
+      <PlayList setSearch={setSearch} search={search} />
       <MainSidebar />
     </S.Main>
   );
