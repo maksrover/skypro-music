@@ -10,11 +10,15 @@ import BlockFilter from "../FilterFolder/BlockFilter";
 import BlockSearch from "../searchFolder/BlockSearch";
 import * as S from "../playlistFolder/playlist.styled";
 import Track from "../playlistFolder/Tracks/Tracks";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setFilters,
+  setTrackListForFilter,
+} from "../../pages/authContext/slice";
 
 const PlayListCategory = () => {
   const { theme } = useThemeContext();
   const params = useParams();
-
   const token = localStorage.getItem("access");
   const { logout } = useContext(AuthContext);
   const { error: likeError, error: dislikeError } = useMyFavoriteTracksQuery({
@@ -32,32 +36,31 @@ const PlayListCategory = () => {
 
   const { data = [] } = useGetSelectionCategoryQuery({ id: params.id });
   const ArrCategorys = [
-    {
-      id: 1,
-      title: "Плейлист дня",
-    },
-    {
-      id: 2,
-      title: "100 хитов",
-    },
-    {
-      id: 3,
-      title: "Инди-заряд",
-    },
+    { id: 1, title: "Плейлист дня" },
+    { id: 2, title: "100 хитов" },
+    { id: 3, title: "Инди-заряд" },
   ];
   const category = ArrCategorys.find(
     (categor) => categor.id === Number(params.id)
   );
 
   const dataItem = data.items;
+  const dispatch = useDispatch();
+  const valueSearch = useSelector((state) => state.music.search);
+
+  useEffect(() => {
+    dispatch(setTrackListForFilter(dataItem || []));
+    dispatch(setFilters({ nameFilter: "search", valueFilter: valueSearch }));
+  }, [dispatch, dataItem, valueSearch]);
+
+  const filteredTracks = useSelector((state) => state.music.filteredTracks);
+
   return (
     <S.MainCenterblock>
       <BlockSearch />
-
       <S.CenterblockHeading theme={theme}>
         {category.title}
       </S.CenterblockHeading>
-
       <BlockFilter />
       <S.CenterblockContent>
         <S.ContentTitle>
@@ -70,19 +73,16 @@ const PlayListCategory = () => {
             </S.PlaylistTitleSvg>
           </S.TitleCol4>
         </S.ContentTitle>
-
         <S.ContentPlaylist theme={theme}>
-          {dataItem?.map((item) => {
-            return (
-              <Track
-                key={item.id}
-                item={item}
-                {...item}
-                data={dataItem}
-                isCategoryLike={false}
-              />
-            );
-          })}
+          {filteredTracks.map((item) => (
+            <Track
+              key={item.id}
+              item={item}
+              {...item}
+              data={dataItem}
+              isCategoryLike={false}
+            />
+          ))}
         </S.ContentPlaylist>
       </S.CenterblockContent>
     </S.MainCenterblock>

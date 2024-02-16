@@ -1,8 +1,6 @@
 import BlockFilter from "../FilterFolder/BlockFilter";
 import BlockSearch from "../searchFolder/BlockSearch";
-
 import Track from "./Tracks/Tracks";
-
 import "react-loading-skeleton/dist/skeleton.css";
 import SkeletonTrack from "../../components/Skeletons/SkeletonTrack";
 import * as S from "./playlist.styled";
@@ -23,14 +21,14 @@ function PlayList() {
   const isFiltred = useSelector((state) => state.music.isFiltred);
   const valueSearch = useSelector((state) => state.music.search);
 
-  let newFiltredData = isFiltred ? filtredDataRedux : initialTracks;
+  const newFiltredData = isFiltred ? filtredDataRedux : initialTracks;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setTrackListForFilter(data || []));
     dispatch(setFilters({ nameFilter: "search", valueFilter: valueSearch }));
-  }, [dispatch, data, isLoading, valueSearch]);
+  }, [dispatch, data, valueSearch]);
 
   return (
     <S.MainCenterblock>
@@ -38,7 +36,6 @@ function PlayList() {
 
       <S.CenterblockHeading theme={theme}>Треки</S.CenterblockHeading>
 
-      {<PlayList /> ? null : <BlockFilter />}
       <BlockFilter />
 
       <S.CenterblockContent>
@@ -57,17 +54,15 @@ function PlayList() {
           {isLoading ? (
             <SkeletonTrack />
           ) : (
-            newFiltredData.map((item) => {
-              return (
-                <Track
-                  key={item.id}
-                  item={item}
-                  {...item}
-                  data={data}
-                  isFavoriteLike={false}
-                />
-              );
-            })
+            newFiltredData.map((item) => (
+              <Track
+                key={item.id}
+                item={item}
+                {...item}
+                data={data}
+                isFavoriteLike={false}
+              />
+            ))
           )}
         </S.ContentPlaylist>
       </S.CenterblockContent>
